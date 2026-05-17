@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PickLab | Coin Flip</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .mystic-glow {
+            filter: drop-shadow(0 0 30px rgba(181, 196, 255, 0.3));
+        }
+        .coin-float {
+            filter: drop-shadow(0 0 50px rgba(255, 219, 207, 0.2));
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .coin-container {
+            perspective: 1000px;
+        }
+        .shadow-text {
+            text-shadow: 0 4px 20px rgba(0,0,0,0.8), 0 0 10px rgba(133,43,0,0.6);
+        }
+</style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-surface": "#2e3039",
+                        "on-primary-container": "#d4dcff",
+                        "primary-fixed": "#dbe1ff",
+                        "surface-container-low": "#f3f3fe",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#434654",
+                        "surface-dim": "#d9d9e4",
+                        "surface-variant": "#e2e1ed",
+                        "on-tertiary-container": "#ffd4c5",
+                        "on-tertiary-fixed": "#380d00",
+                        "secondary": "#555f6d",
+                        "on-secondary-fixed-variant": "#3e4755",
+                        "surface-container-high": "#e7e7f3",
+                        "surface-bright": "#faf8ff",
+                        "secondary-container": "#d6e0f1",
+                        "on-surface": "#191b23",
+                        "on-primary": "#ffffff",
+                        "primary-fixed-dim": "#b5c4ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#1353d8",
+                        "on-error": "#ffffff",
+                        "primary": "#003fb1",
+                        "error-container": "#ffdad6",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "tertiary-fixed": "#ffdbcf",
+                        "secondary-fixed-dim": "#bdc7d8",
+                        "tertiary": "#852b00",
+                        "error": "#ba1a1a",
+                        "tertiary-container": "#ad3b00",
+                        "surface": "#faf8ff",
+                        "primary-container": "#1a56db",
+                        "on-primary-fixed-variant": "#003dab",
+                        "on-tertiary-fixed-variant": "#802a00",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed": "#00174d",
+                        "surface-container-highest": "#e2e1ed",
+                        "surface-container": "#ededf8",
+                        "outline-variant": "#c3c5d7",
+                        "outline": "#737686",
+                        "secondary-fixed": "#d9e3f4",
+                        "on-secondary-container": "#596372",
+                        "on-secondary-fixed": "#121c28",
+                        "on-tertiary": "#ffffff",
+                        "on-background": "#191b23",
+                        "inverse-primary": "#b5c4ff",
+                        "background": "#faf8ff",
+                        "inverse-on-surface": "#f0f0fb"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "base": "4px",
+                        "sm": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "gutter": "1.5rem",
+                        "max-width": "1440px",
+                        "xs": "0.5rem",
+                        "md": "1.5rem",
+                        "margin-mobile": "1rem",
+                        "margin-desktop": "2.5rem"
+                    },
+                    "fontFamily": {
+                        "label-sm": ["Inter"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "body-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"],
+                        "body-lg": ["Inter"]
+                    },
+                    "fontSize": {
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["20px", {"lineHeight": "1.3", "letterSpacing": "0em", "fontWeight": "600"}],
+                        "headline-lg": ["24px", {"lineHeight": "1.3", "letterSpacing": "0em", "fontWeight": "600"}],
+                        "headline-xl": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+</script>
+</head>
+<body class="bg-inverse-surface min-h-screen text-sm md:text-base text-on-primary-container selection:bg-primary-container selection:text-on-primary-container">
+
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-[100] bg-white backdrop-blur-md border-b border-gray-200 text-black">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-8 lg:px-12 py-4">
+<div class="flex items-center gap-6 lg:gap-12">
+<a class="text-xl md:text-2xl font-bold text-black shrink-0" href="/">PickLab</a>
+<nav class="hidden lg:flex gap-8 items-center">
+  
+  <!-- Category 1: Quick Decisions -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-gray-700 hover:text-black transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-black hover:bg-gray-100 transition-colors" href="/coinflip/">코인플립</a>
+      <a class="px-4 py-3 text-sm md:text-base text-black hover:bg-gray-100 transition-colors" href="/dice/">운명의 주사위</a>
+      <a class="px-4 py-3 text-sm md:text-base text-black hover:bg-gray-100 transition-colors" href="/magiclamp/">요술램프</a>
+    </div>
+  </div>
+
+  <!-- Category 2: Games & Roulette -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-gray-700 hover:text-black transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-black hover:bg-gray-100 transition-colors" href="/bomb/">폭탄터트리기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-black hover:bg-gray-100 transition-colors" href="/ladder/">운명의 사다리</a>
+      <a class="px-4 py-3 text-sm md:text-base text-black hover:bg-gray-100 transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-black hover:bg-gray-100 transition-colors" href="/roulette/">룰렛돌리기</a>
+    </div>
+  </div>
+
+  <!-- Category 3: Group & Team -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-gray-700 hover:text-black transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-56 bg-white rounded-xl shadow-xl border border-gray-200 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-black hover:bg-gray-100 transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-black hover:bg-gray-100 transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-black hover:bg-gray-100 transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-black hover:bg-gray-100 transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-black hover:bg-gray-100 transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="px-4 py-3 text-sm md:text-base text-black hover:bg-gray-100 transition-colors" href="/number/">숫자 생성기</a>
+    </div>
+  </div>
+</nav>
+</div>
+<div class="flex items-center gap-4 md:gap-6 lg:hidden">
+<button id="mobile-menu-btn" class="p-2 text-black hover:text-gray-600 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden lg:hidden bg-white border-b border-gray-200 flex flex-col shadow-lg max-h-[80vh] overflow-y-auto">
+  <div class="py-2 border-b border-gray-100">
+    <div class="px-6 py-2 text-xs font-bold text-gray-500 flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-black hover:bg-gray-50 transition-colors" href="/coinflip/">코인플립</a>
+    <a class="block px-8 py-3 text-sm font-bold text-black hover:bg-gray-50 transition-colors" href="/dice/">운명의 주사위</a>
+    <a class="block px-8 py-3 text-sm font-bold text-black hover:bg-gray-50 transition-colors" href="/magiclamp/">요술램프</a>
+  </div>
+  <div class="py-2 border-b border-gray-100">
+    <div class="px-6 py-2 text-xs font-bold text-gray-500 flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-black hover:bg-gray-50 transition-colors" href="/bomb/">폭탄터트리기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-black hover:bg-gray-50 transition-colors" href="/ladder/">운명의 사다리</a>
+    <a class="block px-8 py-3 text-sm font-bold text-black hover:bg-gray-50 transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-black hover:bg-gray-50 transition-colors" href="/roulette/">룰렛돌리기</a>
+  </div>
+  <div class="py-2">
+    <div class="px-6 py-2 text-xs font-bold text-gray-500 flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-black hover:bg-gray-50 transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-black hover:bg-gray-50 transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-black hover:bg-gray-50 transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-black hover:bg-gray-50 transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-black hover:bg-gray-50 transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="block px-8 py-3 text-sm font-bold text-black hover:bg-gray-50 transition-colors" href="/number/">숫자 생성기</a>
+  </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileBtn.querySelector('.material-symbols-outlined');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.textContent = 'menu';
+                } else {
+                    icon.textContent = 'close';
+                }
+            });
+        }
+        
+        // Highlight active menu item
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('header nav flex a, header #mobile-menu a, header .group a');
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href !== '/' && currentPath.startsWith(href)) {
+                link.classList.add('text-blue-600', 'font-bold', 'bg-gray-50');
+            }
+        });
+    });
+</script>
+</header>
+
+<!-- Immersive Background Layer -->
+<div class="fixed inset-0 z-0">
+<div class="absolute inset-0 bg-black/40"></div>
+<img alt="Mystic Cave" class="w-full h-full object-cover" data-alt="A cinematic, ultra-detailed interior of a dark mysterious limestone cave. Large glowing purple and indigo crystals sprout from the damp cave floors and walls, casting a magical violet light across the scene. Swirling ethereal mist and atmospheric haze drift through the air, catching the light from hidden bioluminescent sources. The overall aesthetic is moody, sophisticated, and mystical, with deep shadows and vibrant high-contrast highlights in shades of primary blue and tertiary amber." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAwaxv3bCB3H3gQvH8cOW_fegcXn0H5K6rbNzWZ_D4aAosfV-PNjS8Crwpw8zIyiJM1PgTEOvh72u7zN7_NsX2zFTptpOeBpg4Zoi_AtDjywmVRvlG4nWm3H5fTd7cmFfCYm8MKfCdmqjzkNJlwje84SYCbIrMK9aCWIOMehNrh_BqLYs1_VD221SrSilyWanVHA0tAY02lzy6ayGYRv9Z3dtvSBcgZW6AFLD3SUNOzwCAlEk2r8XUAVpr54T8CcT8w01mTWa4Cd2I" />
+</div>
+
+<!-- Header Branding (Decoupled from Nav) -->
+<div class="w-full max-w-max-width flex justify-center mt-24 md:mt-28 lg:mt-32 relative z-10">
+<div class="text-center px-4">
+<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white drop-shadow-md tracking-wider uppercase mb-2 md:mb-4">
+                    운명의 코인플립
+                </h1>
+<p class="text-xs md:text-sm lg:text-base text-white drop-shadow-md tracking-widest text-shadow-md uppercase font-medium">
+                    동전이 당신의 선택을 도와드립니다
+                </p>
+</div>
+</div>
+<!-- Centerpiece Content -->
+<div class="flex-1 flex flex-col items-center justify-center w-full max-w-2xl mx-auto text-center space-y-8 md:space-y-12 my-8 md:my-12 px-4 relative z-10">
+    <div id="capture-area" class="w-full flex flex-col items-center justify-center py-8 rounded-3xl relative">
+        <!-- Result Text Display -->
+        <div class="h-16 flex items-center justify-center mb-4">
+            <p id="result-text" class="text-xl md:text-2xl lg:text-3xl font-bold text-white opacity-0 transition-all duration-500 shadow-text translate-y-2">...</p>
+        </div>
+
+        <!-- Floating Ancient Coin -->
+        <div class="relative group coin-container w-48 h-48 md:w-64 md:h-64 lg:w-80 lg:h-80 cursor-pointer" onclick="flipCoin()">
+            <!-- Aura Glow -->
+            <div class="coin-decoration absolute inset-0 bg-blue-500/10 rounded-full blur-[60px] md:blur-[100px] scale-150 animate-pulse border-0"></div>
+            
+            <div id="coin" class="relative w-full h-full" style="transform-style: preserve-3d; transition: transform 3s cubic-bezier(0.2, 0.8, 0.2, 1);">
+                
+                <!-- Heads (앞면) -->
+                <div class="absolute inset-0 backface-hidden rounded-full flex flex-col items-center justify-end pb-6 md:pb-8 border border-white/20 bg-gradient-to-br from-[#1c1c1c] to-transparent shadow-lg">
+                    <img id="coin-front-img" alt="Ancient Golden Coin" class="absolute inset-0 w-full h-full object-contain scale-[1.02] rounded-full transition-all duration-500" src="./images/coin_1.png"/>
+                    <div class="absolute inset-0 bg-black/10 rounded-full"></div>
+                    <span class="coin-text relative z-10 text-white text-2xl md:text-3xl lg:text-4xl font-bold tracking-widest drop-shadow-md">앞면</span>
+                </div>
+
+                <!-- Tails (뒷면) -->
+                <div class="absolute inset-0 backface-hidden rounded-full flex flex-col items-center justify-end pb-6 md:pb-8 border border-white/20 bg-gradient-to-br from-[#1c1c1c] to-transparent shadow-lg" style="transform: rotateY(180deg);">
+                    <img id="coin-back-img" alt="Ancient Golden Coin (Back)" class="absolute inset-0 w-full h-full object-contain scale-[1.02] rounded-full transition-all duration-500" src="./images/coin_2.png"/>
+                    <div class="absolute inset-0 bg-black/20 rounded-full"></div>
+                    <span class="coin-text relative z-10 text-white text-2xl md:text-3xl lg:text-4xl font-bold tracking-widest drop-shadow-md">뒷면</span>
+                </div>
+
+                <!-- Decorative Ring -->
+                <div class="coin-decoration absolute inset-[-10px] md:inset-[-20px] border border-white/20 rounded-full" style="transform: translateZ(-1px);"></div>
+                <div class="coin-decoration absolute inset-[-20px] md:inset-[-40px] border border-white/10 rounded-full opacity-50" style="transform: translateZ(-2px);"></div>
+            </div>
+        </div>
+        
+        <div id="result-date" class="text-white/60 text-sm tracking-widest mt-12 opacity-0 transition-opacity duration-500 font-mono text-shadow-md"></div>
+    </div>
+
+    <!-- Action Area -->
+    <div class="space-y-6 md:space-y-8 flex flex-col items-center w-full">
+        <div class="text-center space-y-2 md:space-y-4">
+            <h2 class="text-xl md:text-2xl font-bold text-white drop-shadow-md">당신의 선택</h2>
+            <p class="text-sm md:text-base text-white drop-shadow-md max-w-sm md:max-w-md mx-auto font-medium">
+                마음속으로 질문을 생각하고 동전을 던져보세요.
+            </p>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row items-center gap-4 justify-center">
+            <button onclick="flipCoin()" class="group relative px-6 py-3 md:px-8 md:py-4 bg-gradient-to-r from-tertiary to-primary-container text-white rounded-full text-lg md:text-xl font-bold transition-all duration-500 hover:scale-105 active:scale-95 shadow-[0_0_30px_rgba(133,43,0,0.4)] overflow-hidden flex-shrink-0">
+                <span class="relative z-10 flex items-center gap-2 md:gap-3">
+                    <span class="material-symbols-outlined text-white text-xl md:text-2xl" data-icon="toll">toll</span>
+                    동전 던지기
+                </span>
+                <div class="absolute inset-0 bg-white/20 -translate-x-full group-hover:translate-x-full transition-transform duration-1000"></div>
+            </button>
+
+            <button id="btn-save" onclick="saveResult()" class="group relative px-6 py-3 md:px-8 md:py-4 bg-white/10 text-white rounded-full text-sm md:text-base font-bold transition-all duration-300 hover:bg-white/20 active:scale-95 flex-shrink-0 hidden justify-center items-center gap-2 border border-white/20">
+                <span class="material-symbols-outlined text-white text-lg">download</span>
+                결과 저장
+            </button>
+        </div>
+
+        <!-- Coin Selector -->
+        <div class="mt-6 md:mt-8 pt-4 md:pt-6 flex flex-col items-center space-y-3 md:space-y-4 w-full px-2">
+            <p class="text-xs md:text-sm text-outline-variant uppercase tracking-widest">운명을 함께할 7개의 동전</p>
+            <div id="coin-selector" class="flex gap-3 md:gap-4 overflow-x-auto w-full max-w-2xl py-2 md:py-4 px-2 snap-x justify-start md:justify-center custom-scrollbar">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- User Guide Section -->
+<section class="max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 mb-8 md:mb-12">
+    <div class="bg-white/10 border border-white/20 p-6 md:p-8 lg:p-10 rounded-2xl backdrop-blur-sm">
+        <h3 class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4 md:mb-6 flex items-center gap-2 md:gap-3">
+            <span class="material-symbols-outlined text-white text-2xl md:text-3xl" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+            코인플립 사용 지침서
+        </h3>
+        <ul class="flex flex-col gap-3 md:gap-4 text-sm md:text-base lg:text-lg text-white list-none pl-0">
+            <li class="flex gap-4 md:gap-6 items-start">
+                <span class="material-symbols-outlined text-white mt-0.5" style="font-variation-settings: 'FILL' 1;">toll</span>
+                <p><strong>동전 선택:</strong> 다양한 테마의 동전 중 마음에 드는 것을 하단 목록에서 선택하세요.</p>
+            </li>
+            <li class="flex gap-4 md:gap-6 items-start">
+                <span class="material-symbols-outlined text-white mt-0.5" style="font-variation-settings: 'FILL' 1;">touch_app</span>
+                <p><strong>동전 던지기:</strong> 동전 이미지를 클릭하면 운명의 동전이 던져집니다.</p>
+            </li>
+            <li class="flex gap-4 md:gap-6 items-start">
+                <span class="material-symbols-outlined text-white mt-0.5" style="font-variation-settings: 'FILL' 1;">psychology</span>
+                <p><strong>결과 확인:</strong> '앞면'은 긍정(Yes), '뒷면'은 부정(No)을 의미합니다. 간단한 양자택일에 활용하세요!</p>
+            </li>
+        </ul>
+    </div>
+</section>
+</main>
+<!-- Subtle Ambient Particles Overlay -->
+<div class="fixed inset-0 pointer-events-none opacity-20 mix-blend-screen z-20">
+<div class="absolute top-1/4 left-1/4 w-1 h-1 bg-white rounded-full animate-pulse"></div>
+<div class="absolute top-3/4 left-2/3 w-1.5 h-1.5 bg-tertiary-fixed rounded-full animate-pulse delay-700"></div>
+<div class="absolute top-1/2 left-1/3 w-1 h-1 bg-primary-fixed rounded-full animate-pulse delay-300"></div>
+<div class="absolute top-1/3 left-3/4 w-0.5 h-0.5 bg-white rounded-full animate-pulse delay-1000"></div>
+</div>
+
+<script>
+    const coinList = [
+        { id: 0, name: "기본 금화", front: "./images/coin_1.png", back: "./images/coin_2.png", filter: "none" },
+        { id: 1, name: "황금 주화", front: "./images/coin1_1.png", back: "./images/coin1_2.png", filter: "none" },
+        { id: 2, name: "백은 주화", front: "./images/coin2_1.png", back: "./images/coin2_2.png", filter: "none" },
+        { id: 3, name: "청동 주화", front: "./images/coin3_1.png", back: "./images/coin3_2.png", filter: "none" },
+        { id: 4, name: "신비 주화", front: "./images/coin4_1.png", back: "./images/coin4_2.png", filter: "none" },
+        { id: 5, name: "고대 주화", front: "./images/coin5_1.png", back: "./images/coin5_2.png", filter: "none" },
+        { id: 6, name: "전설 주화", front: "./images/coin6_1.png", back: "./images/coin6_2.png", filter: "none" }
+    ];
+
+    let currentSelectedCoinId = 0;
+
+    function renderCoinSelector() {
+        const container = document.getElementById('coin-selector');
+        container.innerHTML = coinList.map(coin => `
+            <div onclick="selectCoin(${coin.id})" class="flex-shrink-0 cursor-pointer snap-center group flex flex-col items-center gap-2">
+                <div class="w-16 h-16 rounded-full border-2 transition-all duration-300 ${coin.id === currentSelectedCoinId ? 'border-tertiary-fixed shadow-[0_0_15px_rgba(255,183,124,0.4)] scale-110' : 'border-transparent opacity-60 group-hover:opacity-100 group-hover:scale-105'}"
+                     style="background: #1c1c1c;">
+                    <img src="${coin.front}" class="w-full h-full object-contain rounded-full" style="filter: ${coin.filter}">
+                </div>
+                <span class="text-xs transition-colors duration-300 ${coin.id === currentSelectedCoinId ? 'text-tertiary-fixed font-bold' : 'text-outline-variant'}">${coin.name}</span>
+            </div>
+        `).join('');
+    }
+
+    function selectCoin(id) {
+        if (isFlipping) return;
+        currentSelectedCoinId = id;
+        
+        const coinDef = coinList.find(c => c.id === id);
+        if (!coinDef) return;
+        
+        const coinFrontImg = document.getElementById('coin-front-img');
+        const coinBackImg = document.getElementById('coin-back-img');
+        
+        coinFrontImg.src = coinDef.front;
+        coinFrontImg.style.filter = coinDef.filter;
+        
+        coinBackImg.src = coinDef.back;
+        coinBackImg.style.filter = coinDef.filter;
+        
+        renderCoinSelector();
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        renderCoinSelector();
+    });
+
+    let isFlipping = false;
+    let currentRotation = 0;
+    let lastResultIsHeads = true;
+
+    function flipCoin() {
+        if (isFlipping) return;
+        isFlipping = true;
+
+        const coin = document.getElementById('coin');
+        const resultText = document.getElementById('result-text');
+        const resultDate = document.getElementById('result-date');
+        const btnSave = document.getElementById('btn-save');
+
+        resultText.classList.remove('opacity-100', '-translate-y-2');
+        resultText.classList.add('opacity-0', 'translate-y-2');
+        resultDate.classList.remove('opacity-100');
+        resultDate.classList.add('opacity-0');
+        btnSave.classList.add('hidden');
+        btnSave.classList.remove('flex');
+
+        const isHeads = Math.random() > 0.5;
+        lastResultIsHeads = isHeads;
+        
+        // Spin 5 times
+        let targetRotation = currentRotation + 1800;
+        
+        // Find remainder
+        const remainder = targetRotation % 360;
+        
+        if (isHeads) {
+            // align to 0 offset 
+            targetRotation += (360 - remainder) % 360; 
+        } else {
+            // align to 180 offset
+            targetRotation += (180 - remainder + 360) % 360;
+        }
+
+        currentRotation = targetRotation;
+        coin.style.transform = `rotateY(${currentRotation}deg)`;
+
+        setTimeout(() => {
+            isFlipping = false;
+            resultText.innerText = isHeads ? "'앞면'이 나왔습니다." : "'뒷면'이 나왔습니다.";
+            
+            resultText.classList.remove('opacity-0', 'translate-y-2');
+            resultText.classList.add('opacity-100', '-translate-y-2');
+
+            // Format date to show
+            const now = new Date();
+            const dateString = now.getFullYear() + '.' + 
+                               String(now.getMonth() + 1).padStart(2, '0') + '.' + 
+                               String(now.getDate()).padStart(2, '0') + ' ' + 
+                               String(now.getHours()).padStart(2, '0') + ':' + 
+                               String(now.getMinutes()).padStart(2, '0');
+            resultDate.innerText = `Destiny recorded on ${dateString}`;
+            resultDate.classList.remove('opacity-0');
+            resultDate.classList.add('opacity-100');
+
+            btnSave.classList.remove('hidden');
+            btnSave.classList.add('flex');
+
+        }, 3000);
+    }
+    
+    function saveResult() {
+        if (isFlipping) return;
+        const captureArea = document.getElementById('capture-area');
+        const coin = document.getElementById('coin');
+        const coinFront = coin.children[0];
+        const coinBack = coin.children[1];
+        
+        const originalBg = captureArea.style.background;
+        const originalPadding = captureArea.style.padding;
+        
+        const origTransition = coin.style.transition;
+        const origTransform = coin.style.transform;
+        const origFrontVisible = coinFront.style.display;
+        const origBackVisible = coinBack.style.display;
+        const origBackTransform = coinBack.style.transform;
+        
+        // Hide decorations and text for the saved image
+        const decorations = document.querySelectorAll('.coin-decoration');
+        const texts = document.querySelectorAll('.coin-text');
+        decorations.forEach(el => el.style.display = 'none');
+        texts.forEach(el => el.style.display = 'none');
+
+        captureArea.style.background = 'rgba(10,10,15,0.95)';
+        captureArea.style.padding = '40px';
+        
+        coin.style.transition = 'none';
+        coin.style.transform = 'none'; // Lay it flat for html2canvas
+        
+        if (lastResultIsHeads) {
+            coinFront.style.display = 'flex';
+            coinBack.style.display = 'none';
+        } else {
+            coinFront.style.display = 'none';
+            coinBack.style.display = 'flex';
+            coinBack.style.transform = 'none'; // Lay tails flat
+        }
+
+        setTimeout(() => {
+            html2canvas(captureArea, {
+                backgroundColor: null,
+                scale: 2,
+                useCORS: true,
+                logging: false
+            }).then(canvas => {
+                captureArea.style.background = originalBg;
+                captureArea.style.padding = originalPadding;
+                
+                coin.style.transform = origTransform;
+                coinFront.style.display = origFrontVisible;
+                coinBack.style.display = origBackVisible;
+                coinBack.style.transform = origBackTransform;
+                
+                // Show decorations and text back
+                decorations.forEach(el => el.style.display = '');
+                texts.forEach(el => el.style.display = '');
+                
+                // Force a reflow before restoring the transition
+                void coin.offsetWidth;
+                coin.style.transition = origTransition;
+                
+                const link = document.createElement('a');
+                link.download = `coinflip_result_${new Date().getTime()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }, 50); // slight delay to ensure DOM is updated
+    }
+</script>
+
+<!-- Global Footer -->
+<footer class="w-full relative z-20 px-4 md:px-8 lg:px-12 py-12 md:py-24 flex flex-col md:flex-row justify-between items-start gap-6 md:gap-8 bg-inverse-surface border-t border-outline-variant/30 text-on-primary-container">
+<div class="flex flex-col gap-2 md:gap-3">
+<span class="text-2xl md:text-3xl font-bold font-bold text-primary-fixed">PickLab</span>
+<p class="text-xs md:text-sm text-outline-variant max-w-xs">
+                The world's leading decision-intelligence platform for high-growth enterprises.
+            </p>
+<p class="text-xs md:text-sm text-outline-variant mt-4 md:mt-6">
+                © 2024 PickLab. All rights reserved.
+            </p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 lg:gap-16">
+<div class="flex flex-col gap-2 md:gap-3">
+<span class="text-sm font-bold text-primary-fixed font-bold">Product</span>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">Features</a>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">Integrations</a>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">Enterprise</a>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">Solutions</a>
+</div>
+<div class="flex flex-col gap-2 md:gap-3">
+<span class="text-sm font-bold text-primary-fixed font-bold">Company</span>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">About Us</a>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">Careers</a>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">Press</a>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">Contact</a>
+</div>
+<div class="flex flex-col gap-2 md:gap-3">
+<span class="text-sm font-bold text-primary-fixed font-bold">Resources</span>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">Documentation</a>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">API Reference</a>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">Community</a>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">Status</a>
+</div>
+<div class="flex flex-col gap-2 md:gap-3">
+<span class="text-sm font-bold text-primary-fixed font-bold">Legal</span>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">Privacy</a>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">Terms</a>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">Security</a>
+<a class="text-xs md:text-sm text-outline-variant hover:text-primary-fixed transition-colors" href="#">Cookies</a>
+</div>
+</div>
+</footer>
+</body></html>

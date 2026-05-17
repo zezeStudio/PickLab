@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html class="dark" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>신비로운 숫자 생성기 - Mystic Number Generator</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=Cinzel:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed-dim": "#bdc7d8",
+                        "surface-container": "#191b23",
+                        "primary-fixed-dim": "#b5c4ff",
+                        "tertiary-fixed": "#ffdbcf",
+                        "surface-bright": "#faf8ff",
+                        "on-primary-container": "#d4dcff",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "on-secondary": "#ffffff",
+                        "surface-container-low": "#1e2029",
+                        "surface-dim": "#0d0e14",
+                        "on-primary-fixed": "#00174d",
+                        "surface-container-high": "#282a35",
+                        "background": "#0d0e14",
+                        "secondary-container": "#3e4755",
+                        "on-tertiary-fixed-variant": "#802a00",
+                        "on-tertiary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "surface": "#0d0e14",
+                        "on-tertiary-container": "#ffd4c5",
+                        "on-secondary-fixed": "#d9e3f4",
+                        "on-error": "#ffffff",
+                        "primary-container": "#1a56db",
+                        "on-surface": "#f0f0fb",
+                        "inverse-on-surface": "#191b23",
+                        "surface-container-lowest": "#0a0b10",
+                        "on-surface-variant": "#c3c5d7",
+                        "surface-container-highest": "#333541",
+                        "outline-variant": "#434654",
+                        "surface-tint": "#1353d8",
+                        "on-tertiary-fixed": "#380d00",
+                        "error": "#ffb4ab",
+                        "tertiary": "#ffb59a",
+                        "on-primary-fixed-variant": "#003dab",
+                        "on-background": "#f0f0fb",
+                        "on-error-container": "#ffdad6",
+                        "inverse-primary": "#003fb1",
+                        "secondary": "#bdc7d8",
+                        "outline": "#8d9199",
+                        "primary": "#b5c4ff",
+                        "secondary-fixed": "#d9e3f4",
+                        "inverse-surface": "#f0f0fb",
+                        "primary-fixed": "#dbe1ff",
+                        "error-container": "#93000a",
+                        "surface-variant": "#434654",
+                        "tertiary-container": "#ad3b00",
+                        "on-secondary-fixed-variant": "#3e4755",
+                        "on-secondary-container": "#d6e0f1"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "sm": "1rem",
+                        "max-width": "1440px",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "md": "1.5rem",
+                        "margin-desktop": "2.5rem",
+                        "base": "4px",
+                        "xs": "0.5rem",
+                        "margin-mobile": "1rem",
+                        "gutter": "1.5rem"
+                    },
+                    "fontFamily": {
+                        "label-md": ["Inter"],
+                        "body-md": ["Inter"],
+                        "label-sm": ["Inter"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "body-sm": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "decorative": ["Cinzel"]
+                    },
+                    "fontSize": {
+                        "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-xl": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "headline-lg-mobile": ["20px", {"lineHeight": "1.3", "letterSpacing": "0em", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "headline-lg": ["24px", {"lineHeight": "1.3", "letterSpacing": "0em", "fontWeight": "600"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            background-color: #0d0e14;
+            overflow-x: hidden;
+        }
+        .star-field {
+            background-image: 
+                radial-gradient(1px 1px at 10% 10%, #fff, transparent),
+                radial-gradient(1px 1px at 20% 50%, #fff, transparent),
+                radial-gradient(2px 2px at 40% 80%, #fff, transparent),
+                radial-gradient(1px 1px at 60% 20%, #fff, transparent),
+                radial-gradient(2px 2px at 80% 40%, #fff, transparent),
+                radial-gradient(1px 1px at 90% 90%, #fff, transparent);
+            background-size: 300px 300px;
+        }
+        .glass-panel {
+            background: rgba(13, 14, 20, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .orb-glow {
+            box-shadow: 
+                0 0 60px 10px rgba(26, 86, 219, 0.3),
+                inset 0 0 40px 5px rgba(255, 255, 255, 0.1);
+        }
+        .mystic-gradient {
+            background: linear-gradient(135deg, #1a56db 0%, #852b00 100%);
+        }
+        .decorative-number {
+            text-shadow: 0 0 20px rgba(181, 196, 255, 0.6);
+        }
+    </style>
+</head>
+<body class="text-sm md:text-base text-on-background min-h-screen flex items-center justify-center p-4 md:p-8 lg:p-12 md:p-4 md:p-8 lg:p-12 pt-[80px]">
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-[100] bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 text-on-surface">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-8 lg:px-12 py-4">
+<div class="flex items-center gap-6 lg:gap-12">
+<a class="text-xl md:text-2xl font-bold text-primary dark:text-primary-fixed shrink-0" href="/">PickLab</a>
+<nav class="hidden lg:flex gap-8 items-center">
+  
+  <!-- Category 1: Quick Decisions -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/coinflip/">코인플립</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/dice/">운명의 주사위</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/magiclamp/">요술램프</a>
+    </div>
+  </div>
+
+  <!-- Category 2: Games & Roulette -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/bomb/">폭탄터트리기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/ladder/">운명의 사다리</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/roulette/">룰렛돌리기</a>
+    </div>
+  </div>
+
+  <!-- Category 3: Group & Team -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-56 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/number/">숫자 생성기</a>
+    </div>
+  </div>
+</nav>
+</div>
+<div class="flex items-center gap-4 md:gap-6 lg:hidden">
+<button id="mobile-menu-btn" class="p-2 text-on-surface hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden lg:hidden bg-surface dark:bg-surface-container-low border-b border-outline-variant/30 flex flex-col shadow-lg max-h-[80vh] overflow-y-auto">
+  <div class="py-2 border-b border-outline-variant/10">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/coinflip/">코인플립</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/dice/">운명의 주사위</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/magiclamp/">요술램프</a>
+  </div>
+  <div class="py-2 border-b border-outline-variant/10">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/bomb/">폭탄터트리기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/ladder/">운명의 사다리</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/roulette/">룰렛돌리기</a>
+  </div>
+  <div class="py-2">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/number/">숫자 생성기</a>
+  </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileBtn.querySelector('.material-symbols-outlined');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.textContent = 'menu';
+                } else {
+                    icon.textContent = 'close';
+                }
+            });
+        }
+        
+        // Highlight active menu item
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('header nav flex a, header #mobile-menu a, header .group a');
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href !== '/' && currentPath.startsWith(href)) {
+                link.classList.add('text-primary', 'dark:text-primary-fixed', 'font-bold', 'bg-surface-container-highest');
+            }
+        });
+    });
+</script>
+</header>
+<div class="star-field fixed inset-0 pointer-events-none opacity-30"></div>
+<main class="relative z-10 w-full max-w-2xl px-4 md:px-6 lg:px-8 flex flex-col items-center text-center mt-8 md:mt-12 pb-24">
+<!-- Title Section -->
+<header class="mb-8 md:mb-12">
+<h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary-fixed mb-3 md:mb-4 tracking-tight">신비로운 숫자 생성기</h1>
+<p class="text-base md:text-lg text-sm md:text-base lg:text-lg text-on-surface-variant max-w-md mx-auto">정해진 범위 안에서 당신의 운명적 숫자를 확인하세요.</p>
+</header>
+<!-- Central Visual: The Orb -->
+<section class="relative mb-12 md:mb-16 group">
+<div class="w-64 h-64 md:w-80 md:h-80 rounded-full glass-panel orb-glow flex items-center justify-center relative overflow-hidden transition-all duration-700 hover:scale-105 border-primary/20">
+<!-- Inner swirling nebula effect using nested gradients -->
+<div id="orb-nebula" class="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-primary-container via-transparent to-transparent animate-pulse transition-colors duration-500"></div>
+<div class="z-20 text-center flex flex-col items-center justify-center h-full w-full">
+<span class="block text-xs font-bold text-primary mb-1 uppercase tracking-widest opacity-70">Destiny Number</span>
+<span id="result-number" class="font-decorative text-[84px] md:text-[112px] leading-none text-white decorative-number w-full px-4 truncate transition-all duration-300">?</span>
+</div>
+<!-- Decorative Rings -->
+<div id="orb-ring1" class="absolute inset-2 border border-white/5 rounded-full transition-transform duration-1000"></div>
+<div id="orb-ring2" class="absolute inset-6 border border-white/5 rounded-full border-dashed transition-transform duration-1000"></div>
+</div>
+<!-- Floating Particles Representation -->
+<div class="absolute -top-4 -right-4 w-12 h-12 bg-tertiary/20 blur-xl rounded-full pointer-events-none"></div>
+<div class="absolute -bottom-8 -left-8 w-16 h-16 bg-primary/20 blur-xl rounded-full pointer-events-none"></div>
+</section>
+<!-- Controls Section -->
+<section class="w-full max-w-[90%] md:max-w-sm glass-panel p-4 md:p-6 lg:p-8 rounded-xl shadow-2xl mb-8 md:mb-10 relative z-20 mx-auto">
+<div class="grid grid-cols-2 gap-3 md:gap-4 lg:gap-6">
+<div class="flex flex-col items-start space-y-1 md:space-y-2">
+<label class="text-xs md:text-sm text-secondary uppercase tracking-wider ml-1" for="min-val">최소값 (Min)</label>
+<input class="w-full bg-surface-container-low border border-white/10 rounded-lg px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all text-center" id="min-val" type="number" value="1"/>
+</div>
+<div class="flex flex-col items-start space-y-1 md:space-y-2">
+<label class="text-xs md:text-sm text-secondary uppercase tracking-wider ml-1" for="max-val">최대값 (Max)</label>
+<input class="w-full bg-surface-container-low border border-white/10 rounded-lg px-3 py-2 md:px-4 md:py-3 text-sm md:text-base text-white focus:outline-none focus:ring-2 focus:ring-primary/50 transition-all text-center" id="max-val" type="number" value="100"/>
+</div>
+</div>
+</section>
+<!-- Primary Action -->
+<button id="btn-generate" class="mystic-gradient px-6 py-3 md:px-8 md:py-4 lg:px-10 lg:py-5 rounded-full text-lg md:text-xl lg:text-2xl font-bold text-white shadow-xl hover:shadow-primary/40 active:scale-95 transition-all duration-300 flex items-center gap-2 md:gap-3 group relative z-20">
+<span id="btn-icon" class="material-symbols-outlined text-xl md:text-2xl group-hover:rotate-180 transition-transform duration-500">auto_awesome</span>
+<span id="btn-text">숫자 추출하기</span>
+</button>
+
+<!-- User Guide Section -->
+<section class="mt-16 md:mt-20 w-full glass-panel p-6 md:p-8 rounded-2xl relative z-10 text-left">
+    <h3 class="text-2xl md:text-3xl font-bold text-xl md:text-2xl lg:text-3xl text-white mb-4 flex items-center gap-3">
+        <span class="material-symbols-outlined text-primary-fixed text-2xl md:text-3xl">menu_book</span>
+        사용 지침서
+    </h3>
+    <ul class="flex flex-col gap-4 text-sm md:text-base text-sm md:text-base lg:text-lg text-white/80 list-disc list-inside">
+        <li><strong>범위 설정:</strong> 추출할 숫자의 최소값(Min)과 최대값(Max)을 입력하세요.</li>
+        <li><strong>추출하기:</strong> '숫자 추출하기' 버튼을 누르면 구슬이 신비로운 에너지를 모아 범위 내의 번호 하나를 선택합니다.</li>
+        <li class="bg-primary/20 border border-primary/30 p-4 rounded-xl text-primary-fixed mt-2 shadow-lg marker:text-transparent">
+            <div class="flex items-start gap-2">
+                <span class="material-symbols-outlined text-primary-fixed mt-0.5">lightbulb</span>
+                <span class="font-bold">모임에서의 추첨, 당첨자 선정, 행운의 번호 픽 등 다양한 용도로 활용해보세요!</span>
+            </div>
+        </li>
+    </ul>
+</section>
+
+<!-- Bottom Context Decoration -->
+<div class="mt-12 md:mt-16 flex items-center gap-4 md:gap-6 opacity-40">
+<div class="h-px w-16 bg-gradient-to-r from-transparent to-white/20"></div>
+<span class="material-symbols-outlined text-sm">flare</span>
+<div class="h-px w-16 bg-gradient-to-l from-transparent to-white/20"></div>
+</div>
+</main>
+<!-- Background Ambiance Images -->
+<div class="fixed bottom-0 right-0 w-1/3 h-1/2 -z-10 pointer-events-none">
+<img class="w-full h-full object-cover rounded-tl-[200px]" data-alt="A mesmerizing view of a deep space nebula with swirling clouds of violet, cobalt blue, and magenta gases." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAkz9wD4L_mS19KXt-n5R-sXhef9W5FpwOhtYHJVvsSbGzvaiwhgd-3o3awaTnsrIzWlIiPXB1pAxj182Tf8ma2MGmoOw2IV057MeqvXL0E2T2S-RmCj3_aIJ6RCm3Ezem-Iv092vo_QU794eFbBU368jY1valEV7WdrhpoyhwpD2XdYXX25G4sn76uIAoKwTmOay5xddICQ7npvJM7GEC6cJWLBIdzcX1o1-EWyG_htbp8fz1ZOw7OPoxubEk8PStYDo890-Srb7U"/>
+</div>
+<div class="fixed top-0 left-0 w-1/4 h-1/3 -z-10 pointer-events-none">
+<img class="w-full h-full object-cover rounded-br-[150px]" data-alt="A close-up abstract shot of mystical crystal formations with sharp geometric edges and a translucent quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBMNMgwFOylTgL6mAUDCHf8FSOuiDTsXRd7NeQL3LcAERLgY2a48YCGvUHI5rGFdRWwML9KqhcECk9zR04s6YR0vug4SBeleiUvOe2qckRDcrX16PErmL63R1NqH52ZZHjvjIDv3Mbtb1mmZWCbsmLL-ahNNa7ibMl-YvYEh3T1WucWzSnvIVFrodPKAuV1Mdq-TNrj-LVM_GB2HPKy8B8At_pokKmAq9JhMPriXwvp47_MeeEdO7IY9lAuUAdLuzQXzlTxJ0Opcxo"/>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const btnGenerate = document.getElementById('btn-generate');
+        const minValInput = document.getElementById('min-val');
+        const maxValInput = document.getElementById('max-val');
+        const resultNumber = document.getElementById('result-number');
+        const orbNebula = document.getElementById('orb-nebula');
+        const orbRing1 = document.getElementById('orb-ring1');
+        const orbRing2 = document.getElementById('orb-ring2');
+        
+        let isGenerating = false;
+
+        btnGenerate.addEventListener('click', () => {
+            if(isGenerating) return;
+
+            let min = parseInt(minValInput.value, 10);
+            let max = parseInt(maxValInput.value, 10);
+
+            if (isNaN(min) || isNaN(max)) {
+                alert("올바른 숫자를 입력해주세요.");
+                return;
+            }
+
+            if (min > max) {
+                const temp = min;
+                min = max;
+                max = temp;
+                minValInput.value = min;
+                maxValInput.value = max;
+            }
+
+            isGenerating = true;
+            btnGenerate.classList.add('opacity-50', 'pointer-events-none');
+            
+            // Animation effects
+            orbNebula.classList.remove('from-primary-container');
+            orbNebula.classList.add('from-white');
+            orbRing1.style.transform = 'rotate(180deg) scale(1.1)';
+            orbRing2.style.transform = 'rotate(-180deg) scale(0.9)';
+
+            let shuffles = 0;
+            const maxShuffles = 20;
+
+            function updateFontSize(numberStr) {
+                const len = String(numberStr).length;
+                resultNumber.classList.remove('text-[84px]', 'md:text-[112px]', 'text-[64px]', 'md:text-[84px]', 'text-[48px]', 'md:text-[64px]', 'text-[32px]', 'md:text-[48px]', 'text-[24px]', 'md:text-[32px]');
+                
+                if (len > 8) {
+                    resultNumber.classList.add('text-[24px]', 'md:text-[32px]');
+                } else if (len > 6) {
+                    resultNumber.classList.add('text-[32px]', 'md:text-[48px]');
+                } else if (len > 4) {
+                    resultNumber.classList.add('text-[48px]', 'md:text-[64px]');
+                } else if (len > 3) {
+                    resultNumber.classList.add('text-[64px]', 'md:text-[84px]');
+                } else {
+                    resultNumber.classList.add('text-[84px]', 'md:text-[112px]');
+                }
+            }
+
+            const shuffleInterval = setInterval(() => {
+                const randomTemp = Math.floor(Math.random() * (max - min + 1)) + min;
+                const formattedTemp = randomTemp.toLocaleString() + '번';
+                resultNumber.textContent = formattedTemp;
+                updateFontSize(formattedTemp);
+                shuffles++;
+
+                if (shuffles >= maxShuffles) {
+                    clearInterval(shuffleInterval);
+                    const finalResult = Math.floor(Math.random() * (max - min + 1)) + min;
+                    const formattedFinal = finalResult.toLocaleString() + '번';
+                    resultNumber.textContent = formattedFinal;
+                    updateFontSize(formattedFinal);
+                    resultNumber.classList.add('scale-125', 'text-tertiary-fixed');
+                    
+                    setTimeout(() => {
+                        resultNumber.classList.remove('scale-125', 'text-tertiary-fixed');
+                        orbNebula.classList.remove('from-white');
+                        orbNebula.classList.add('from-primary-container');
+                        orbRing1.style.transform = 'rotate(0deg) scale(1)';
+                        orbRing2.style.transform = 'rotate(0deg) scale(1)';
+                        btnGenerate.classList.remove('opacity-50', 'pointer-events-none');
+                        isGenerating = false;
+                    }, 1000);
+                }
+            }, 50);
+        });
+    });
+</script>
+</body></html>

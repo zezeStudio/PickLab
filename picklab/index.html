@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>PickLab | Data-Driven SaaS Platform</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-high": "#e7e7f3",
+                      "on-background": "#191b23",
+                      "on-secondary": "#ffffff",
+                      "inverse-primary": "#b5c4ff",
+                      "secondary-fixed-dim": "#bdc7d8",
+                      "on-tertiary-container": "#ffd4c5",
+                      "surface-tint": "#1353d8",
+                      "secondary-fixed": "#d9e3f4",
+                      "primary-container": "#1a56db",
+                      "secondary": "#555f6d",
+                      "error": "#ba1a1a",
+                      "surface-container": "#ededf8",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-container": "#596372",
+                      "on-surface-variant": "#434654",
+                      "on-tertiary-fixed": "#380d00",
+                      "on-surface": "#191b23",
+                      "outline": "#737686",
+                      "surface-container-low": "#f3f3fe",
+                      "surface": "#faf8ff",
+                      "surface-bright": "#faf8ff",
+                      "secondary-container": "#d6e0f1",
+                      "on-primary-fixed-variant": "#003dab",
+                      "on-primary-fixed": "#00174d",
+                      "inverse-surface": "#2e3039",
+                      "inverse-on-surface": "#f0f0fb",
+                      "tertiary-fixed-dim": "#ffb59a",
+                      "on-tertiary-fixed-variant": "#802a00",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed-variant": "#3e4755",
+                      "error-container": "#ffdad6",
+                      "tertiary-fixed": "#ffdbcf",
+                      "primary-fixed-dim": "#b5c4ff",
+                      "outline-variant": "#c3c5d7",
+                      "tertiary-container": "#ad3b00",
+                      "surface-dim": "#d9d9e4",
+                      "on-error": "#ffffff",
+                      "surface-container-highest": "#e2e1ed",
+                      "on-error-container": "#93000a",
+                      "on-primary": "#ffffff",
+                      "background": "#faf8ff",
+                      "surface-variant": "#e2e1ed",
+                      "on-secondary-fixed": "#121c28",
+                      "primary": "#003fb1",
+                      "tertiary": "#852b00",
+                      "on-primary-container": "#d4dcff",
+                      "primary-fixed": "#dbe1ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "sm": "1rem",
+                      "gutter": "1.5rem",
+                      "lg": "2rem",
+                      "md": "1.5rem",
+                      "xl": "3rem",
+                      "xs": "0.5rem",
+                      "max-width": "1440px",
+                      "base": "4px",
+                      "margin-desktop": "2.5rem",
+                      "margin-mobile": "1rem"
+              },
+              "fontFamily": {
+                      "headline-xl": ["Plus Jakarta Sans"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "body-sm": ["Inter"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "body-lg": ["Inter"],
+                      "body-md": ["Inter"],
+                      "label-sm": ["Inter"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "label-md": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-xl": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "headline-lg-mobile": ["20px", {"lineHeight": "1.3", "letterSpacing": "0em", "fontWeight": "600"}],
+                      "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                      "headline-lg": ["24px", {"lineHeight": "1.3", "letterSpacing": "0em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                      "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(229, 231, 235, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background text-sm md:text-base selection:bg-primary-fixed-dim selection:text-primary">
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-[100] bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 text-on-surface">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-8 lg:px-12 py-4">
+<div class="flex items-center gap-6 lg:gap-12">
+<a class="text-xl md:text-2xl font-bold text-primary dark:text-primary-fixed shrink-0" href="/">PickLab</a>
+<nav class="hidden lg:flex gap-8 items-center">
+  
+  <!-- Category 1: Quick Decisions -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/coinflip/">코인플립</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/dice/">운명의 주사위</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/magiclamp/">요술램프</a>
+    </div>
+  </div>
+
+  <!-- Category 2: Games & Roulette -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/bomb/">폭탄터트리기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/ladder/">운명의 사다리</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/roulette/">룰렛돌리기</a>
+    </div>
+  </div>
+
+  <!-- Category 3: Group & Team -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-56 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/number/">숫자 생성기</a>
+    </div>
+  </div>
+</nav>
+</div>
+<div class="flex items-center gap-4 md:gap-6 lg:hidden">
+<button id="mobile-menu-btn" class="p-2 text-on-surface hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden lg:hidden bg-surface dark:bg-surface-container-low border-b border-outline-variant/30 flex flex-col shadow-lg max-h-[80vh] overflow-y-auto">
+  <div class="py-2 border-b border-outline-variant/10">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/coinflip/">코인플립</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/dice/">운명의 주사위</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/magiclamp/">요술램프</a>
+  </div>
+  <div class="py-2 border-b border-outline-variant/10">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/bomb/">폭탄터트리기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/ladder/">운명의 사다리</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/roulette/">룰렛돌리기</a>
+  </div>
+  <div class="py-2">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/number/">숫자 생성기</a>
+  </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileBtn.querySelector('.material-symbols-outlined');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.textContent = 'menu';
+                } else {
+                    icon.textContent = 'close';
+                }
+            });
+        }
+        
+        // Highlight active menu item
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('header nav flex a, header #mobile-menu a, header .group a');
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href !== '/' && currentPath.startsWith(href)) {
+                link.classList.add('text-primary', 'dark:text-primary-fixed', 'font-bold', 'bg-surface-container-highest');
+            }
+        });
+    });
+</script>
+</header>
+<main class="pt-24">
+<!-- Hero Section -->
+<section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-12 md:py-24 lg:py-32 flex flex-col items-center text-center">
+<div class="max-w-3xl">
+<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-on-background mb-6 md:mb-8">
+                    운명의 갈림길에 섰을 때,<br/><span class="text-primary">PickLab</span>가 답을 드립니다
+</h1>
+<p class="text-base md:text-lg text-on-surface-variant mb-8 md:mb-12">
+                    사소한 점심 메뉴 선택부터 중대한 결정까지, 더 이상 고민하지 마세요. 신비로운 요술램프, 운명의 룰렛, 스릴 넘치는 복불복 게임들이 당신의 선택을 도와줍니다.
+                </p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center mb-8 md:mb-12">
+<button class="bg-primary text-on-primary font-bold px-8 py-4 rounded-lg text-lg hover:shadow-lg transition-all" onclick="window.location.href='/magiclamp/'">요술램프에게 묻기</button>
+<button class="border border-outline text-on-background font-bold px-8 py-4 rounded-lg text-lg hover:bg-surface-container transition-all" onclick="window.location.href='/roulette/'">룰렛 돌리기</button>
+</div>
+</div>
+<div class="w-full mt-12 relative">
+<div class="absolute inset-0 bg-primary/5 blur-[120px] rounded-full -z-10"></div>
+<div class="glass-card rounded-xl overflow-hidden shadow-2xl">
+<img alt="PickLab Magic Items" class="w-full object-cover max-h-[500px]" src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=1200&auto=format&fit=crop"/>
+</div>
+</div>
+</section>
+<!-- Trust Bar -->
+<section class="bg-surface-container-low py-12 border-y border-outline-variant/20">
+<div class="max-w-7xl mx-auto px-4 md:px-8 text-center">
+<p class="text-lg md:text-xl font-bold tracking-widest text-on-surface-variant mb-6 md:mb-8">수많은 결정 장애인들이 선택한 신비로운 해결책</p>
+<div class="flex flex-wrap justify-center items-center gap-8 md:gap-24 opacity-60">
+<div class="flex flex-col items-center gap-2"><span class="material-symbols-outlined text-4xl text-primary">casino</span><span class="font-bold text-sm">복불복</span></div>
+<div class="flex flex-col items-center gap-2"><span class="material-symbols-outlined text-4xl text-primary">groups</span><span class="font-bold text-sm">모임 추첨</span></div>
+<div class="flex flex-col items-center gap-2"><span class="material-symbols-outlined text-4xl text-primary">bolt</span><span class="font-bold text-sm">퀵 결정</span></div>
+<div class="flex flex-col items-center gap-2"><span class="material-symbols-outlined text-4xl text-primary">celebration</span><span class="font-bold text-sm">파티 게임</span></div>
+</div>
+</div>
+</section>
+<!-- Key Features -->
+<section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-12 md:py-24 lg:py-32">
+<div class="text-center mb-8 md:mb-12">
+<h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 md:mb-8">결정 장애 탈출 가이드</h2>
+<p class="text-on-surface-variant max-w-2xl mx-auto text-sm md:text-base">상황에 맞는 완벽한 도구를 선택하여 당신의 고민을 단번에 해결하세요.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+<div class="p-6 md:p-8 bg-surface-container-lowest border border-outline-variant/30 rounded-xl hover:shadow-md transition-shadow">
+<div class="w-12 h-12 bg-primary-container/10 flex items-center justify-center rounded-lg mb-6 md:mb-8">
+<span class="material-symbols-outlined text-primary text-3xl">bolt</span>
+</div>
+<h3 class="text-2xl md:text-3xl font-bold mb-4">빠르고 직관적인 선택</h3>
+<p class="text-on-surface-variant text-sm md:text-base">짜장면 vs 짬뽕? 단순한 양자택일에는 코인플립이나 주사위를 던져보세요.</p>
+</div>
+<div class="p-6 md:p-8 bg-surface-container-lowest border border-outline-variant/30 rounded-xl hover:shadow-md transition-shadow">
+<div class="w-12 h-12 bg-primary-container/10 flex items-center justify-center rounded-lg mb-6 md:mb-8">
+<span class="material-symbols-outlined text-primary text-3xl">casino</span>
+</div>
+<h3 class="text-2xl md:text-3xl font-bold mb-4">긴장감 넘치는 복불복</h3>
+<p class="text-on-surface-variant text-sm md:text-base">여러 명의 친구들과 함께 밥값을 낼 사람을 정할 때 폭탄 터트리기와 룰렛을 즐겨보세요.</p>
+</div>
+<div class="p-6 md:p-8 bg-surface-container-lowest border border-outline-variant/30 rounded-xl hover:shadow-md transition-shadow">
+<div class="w-12 h-12 bg-primary-container/10 flex items-center justify-center rounded-lg mb-6 md:mb-8">
+<span class="material-symbols-outlined text-primary text-3xl">groups</span>
+</div>
+<h3 class="text-2xl md:text-3xl font-bold mb-4">모임과 추첨의 달인</h3>
+<p class="text-on-surface-variant text-sm md:text-base">팀 나누기, 발표 순서 정하기 등 여럿이 모인 자리에서 공정하고 재미있게 추첨해보세요.</p>
+</div>
+</div>
+</section>
+<!-- Value Proposition Section -->
+<section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-12 md:py-24 lg:py-32">
+<div class="flex flex-col lg:flex-row items-center gap-12 lg:gap-32">
+<div class="flex-1">
+<span class="text-primary text-xs md:text-sm font-bold uppercase tracking-widest mb-2 block">운명과 행운의 조화</span>
+<h2 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 md:mb-8">당신의 선택에 강력한 확신을</h2>
+<p class="text-on-surface-variant text-base md:text-lg mb-8">PickLab는 단순한 랜덤 게임을 넘어, 당신이 가장 원하는 선택이 무엇인지 무의식중에 깨닫게 해줍니다. 요술램프에 고이 아껴둔 소원을 빌고, 카드 뒤집기로 오늘의 운을 시험해보세요.</p>
+<ul class="space-y-3 md:space-y-4 mb-8">
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm md:text-base font-medium">수십 가지의 재미있는 결정 도구</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm md:text-base font-medium">여럿이서 함께 즐기는 스릴 만점 게임</span>
+</li>
+<li class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="text-sm md:text-base font-medium">단 1초 만에 결과를 보여주는 빠른 속도</span>
+</li>
+</ul>
+</div>
+<div class="flex-1 w-full">
+<div class="relative rounded-2xl overflow-hidden shadow-xl aspect-video lg:aspect-square">
+<img alt="People enjoying games" class="w-full h-full object-cover" src="https://images.unsplash.com/photo-1542596594-649edbc13630?q=80&w=1200&auto=format&fit=crop"/>
+</div>
+</div>
+</div>
+</section>
+<!-- Testimonial Section -->
+<section class="bg-primary py-24 md:py-32 text-on-primary">
+<div class="max-w-4xl mx-auto px-4 md:px-8 text-center">
+<span class="material-symbols-outlined text-6xl mb-6 md:mb-8 opacity-30">format_quote</span>
+<blockquote class="text-3xl md:text-4xl lg:text-5xl font-bold italic mb-12 leading-snug">
+                    "매일 점심 메뉴 고르는 게 일이었는데, 이젠 팀원들끼리 다 같이 룰렛을 돌리니까 오히려 식사 시간이 기다려져요! 강력 추천합니다."
+                </blockquote>
+<div class="flex flex-col items-center">
+<img alt="User Profile" class="w-16 h-16 rounded-full object-cover mb-4 ring-4 ring-on-primary/20" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop"/>
+<p class="font-bold text-lg text-sm md:text-base">김결정</p>
+<p class="text-xs md:text-sm opacity-80">만성 결정 장애 극복자</p>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-24 md:py-32">
+<div class="bg-surface-container text-on-surface p-8 md:p-12 lg:p-24 rounded-3xl text-center relative overflow-hidden">
+<div class="absolute -top-32 -right-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+<div class="absolute -bottom-32 -left-32 w-96 h-96 bg-primary/10 rounded-full blur-3xl"></div>
+<h2 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 md:mb-8 relative z-10">아직도 고민 중이신가요?</h2>
+<p class="text-on-surface-variant text-base md:text-lg max-w-2xl mx-auto mb-8 md:mb-12 relative z-10">지금 바로 PickLab의 세계로 들어와 당신의 운명을 확인해보세요. 모든 도구는 별도 설치 없이 바로 이용 가능합니다!</p>
+<div class="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
+<button class="bg-primary text-on-primary font-bold px-8 py-4 rounded-lg text-lg hover:shadow-lg active:scale-95 transition-all" onclick="window.location.href='/luckydraw/'">신비로운 제비뽑기</button>
+<button class="bg-surface-container-lowest text-on-surface font-bold px-8 py-4 rounded-lg text-lg border border-outline-variant hover:bg-white transition-all" onclick="window.location.href='/dice/'">주사위 던지기</button>
+</div>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full px-4 md:px-8 lg:px-12 py-12 flex flex-col md:flex-row justify-between items-start gap-8 bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant">
+<div class="flex flex-col gap-4">
+<span class="text-2xl md:text-3xl font-bold text-on-surface dark:text-inverse-on-surface">PickLab</span>
+<p class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant max-w-xs">
+                결정 장애를 해결해 주는 재미있는 웹 기반 난수/게임 도구 모음 플랫폼입니다. 운명을 테스트하세요!
+            </p>
+<p class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant mt-6 md:mt-8">
+                © 2024 PickLab. All rights reserved.<br>재미와 즐거움을 위해 제공되는 서비스입니다.
+            </p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12">
+<div class="flex flex-col gap-3">
+<span class="text-sm md:text-base text-on-surface font-bold">Product</span>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Features</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Integrations</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Enterprise</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Solutions</a>
+</div>
+<div class="flex flex-col gap-3">
+<span class="text-sm md:text-base text-on-surface font-bold">Company</span>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">About Us</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Careers</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Press</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+<div class="flex flex-col gap-3">
+<span class="text-sm md:text-base text-on-surface font-bold">Resources</span>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">API Reference</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Community</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Status</a>
+</div>
+<div class="flex flex-col gap-3">
+<span class="text-sm md:text-base text-on-surface font-bold">Legal</span>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Terms</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Security</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Cookies</a>
+</div>
+</div>
+</footer>
+</body></html>

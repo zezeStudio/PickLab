@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>신비로운 팀 나누기 - Mystic Oracle</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=Plus+Jakarta+Sans:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            vertical-align: middle;
+        }
+        .mystic-glow {
+            box-shadow: 0 0 20px rgba(181, 196, 255, 0.15);
+        }
+        .golden-button {
+            background: linear-gradient(135deg, #ad3b00 0%, #852b00 100%);
+            transition: all 0.3s ease;
+        }
+        .golden-button:hover {
+            box-shadow: 0 0 25px rgba(173, 59, 0, 0.4);
+            transform: translateY(-1px);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "on-error": "#ffffff",
+                      "primary": "#003fb1",
+                      "surface-tint": "#1353d8",
+                      "on-primary": "#ffffff",
+                      "surface-container-lowest": "#ffffff",
+                      "primary-fixed-dim": "#b5c4ff",
+                      "on-secondary-fixed-variant": "#3e4755",
+                      "on-surface": "#191b23",
+                      "surface-container-high": "#e7e7f3",
+                      "surface-bright": "#faf8ff",
+                      "secondary-container": "#d6e0f1",
+                      "on-tertiary-fixed": "#380d00",
+                      "secondary": "#555f6d",
+                      "on-surface-variant": "#434654",
+                      "surface-variant": "#e2e1ed",
+                      "on-tertiary-container": "#ffd4c5",
+                      "surface-dim": "#d9d9e4",
+                      "primary-fixed": "#dbe1ff",
+                      "on-error-container": "#93000a",
+                      "surface-container-low": "#f3f3fe",
+                      "inverse-surface": "#2e3039",
+                      "on-primary-container": "#d4dcff",
+                      "on-secondary-fixed": "#121c28",
+                      "secondary-fixed": "#d9e3f4",
+                      "on-secondary-container": "#596372",
+                      "inverse-on-surface": "#f0f0fb",
+                      "on-tertiary": "#ffffff",
+                      "on-background": "#191b23",
+                      "inverse-primary": "#b5c4ff",
+                      "background": "#faf8ff",
+                      "surface-container": "#ededf8",
+                      "outline-variant": "#c3c5d7",
+                      "outline": "#737686",
+                      "on-secondary": "#ffffff",
+                      "surface-container-highest": "#e2e1ed",
+                      "on-primary-fixed": "#00174d",
+                      "on-primary-fixed-variant": "#003dab",
+                      "on-tertiary-fixed-variant": "#802a00",
+                      "tertiary-container": "#ad3b00",
+                      "surface": "#faf8ff",
+                      "primary-container": "#1a56db",
+                      "tertiary": "#852b00",
+                      "error": "#ba1a1a",
+                      "error-container": "#ffdad6",
+                      "tertiary-fixed": "#ffdbcf",
+                      "secondary-fixed-dim": "#bdc7d8",
+                      "tertiary-fixed-dim": "#ffb59a"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "max-width": "1440px",
+                      "xl": "3rem",
+                      "gutter": "1.5rem",
+                      "md": "1.5rem",
+                      "xs": "0.5rem",
+                      "sm": "1rem",
+                      "base": "4px",
+                      "lg": "2rem",
+                      "margin-mobile": "1rem",
+                      "margin-desktop": "2.5rem"
+              },
+              "fontFamily": {
+                      "body-lg": ["Inter"],
+                      "label-md": ["Inter"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "label-sm": ["Inter"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "body-md": ["Inter"],
+                      "headline-xl": ["Plus Jakarta Sans"],
+                      "body-sm": ["Inter"]
+              },
+              "fontSize": {
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                      "headline-lg": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                      "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "headline-xl": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                      "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+</head>
+<body class="bg-background text-on-surface text-sm md:text-base overflow-x-hidden">
+
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-[100] bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 text-on-surface">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-8 lg:px-12 py-4">
+<div class="flex items-center gap-6 lg:gap-12">
+<a class="text-xl md:text-2xl font-bold text-primary dark:text-primary-fixed shrink-0" href="/">PickLab</a>
+<nav class="hidden lg:flex gap-8 items-center">
+  
+  <!-- Category 1: Quick Decisions -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/coinflip/">코인플립</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/dice/">운명의 주사위</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/magiclamp/">요술램프</a>
+    </div>
+  </div>
+
+  <!-- Category 2: Games & Roulette -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/bomb/">폭탄터트리기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/ladder/">운명의 사다리</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/roulette/">룰렛돌리기</a>
+    </div>
+  </div>
+
+  <!-- Category 3: Group & Team -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-56 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/number/">숫자 생성기</a>
+    </div>
+  </div>
+</nav>
+</div>
+<div class="flex items-center gap-4 md:gap-6 lg:hidden">
+<button id="mobile-menu-btn" class="p-2 text-on-surface hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden lg:hidden bg-surface dark:bg-surface-container-low border-b border-outline-variant/30 flex flex-col shadow-lg max-h-[80vh] overflow-y-auto">
+  <div class="py-2 border-b border-outline-variant/10">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/coinflip/">코인플립</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/dice/">운명의 주사위</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/magiclamp/">요술램프</a>
+  </div>
+  <div class="py-2 border-b border-outline-variant/10">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/bomb/">폭탄터트리기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/ladder/">운명의 사다리</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/roulette/">룰렛돌리기</a>
+  </div>
+  <div class="py-2">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/number/">숫자 생성기</a>
+  </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileBtn.querySelector('.material-symbols-outlined');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.textContent = 'menu';
+                } else {
+                    icon.textContent = 'close';
+                }
+            });
+        }
+        
+        // Highlight active menu item
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('header nav flex a, header #mobile-menu a, header .group a');
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href !== '/' && currentPath.startsWith(href)) {
+                link.classList.add('text-primary', 'dark:text-primary-fixed', 'font-bold', 'bg-surface-container-highest');
+            }
+        });
+    });
+</script>
+</header>
+
+<!-- Main Content Canvas -->
+<main class="min-h-screen pt-24 px-4 md:px-8 lg:px-12 py-12 md:py-24 max-w-screen-xl mx-auto">
+<!-- Header Section -->
+<header class="mb-12">
+<div class="flex justify-between items-center mb-4">
+<h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-primary">신비로운 팀 나누기</h2>
+</div>
+<p class="text-base md:text-lg text-on-surface-variant max-w-2xl">참여자들의 운명을 조율하여 완벽한 균형을 갖춘 팀을 구성하세요. 고대의 지혜가 담긴 알고리즘이 당신의 여정을 도울 것입니다.</p>
+</header>
+<!-- Interactive Section: Input & Controls -->
+<div class="grid grid-cols-12 gap-8 mb-12 md:mb-16">
+<!-- Input Area (Bento-style Card) -->
+<section class="col-span-8 bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-tertiary">edit_note</span>
+<h3 class="text-2xl md:text-3xl font-bold">참여자 명단 입력</h3>
+</div>
+<textarea id="names-input" class="w-full h-64 p-6 rounded-lg bg-surface-container-low border border-outline-variant focus:ring-2 focus:ring-primary focus:border-transparent transition-all outline-none text-sm md:text-base placeholder:text-outline resize-none" placeholder="이름을 콤마(,)나 줄바꿈으로 구분하여 입력하세요. (예: 아서, 멀린, 기네비어...)"></textarea>
+<div class="mt-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<p class="text-xs font-bold text-on-surface-variant italic">※ 입력된 모든 혼들은 공평한 운명을 따르게 됩니다.</p>
+<div class="flex items-center gap-4">
+<button type="button" id="btn-clear-names" class="text-error text-sm md:text-base font-bold flex items-center gap-1 hover:underline">
+<span class="material-symbols-outlined text-[18px]">delete</span>
+                        명단 초기화
+</button>
+<div class="relative">
+<input type="file" id="excel-upload" accept=".xlsx, .xls, .csv" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer" title="파일을 드래그하거나 클릭하여 업로드">
+<button class="text-primary text-sm md:text-base font-bold flex items-center gap-1 hover:underline pointer-events-none">
+<span class="material-symbols-outlined text-[18px]">upload_file</span>
+                        엑셀/CSV 불러오기
+</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Control Area (Bento-style Card) -->
+<section class="col-span-12 lg:col-span-4 space-y-8">
+<div class="bg-surface-container-lowest border border-outline-variant rounded-xl p-8 shadow-sm">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-tertiary">schema</span>
+<h3 class="text-2xl md:text-3xl font-bold">목표 팀 수</h3>
+</div>
+<div class="flex items-center justify-between bg-surface-container-low p-4 rounded-xl border border-outline-variant">
+<button id="btn-decrease" class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container hover:bg-surface-container-high transition-colors text-primary active:scale-95">
+<span class="material-symbols-outlined">remove</span>
+</button>
+<span id="team-count" class="text-3xl md:text-4xl lg:text-5xl font-bold text-primary">2</span>
+<button id="btn-increase" class="w-12 h-12 flex items-center justify-center rounded-full bg-surface-container hover:bg-surface-container-high transition-colors text-primary active:scale-95">
+<span class="material-symbols-outlined">add</span>
+</button>
+</div>
+<p class="mt-6 text-xs font-bold text-on-surface-variant text-center">총 <span id="team-count-desc">2</span>개의 운명적인 그룹이 생성됩니다.</p>
+</div>
+<button id="btn-trigger" class="golden-button w-full py-8 rounded-xl flex flex-col items-center justify-center gap-2 group overflow-hidden relative active:scale-[0.98]">
+<div class="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-white via-transparent to-transparent"></div>
+<span class="material-symbols-outlined text-[40px] text-white mb-2" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+<span class="text-2xl md:text-3xl font-bold text-white">운명의 팀 편성하기</span>
+<span class="text-xs font-bold text-on-tertiary-container opacity-80 uppercase tracking-widest">Weave the Teams of Destiny</span>
+</button>
+</section>
+</div>
+<!-- Results Section -->
+<section id="result-container" class="mt-16 hidden">
+<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-4">
+<div class="flex items-center gap-4">
+<h3 class="text-4xl md:text-5xl lg:text-6xl font-bold text-on-surface">운명으로 맺어진 팀</h3>
+<span class="px-4 py-1 bg-tertiary-container text-on-tertiary-fixed text-sm md:text-base font-bold rounded-full">완료됨</span>
+</div>
+<div class="flex gap-2">
+<button id="btn-copy" class="flex items-center gap-2 px-4 py-2 border border-outline text-on-surface-variant rounded-lg hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined text-[20px]">content_copy</span>
+                        결과 복사
+                    </button>
+</div>
+</div>
+<!-- Team Result Grid -->
+<div id="result-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+</div>
+</section>
+<!-- Empty State / Placeholder Image Section -->
+<div id="empty-state" class="mt-12 rounded-2xl overflow-hidden relative h-[300px] border border-outline-variant bg-surface-container flex items-center justify-center">
+<img class="absolute inset-0 w-full h-full object-cover opacity-20" data-alt="A mystical digital illustration" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCpG3D3CfBJ68j-xa5Duxskj23q1FQjK2lhCz04XSwOgCJmvaLkEYT6A8NiTwVlayyA089OQu0jHhlnHzvA1KbigcCXIxwivA1urqTgaCo6-mA8TOR4uQTvHOt7Ei1RPsR3VjoFzm7s2wt6lfPEP-EDiQUblYgcABt0Z_ZNhJh8lliDLhYaxI6hfHXgX-kw1Cna575Vh-F32IUxwqCiZLJyLqZ0haRR20vpudpdchswPHu4bhqsAXYHBjMmjJ0DaPoNj0eH4eMm2Og"/>
+<div class="relative z-10 text-center px-8">
+<span class="material-symbols-outlined text-[48px] text-primary opacity-40 mb-4">group</span>
+<h4 class="text-2xl md:text-3xl font-bold text-on-surface">새로운 팀을 기다리고 있습니다</h4>
+<p class="text-sm md:text-base text-on-surface-variant max-w-lg mx-auto">상단의 버튼을 눌러 당신의 운명을 확인하세요. 시스템이 최적의 균형을 찾고 있습니다.</p>
+</div>
+</div>
+<!-- User Guide Section -->
+<section class="max-w-4xl mx-auto px-4 md:px-8 py-12 md:py-24 mb-12 md:mb-16">
+    <div class="bg-surface-container/30 border border-outline/30 p-6 md:p-8 rounded-2xl backdrop-blur-sm">
+        <h3 class="text-2xl md:text-3xl font-bold text-primary mb-4 flex items-center gap-3">
+            <span class="material-symbols-outlined text-primary" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+            신비로운 팀 나누기 사용 지침서
+        </h3>
+        <ul class="flex flex-col gap-4 text-sm md:text-base text-on-surface-variant">
+            <li class="flex gap-4 items-start">
+                <span class="material-symbols-outlined text-primary mt-0.5" style="font-variation-settings: 'FILL' 1;">group_add</span>
+                <p><strong>명단 구성:</strong> 좌측 텍스트 창에 각 사람의 이름을 줄바꿈이나 콤마로 구분하여 직접 입력하거나, 우측 엑셀 아이콘 버튼을 통해 명단을 파일로 손쉽게 로드하세요. '명단 초기화'를 통해 쉽게 리셋할 수 있습니다.</p>
+            </li>
+            <li class="flex gap-4 items-start">
+                <span class="material-symbols-outlined text-primary mt-0.5" style="font-variation-settings: 'FILL' 1;">splitscreen</span>
+                <p><strong>팀 개수 지정:</strong> 우측 패널에서 -/+ 버튼을 이용해 만들고 싶은 총 팀의 개수를 설정해주세요.</p>
+            </li>
+            <li class="flex gap-4 items-start">
+                <span class="material-symbols-outlined text-primary mt-0.5" style="font-variation-settings: 'FILL' 1;">call_split</span>
+                <p><strong>운명의 배정:</strong> '운명의 궤적 활성화' 버튼을 누르면 인원이 무작위로 배정됩니다. 배정된 각 팀의 이름(예: Team 1)을 클릭하면 직접 팀명을 변경할 수 있으며, 텍스트 복사 아이콘을 통해 팀 결과를 복사하여 공유할 수 있습니다.</p>
+            </li>
+        </ul>
+    </div>
+</section>
+</main>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const namesInput = document.getElementById('names-input');
+        const btnDecrease = document.getElementById('btn-decrease');
+        const btnIncrease = document.getElementById('btn-increase');
+        const teamCountEl = document.getElementById('team-count');
+        const teamCountDescEl = document.getElementById('team-count-desc');
+        const btnTrigger = document.getElementById('btn-trigger');
+        const resultContainer = document.getElementById('result-container');
+        const resultGrid = document.getElementById('result-grid');
+        const emptyState = document.getElementById('empty-state');
+        const btnCopy = document.getElementById('btn-copy');
+        const excelUpload = document.getElementById('excel-upload');
+        const btnClearNames = document.getElementById('btn-clear-names');
+
+        if (btnClearNames) {
+            btnClearNames.addEventListener('click', (e) => {
+                e.preventDefault();
+                namesInput.value = '';
+            });
+        }
+
+        // Excel Upload Handler
+        if (excelUpload) {
+            excelUpload.addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const isCsv = file.name.toLowerCase().endsWith('.csv');
+                const reader = new FileReader();
+
+                reader.onload = (evt) => {
+                    try {
+                        const buffer = evt.target.result;
+                        let workbook;
+                        
+                        if (isCsv) {
+                            const uint8Array = new Uint8Array(buffer);
+                            let text = '';
+                            try {
+                                const decoder = new TextDecoder('utf-8', { fatal: true });
+                                text = decoder.decode(uint8Array);
+                            } catch (err) {
+                                const euckrDecoder = new TextDecoder('euc-kr');
+                                text = euckrDecoder.decode(uint8Array);
+                            }
+                            workbook = XLSX.read(text, { type: 'string' });
+                        } else {
+                            workbook = XLSX.read(new Uint8Array(buffer), { type: 'array' });
+                        }
+
+                        // Read first sheet
+                        const firstSheetName = workbook.SheetNames[0];
+                        const worksheet = workbook.Sheets[firstSheetName];
+                        
+                        // Convert to array of arrays
+                        const jsonArr = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                        
+                        // Flatten and clean names
+                        const names = [];
+                        jsonArr.forEach(row => {
+                            row.forEach(cell => {
+                                if (cell && String(cell).trim().length > 0) {
+                                    names.push(String(cell).trim());
+                                }
+                            });
+                        });
+                        
+                        if (names.length > 0) {
+                            namesInput.value = names.join('\n');
+                            alert(`${names.length}명의 이름이 성공적으로 불러와졌습니다.`);
+                        } else {
+                            alert('엑셀 파일에서 이름을 찾을 수 없습니다.');
+                        }
+                    } catch (error) {
+                        console.error('Excel parsing error', error);
+                        alert('파일을 읽는데 실패했습니다. 올바른 포맷(xlsx, csv)인지 확인해주세요.');
+                    }
+                    // Reset input
+                    excelUpload.value = '';
+                };
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        let teamCount = 2; // Default 2
+        
+        function updateTeamCountUI() {
+            teamCountEl.textContent = teamCount;
+            teamCountDescEl.textContent = teamCount;
+        }
+
+        btnDecrease.addEventListener('click', () => {
+            if (teamCount > 2) {
+                teamCount--;
+                updateTeamCountUI();
+            }
+        });
+
+        btnIncrease.addEventListener('click', () => {
+            if (teamCount < 16) {
+                teamCount++;
+                updateTeamCountUI();
+            }
+        });
+
+        btnTrigger.addEventListener('click', () => {
+            const text = namesInput.value;
+            // split by comma or newline
+            let names = text.split(/,|\n/).map(n => n.trim()).filter(n => n.length > 0);
+            
+            if (names.length === 0) {
+                alert('참여자 명단을 입력해주세요.');
+                return;
+            }
+            
+            if (names.length < teamCount) {
+                alert(`참여자 수(${names.length}명)가 목표 팀 수(${teamCount}팀)보다 적습니다.`);
+                return;
+            }
+
+            // Shuffle
+            for (let i = names.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [names[i], names[j]] = [names[j], names[i]];
+            }
+
+            // Distribute
+            const teams = Array.from({ length: teamCount }, () => []);
+            names.forEach((name, i) => {
+                teams[i % teamCount].push(name);
+            });
+
+            renderTeams(teams);
+        });
+
+        function renderTeams(teams) {
+            resultGrid.innerHTML = '';
+            
+            const styles = [
+                { border: 'bg-primary', text: 'text-primary', icon: 'star', dim: 'text-primary-fixed-dim' },
+                { border: 'bg-tertiary', text: 'text-tertiary', icon: 'shield', dim: 'text-tertiary-fixed-dim' },
+                { border: 'bg-secondary', text: 'text-secondary', icon: 'diamond', dim: 'text-secondary-fixed-dim' },
+                { border: 'bg-primary-container', text: 'text-primary-container', icon: 'flare', dim: 'text-primary-fixed-dim' }
+            ];
+
+            teams.forEach((team, index) => {
+                const style = styles[index % styles.length];
+                
+                let html = `
+                    <div class="bg-white border border-outline-variant rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow relative group">
+                        <div class="h-2 ${style.border} w-full"></div>
+                        <div class="p-6">
+                            <div class="flex justify-between items-center mb-6">
+                                <span class="text-2xl md:text-3xl font-bold flex-1 ${style.text} outline-none border-b border-transparent focus:border-current cursor-text transition-colors truncate mr-2" contenteditable="true" spellcheck="false" title="팀명 수정">Team ${index + 1}</span>
+                                <span class="material-symbols-outlined shrink-0 ${style.dim}">${style.icon}</span>
+                            </div>
+                            <ul class="space-y-3">
+                `;
+                
+                team.forEach((member, mIdx) => {
+                    html += `
+                        <li class="flex items-center gap-3 p-3 bg-surface-container-low rounded-lg">
+                            <div class="w-2 h-2 rounded-full ${style.border} ${mIdx === 0 ? '' : 'opacity-50'}"></div>
+                            <span class="text-sm md:text-base">${member}</span>
+                        </li>
+                    `;
+                });
+                
+                html += `
+                            </ul>
+                        </div>
+                    </div>
+                `;
+                
+                resultGrid.innerHTML += html;
+            });
+            
+            emptyState.classList.add('hidden');
+            resultContainer.classList.remove('hidden');
+            
+            // Scroll to results softly
+            setTimeout(() => {
+                resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
+        }
+
+        btnCopy.addEventListener('click', () => {
+            const cards = resultGrid.querySelectorAll('.group');
+            if (cards.length === 0) return;
+
+            let resultText = "✨ 신비로운 팀 나누기 결과 ✨\\n\\n";
+            cards.forEach((card, idx) => {
+                const title = card.querySelector('span.text-2xl').textContent;
+                const members = Array.from(card.querySelectorAll('li span.text-sm')).map(span => span.textContent);
+                resultText += `[${title}]\\n${members.join(', ')}\\n\\n`;
+            });
+
+            navigator.clipboard.writeText(resultText).then(() => {
+                alert('팀 나누기 결과가 클립보드에 복사되었습니다.');
+            }).catch(err => {
+                console.error('Failed to copy', err);
+                alert('복사하는데 실패했습니다.');
+            });
+        });
+    });
+</script>
+</body></html>

@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Bomb Defusal</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;family=Orbitron:wght@400;700;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+    }
+    .digital-glow {
+      text-shadow: 0 0 10px #ff0000, 0 0 20px #ff0000;
+    }
+    .industrial-gradient {
+      background: radial-gradient(circle at center, rgba(30, 30, 35, 0.8) 0%, rgba(10, 10, 12, 1) 100%);
+    }
+    .wire-cut:active {
+      transform: scale(0.95) translateY(2px);
+      filter: brightness(1.5);
+    }
+    .screen-shake:active {
+      animation: shake 0.2s cubic-bezier(.36,.07,.19,.97) both;
+    }
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-1px, 0, 0); }
+      20%, 80% { transform: translate3d(2px, 0, 0); }
+      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+      40%, 60% { transform: translate3d(4px, 0, 0); }
+    }
+</style>
+<script>
+    let timerInterval;
+    let timeRemaining = 60; // seconds
+    let isGameActive = false;
+    let safeWireIndex = -1;
+    let attemptsRemaining = 3;
+
+    function formatTime(seconds) {
+        const m = Math.floor(seconds / 60);
+        const s = seconds % 60;
+        return `<span>${String(m).padStart(2, '0')}</span><span class="${seconds > 0 ? 'animate-pulse' : ''}">:</span><span>${String(s).padStart(2, '0')}</span>`;
+    }
+
+    function updateTimerDisplay() {
+        const timerContainer = document.getElementById('timer-display');
+        if (timerContainer) {
+            timerContainer.innerHTML = formatTime(timeRemaining);
+        }
+        
+        // Update progress bar
+        const progressBar = document.getElementById('timer-progress');
+        if (progressBar) {
+            const percentage = (timeRemaining / 60) * 100;
+            progressBar.style.width = `${percentage}%`;
+        }
+    }
+
+    function startTimer() {
+        if (isGameActive) return;
+        isGameActive = true;
+        safeWireIndex = Math.floor(Math.random() * 5); // 0 to 4
+        attemptsRemaining = 3;
+        updateAttemptsDisplay();
+        
+        timerInterval = setInterval(() => {
+            timeRemaining--;
+            updateTimerDisplay();
+            
+            if (timeRemaining <= 0) {
+                gameOver(false, "시간 초과! 폭탄이 터졌습니다.");
+            }
+        }, 1000);
+    }
+
+    function stopTimer() {
+        clearInterval(timerInterval);
+        isGameActive = false;
+    }
+
+    function gameOver(isSuccess, message) {
+        stopTimer();
+        const overlay = document.getElementById('flash-overlay');
+        
+        if (!isSuccess) {
+            overlay.style.backgroundColor = 'red';
+            overlay.style.opacity = '0.5';
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                overlay.style.backgroundColor = 'white';
+                showToast(message);
+                resetGame();
+            }, 100);
+        } else {
+            overlay.style.backgroundColor = 'green';
+            overlay.style.opacity = '0.3';
+            setTimeout(() => {
+                overlay.style.opacity = '0';
+                overlay.style.backgroundColor = 'white';
+                showToast(message);
+                resetGame();
+            }, 500);
+        }
+    }
+
+    function resetGame() {
+        timeRemaining = 60;
+        updateTimerDisplay();
+        
+        // Reset wires visually
+        const wires = document.querySelectorAll('.wire-cut-inner');
+        wires.forEach(wire => {
+            wire.style.opacity = '1';
+            wire.dataset.cut = 'false';
+        });
+
+        const startButton = document.getElementById('start-btn');
+        if (startButton) {
+            startButton.style.display = 'block';
+        }
+    }
+
+    function updateAttemptsDisplay() {
+        const icons = document.querySelectorAll('#attempts-container .material-symbols-outlined');
+        icons.forEach((icon, index) => {
+            if (index < attemptsRemaining) {
+                icon.style.fontVariationSettings = "'FILL' 1";
+                icon.classList.remove('text-outline/50');
+                icon.classList.add('text-error');
+            } else {
+                icon.style.fontVariationSettings = "'FILL' 0";
+                icon.classList.add('text-outline/50');
+                icon.classList.remove('text-error');
+            }
+        });
+    }
+
+    function showToast(message) {
+        const container = document.getElementById('toast-container');
+        if (!container) return;
+        
+        const toast = document.createElement('div');
+        toast.className = 'bg-inverse-surface text-inverse-on-surface px-6 py-3 rounded-lg shadow-2xl font-bold border border-outline/30 transform transition-all duration-300 translate-y-[-20px] opacity-0 text-center max-w-sm whitespace-pre-wrap';
+        toast.textContent = message;
+        
+        container.appendChild(toast);
+        
+        // Animate in
+        requestAnimationFrame(() => {
+            toast.classList.remove('translate-y-[-20px]', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+        });
+        
+        // Remove after 3 seconds
+        setTimeout(() => {
+            toast.classList.remove('translate-y-0', 'opacity-100');
+            toast.classList.add('translate-y-[-20px]', 'opacity-0');
+            setTimeout(() => {
+                toast.remove();
+            }, 300);
+        }, 3000);
+    }
+
+    function requestIntel() {
+        if (!isGameActive) {
+            showToast("시스템을 먼저 작동시키십시오.");
+            return;
+        }
+        
+        const wires = document.querySelectorAll('.wire-cut-inner');
+        let uncutCount = 0;
+        wires.forEach(wire => {
+            if (wire.dataset.cut !== 'true') uncutCount++;
+        });
+
+        if (uncutCount < 3) {
+            showToast("경고: 남은 선이 3개 미만이므로 정보를 요청할 수 없습니다.");
+            return;
+        }
+
+        const probability = Math.round((1 / uncutCount) * 100);
+        showToast(`[시스템 분석]\n현재 ${uncutCount}개의 선이 남았습니다.\n안전한 선을 찾을 확률은 약 ${probability}% 입니다.`);
+    }
+
+    function cutWire(index, element) {
+        if (!isGameActive) return;
+        
+        const wireInner = element.querySelector('.wire-cut-inner');
+        if (wireInner.dataset.cut === 'true') return; // Already cut
+
+        // Visual change
+        wireInner.style.opacity = '0.2';
+        wireInner.dataset.cut = 'true';
+
+        // Flash screen
+        const overlay = document.getElementById('flash-overlay');
+        overlay.style.opacity = '0.8';
+        setTimeout(() => overlay.style.opacity = '0', 50);
+
+        if (index === safeWireIndex) {
+            gameOver(true, "폭탄 해체 성공!");
+        } else {
+            attemptsRemaining--;
+            updateAttemptsDisplay();
+            
+            // Accelerate timer as penalty
+            timeRemaining = Math.max(0, timeRemaining - 10);
+            updateTimerDisplay();
+
+            if (attemptsRemaining <= 0) {
+                gameOver(false, "시도 횟수 초과! 폭탄이 터졌습니다.");
+            }
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        updateTimerDisplay();
+        
+        const abandonBtn = document.getElementById('abandon-btn');
+        if (abandonBtn) {
+            abandonBtn.addEventListener('click', () => {
+                if(isGameActive) {
+                    gameOver(false, "임무 포기! 폭탄이 터졌습니다.");
+                }
+            });
+        }
+    });
+</script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+                  "on-primary": "#ffffff",
+                  "on-primary-container": "#d4dcff",
+                  "on-secondary": "#ffffff",
+                  "on-surface-variant": "#434654",
+                  "on-error": "#ffffff",
+                  "surface-bright": "#faf8ff",
+                  "primary-container": "#1a56db",
+                  "on-tertiary-fixed": "#380d00",
+                  "on-tertiary-fixed-variant": "#802a00",
+                  "primary-fixed-dim": "#b5c4ff",
+                  "primary-fixed": "#dbe1ff",
+                  "surface-container-low": "#f3f3fe",
+                  "on-surface": "#191b23",
+                  "on-secondary-fixed-variant": "#3e4755",
+                  "error": "#ba1a1a",
+                  "tertiary-fixed-dim": "#ffb59a",
+                  "on-background": "#191b23",
+                  "inverse-on-surface": "#f0f0fb",
+                  "error-container": "#ffdad6",
+                  "secondary-fixed": "#d9e3f4",
+                  "on-error-container": "#93000a",
+                  "on-primary-fixed-variant": "#003dab",
+                  "tertiary-container": "#ad3b00",
+                  "surface-container-lowest": "#ffffff",
+                  "on-tertiary-container": "#ffd4c5",
+                  "tertiary": "#852b00",
+                  "surface-container": "#ededf8",
+                  "on-primary-fixed": "#00174d",
+                  "surface-dim": "#d9d9e4",
+                  "inverse-surface": "#2e3039",
+                  "inverse-primary": "#b5c4ff",
+                  "outline": "#737686",
+                  "outline-variant": "#c3c5d7",
+                  "background": "#0a0a0c"
+          },
+          "fontFamily": {
+                  "headline-xl": ["Plus Jakarta Sans"],
+                  "body-sm": ["Inter"],
+                  "body-lg": ["Inter"],
+                  "display-lg": ["Plus Jakarta Sans"],
+                  "label-md": ["Inter"],
+                  "headline-lg": ["Plus Jakarta Sans"],
+                  "digital": ["Orbitron"]
+          },
+          "fontSize": {
+                  "headline-xl": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                  "headline-lg": ["24px", {"lineHeight": "1.3", "letterSpacing": "0em", "fontWeight": "600"}]
+          },
+          "spacing": {
+              "base": "4px",
+              "sm": "1rem",
+              "lg": "2rem",
+              "xl": "3rem",
+              "gutter": "1.5rem",
+              "max-width": "1440px",
+              "xs": "0.5rem",
+              "md": "1.5rem",
+              "margin-mobile": "1rem",
+              "margin-desktop": "2.5rem"
+          }
+        }
+      }
+    }
+</script>
+</head>
+<body class="bg-background text-on-surface selection:bg-error/30 min-h-screen overflow-y-auto text-sm md:text-base flex flex-col">
+
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-[100] bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 text-on-surface">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-8 lg:px-12 py-4">
+<div class="flex items-center gap-6 lg:gap-12">
+<a class="text-xl md:text-2xl font-bold text-primary dark:text-primary-fixed shrink-0" href="/">PickLab</a>
+<nav class="hidden lg:flex gap-8 items-center">
+  
+  <!-- Category 1: Quick Decisions -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/coinflip/">코인플립</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/dice/">운명의 주사위</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/magiclamp/">요술램프</a>
+    </div>
+  </div>
+
+  <!-- Category 2: Games & Roulette -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/bomb/">폭탄터트리기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/ladder/">운명의 사다리</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/roulette/">룰렛돌리기</a>
+    </div>
+  </div>
+
+  <!-- Category 3: Group & Team -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-56 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/number/">숫자 생성기</a>
+    </div>
+  </div>
+</nav>
+</div>
+<div class="flex items-center gap-4 md:gap-6 lg:hidden">
+<button id="mobile-menu-btn" class="p-2 text-on-surface hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden lg:hidden bg-surface dark:bg-surface-container-low border-b border-outline-variant/30 flex flex-col shadow-lg max-h-[80vh] overflow-y-auto">
+  <div class="py-2 border-b border-outline-variant/10">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/coinflip/">코인플립</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/dice/">운명의 주사위</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/magiclamp/">요술램프</a>
+  </div>
+  <div class="py-2 border-b border-outline-variant/10">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/bomb/">폭탄터트리기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/ladder/">운명의 사다리</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/roulette/">룰렛돌리기</a>
+  </div>
+  <div class="py-2">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/number/">숫자 생성기</a>
+  </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileBtn.querySelector('.material-symbols-outlined');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.textContent = 'menu';
+                } else {
+                    icon.textContent = 'close';
+                }
+            });
+        }
+        
+        // Highlight active menu item
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('header nav flex a, header #mobile-menu a, header .group a');
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href !== '/' && currentPath.startsWith(href)) {
+                link.classList.add('text-primary', 'dark:text-primary-fixed', 'font-bold', 'bg-surface-container-highest');
+            }
+        });
+    });
+</script>
+</header>
+
+<!-- Main Game Canvas -->
+<main class="relative w-full flex-1 flex flex-col justify-center min-h-screen pt-24 pb-8 p-4 md:p-6 industrial-gradient overflow-hidden">
+<!-- Background Cinematic Layer -->
+<div class="absolute inset-0 z-0 opacity-40">
+<img alt="Industrial Background" class="w-full h-full object-cover grayscale" data-alt="A cinematic, high-contrast interior shot of a dark, abandoned industrial warehouse basement. The scene is dominated by heavy concrete pillars, exposed <!-- Top UI: Stats and Health -->
+<div class="absolute top-20 md:top-24 left-0 w-full p-4 md:p-6 lg:p-8 flex justify-between items-start z-40">
+<div class="flex flex-col gap-1 md:gap-2">
+<span class="text-[10px] md:text-sm font-bold text-outline-variant tracking-widest uppercase">타이머 상태</span>
+<div class="flex items-center gap-1 md:gap-2 bg-inverse-surface/80 backdrop-blur-md px-3 py-1.5 md:px-4 md:py-2 rounded-lg border border-outline/20">
+<span class="material-symbols-outlined text-error animate-pulse text-[18px] md:text-[24px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="text-sm md:text-xl font-bold text-on-primary">심각한 위협</span>
+</div>
+</div>
+<div class="flex flex-col items-end gap-1 md:gap-2">
+<span class="text-[10px] md:text-sm font-bold text-outline-variant tracking-widest uppercase text-right">남은 시도 횟수</span>
+<div id="attempts-container" class="flex gap-1 md:gap-2">
+<span class="material-symbols-outlined text-error text-[20px] md:text-[32px]" style="font-variation-settings: 'FILL' 1;">skull</span>
+<span class="material-symbols-outlined text-error text-[20px] md:text-[32px]" style="font-variation-settings: 'FILL' 1;">skull</span>
+<span class="material-symbols-outlined text-error text-[20px] md:text-[32px]" style="font-variation-settings: 'FILL' 1;">skull</span>
+</div>
+</div>
+</div>
+<!-- Central Bomb Unit -->
+<div class="relative z-10 flex flex-col items-center justify-center gap-8 md:gap-12 w-full max-w-[95%] md:max-w-2xl lg:max-w-4xl mx-auto screen-shake mt-24 md:mt-32">
+<!-- The Timer Display -->
+<div class="relative group w-full px-4 md:px-0">
+<div class="absolute -inset-2 md:-inset-4 bg-error/20 blur-2xl md:blur-3xl opacity-50 group-hover:opacity-80 transition-opacity"></div>
+<div class="relative bg-black border-2 md:border-4 border-inverse-surface p-4 md:p-8 lg:p-12 rounded-xl shadow-[0_0_30px_rgba(186,26,26,0.4)] md:shadow-[0_0_50px_rgba(186,26,26,0.4)]">
+<div class="flex flex-col items-center">
+<span class="text-[10px] md:text-sm text-error mb-2 tracking-[0.2em] md:tracking-[0.3em] font-bold">시스템 카운트다운</span>
+<div id="timer-display" class="font-digital text-6xl md:text-[100px] lg:text-[140px] leading-none text-error digital-glow flex gap-2 md:gap-4 lg:gap-6">
+<span>01</span><span class="animate-pulse">:</span><span>00</span>
+</div>
+<div class="w-full h-1 bg-on-surface-variant/20 mt-4 md:mt-6 relative overflow-hidden">
+<div id="timer-progress" class="absolute left-0 top-0 h-full bg-error w-full shadow-[0_0_10px_#ff0000] transition-all duration-1000 linear"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Interaction Instruction -->
+<div class="text-center flex flex-col items-center px-4">
+<h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-on-primary mb-2">자를 선을 선택하세요</h2>
+<p class="text-sm md:text-base text-outline-variant max-w-sm md:max-w-md">단 하나의 선만이 폭발을 막을 수 있습니다. 다른 선들은 카운트다운을 가속시킵니다.</p>
+<button id="start-btn" onclick="startTimer(); this.style.display='none'" class="mt-4 md:mt-6 bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 md:py-3 md:px-8 rounded-full shadow-[0_0_20px_rgba(255,0,0,0.5)] z-50 transition-all active:scale-95 text-sm md:text-base uppercase tracking-widest border-2 border-red-400/50 backdrop-blur-sm">
+    작동 시작
+</button>
+</div>
+<!-- Wire Bundle Bento -->
+<div class="flex flex-col items-center w-full md:max-w-2xl mx-auto px-4">
+  <div class="w-full h-3 md:h-4 bg-gradient-to-b from-zinc-800 to-black border-x border-t border-zinc-700/50 rounded-t-lg shadow-lg mb-[-1px] relative z-20"></div>
+  <div class="grid grid-cols-5 gap-2 md:gap-4 lg:gap-6 w-full px-2 md:px-6 bg-zinc-900/40 backdrop-blur-sm py-4 md:py-8 border-x border-zinc-800/50">
+  <!-- Red Wire -->
+  <button class="wire-cut group flex flex-col items-center gap-1 md:gap-2 transition-all w-full" onclick="cutWire(0, this)">
+  <div class="relative flex flex-col items-center w-full">
+  <!-- Top Connector -->
+  <div class="w-6 md:w-8 h-2 md:h-3 bg-zinc-800 rounded-sm border border-zinc-700 shadow-inner"></div>
+  <!-- The Wire Body -->
+  <div class="wire-cut-inner h-32 md:h-48 lg:h-56 w-5 md:w-7 bg-gradient-to-r from-red-900 via-red-600 to-red-800 rounded-lg shadow-[inset_-2px_0_4px_rgba(0,0,0,0.5),inset_2px_0_4px_rgba(255,255,255,0.2),8px_10px_15px_rgba(0,0,0,0.6)] group-hover:brightness-110 relative overflow-hidden transition-opacity duration-300">
+  <!-- Realistic Highlight -->
+  <div class="absolute inset-y-0 left-1 w-[1px] md:w-1 bg-white/20 blur-[1px]"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40"></div>
+  </div>
+  <!-- Bottom Connector -->
+  <div class="w-6 md:w-8 h-2 md:h-3 bg-zinc-800 rounded-sm border border-zinc-700 shadow-inner"></div>
+  </div>
+  <span class="text-[10px] md:text-sm text-red-500 font-bold tracking-widest drop-shadow-md">빨강</span>
+  </button>
+  <!-- Blue Wire -->
+  <button class="wire-cut group flex flex-col items-center gap-1 md:gap-2 transition-all w-full" onclick="cutWire(1, this)">
+  <div class="relative flex flex-col items-center w-full">
+  <div class="w-6 md:w-8 h-2 md:h-3 bg-zinc-800 rounded-sm border border-zinc-700 shadow-inner"></div>
+  <div class="wire-cut-inner h-32 md:h-48 lg:h-56 w-5 md:w-7 bg-gradient-to-r from-blue-900 via-blue-600 to-blue-800 rounded-lg shadow-[inset_-2px_0_4px_rgba(0,0,0,0.5),inset_2px_0_4px_rgba(255,255,255,0.2),8px_10px_15px_rgba(0,0,0,0.6)] group-hover:brightness-110 relative overflow-hidden transition-opacity duration-300">
+  <div class="absolute inset-y-0 left-1 w-[1px] md:w-1 bg-white/20 blur-[1px]"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40"></div>
+  </div>
+  <div class="w-6 md:w-8 h-2 md:h-3 bg-zinc-800 rounded-sm border border-zinc-700 shadow-inner"></div>
+  </div>
+  <span class="text-[10px] md:text-sm text-blue-500 font-bold tracking-widest drop-shadow-md">파랑</span>
+  </button>
+  <!-- Green Wire -->
+  <button class="wire-cut group flex flex-col items-center gap-1 md:gap-2 transition-all w-full" onclick="cutWire(2, this)">
+  <div class="relative flex flex-col items-center w-full">
+  <div class="w-6 md:w-8 h-2 md:h-3 bg-zinc-800 rounded-sm border border-zinc-700 shadow-inner"></div>
+  <div class="wire-cut-inner h-32 md:h-48 lg:h-56 w-5 md:w-7 bg-gradient-to-r from-emerald-900 via-emerald-600 to-emerald-800 rounded-lg shadow-[inset_-2px_0_4px_rgba(0,0,0,0.5),inset_2px_0_4px_rgba(255,255,255,0.2),8px_10px_15px_rgba(0,0,0,0.6)] group-hover:brightness-110 relative overflow-hidden transition-opacity duration-300">
+  <div class="absolute inset-y-0 left-1 w-[1px] md:w-1 bg-white/20 blur-[1px]"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40"></div>
+  </div>
+  <div class="w-6 md:w-8 h-2 md:h-3 bg-zinc-800 rounded-sm border border-zinc-700 shadow-inner"></div>
+  </div>
+  <span class="text-[10px] md:text-sm text-emerald-500 font-bold tracking-widest drop-shadow-md">초록</span>
+  </button>
+  <!-- Yellow Wire -->
+  <button class="wire-cut group flex flex-col items-center gap-1 md:gap-2 transition-all w-full" onclick="cutWire(3, this)">
+  <div class="relative flex flex-col items-center w-full">
+  <div class="w-6 md:w-8 h-2 md:h-3 bg-zinc-800 rounded-sm border border-zinc-700 shadow-inner"></div>
+  <div class="wire-cut-inner h-32 md:h-48 lg:h-56 w-5 md:w-7 bg-gradient-to-r from-amber-700 via-yellow-500 to-amber-600 rounded-lg shadow-[inset_-2px_0_4px_rgba(0,0,0,0.5),inset_2px_0_4px_rgba(255,255,255,0.2),8px_10px_15px_rgba(0,0,0,0.6)] group-hover:brightness-110 relative overflow-hidden transition-opacity duration-300">
+  <div class="absolute inset-y-0 left-1 w-[1px] md:w-1 bg-white/30 blur-[1px]"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/30"></div>
+  </div>
+  <div class="w-6 md:w-8 h-2 md:h-3 bg-zinc-800 rounded-sm border border-zinc-700 shadow-inner"></div>
+  </div>
+  <span class="text-[10px] md:text-sm text-yellow-500 font-bold tracking-widest drop-shadow-md">노랑</span>
+  </button>
+  <!-- White Wire -->
+  <button class="wire-cut group flex flex-col items-center gap-1 md:gap-2 transition-all w-full" onclick="cutWire(4, this)">
+  <div class="relative flex flex-col items-center w-full">
+  <div class="w-6 md:w-8 h-2 md:h-3 bg-zinc-800 rounded-sm border border-zinc-700 shadow-inner"></div>
+  <div class="wire-cut-inner h-32 md:h-48 lg:h-56 w-5 md:w-7 bg-gradient-to-r from-zinc-400 via-zinc-100 to-zinc-300 rounded-lg shadow-[inset_-2px_0_4px_rgba(0,0,0,0.3),inset_2px_0_4px_rgba(255,255,255,0.8),8px_10px_15px_rgba(0,0,0,0.6)] group-hover:brightness-110 relative overflow-hidden transition-opacity duration-300">
+  <div class="absolute inset-y-0 left-1 w-[1px] md:w-1 bg-white/50 blur-[1px]"></div>
+  <div class="absolute inset-0 bg-gradient-to-b from-black/5 via-transparent to-black/20"></div>
+  </div>
+  <div class="w-6 md:w-8 h-2 md:h-3 bg-zinc-800 rounded-sm border border-zinc-700 shadow-inner"></div>
+  </div>
+  <span class="text-[10px] md:text-sm text-zinc-300 font-bold tracking-widest drop-shadow-md">하양</span>
+  </button>
+  </div>
+  <div class="w-full h-4 md:h-6 bg-gradient-to-t from-zinc-900 to-zinc-800 border-x border-b border-zinc-700/50 rounded-b-lg shadow-2xl mt-[-4px] relative z-20 flex justify-around items-center px-4">
+  <div class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-zinc-950 shadow-inner"></div>
+  <div class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-zinc-950 shadow-inner"></div>
+  <div class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-zinc-950 shadow-inner"></div>
+  <div class="w-1.5 h-1.5 md:w-2 md:h-2 rounded-full bg-zinc-950 shadow-inner"></div>
+  </div>
+</div>
+</div>
+<!-- Bottom Footer Interface -->
+<div class="relative left-0 w-full p-4 md:p-6 lg:p-8 flex flex-col md:flex-row justify-between items-center z-40 mt-8 gap-4">
+<div class="flex items-center gap-2 md:gap-4 lg:w-1/3">
+<div class="h-2 w-2 rounded-full bg-error animate-ping"></div>
+<p class="text-[10px] md:text-sm font-bold text-outline-variant uppercase tracking-widest">실시간 피드: 암호화된 업링크 활성</p>
+</div>
+<div class="flex flex-row items-center justify-center gap-3 md:gap-6 pointer-events-auto w-full md:w-auto mt-4 md:mt-0">
+<button id="abandon-btn" class="bg-transparent border border-outline/30 text-on-surface px-4 py-2 md:px-6 md:py-3 rounded-lg text-xs md:text-sm font-bold hover:bg-on-surface/10 transition-colors uppercase w-full md:w-auto shadow-sm">
+          임무 포기
+        </button>
+<button class="bg-error text-on-error px-6 py-2 md:px-8 md:py-3 rounded-lg text-xs md:text-sm font-bold hover:bg-error/90 transition-all uppercase shadow-lg shadow-error/20 w-full md:w-auto" onclick="requestIntel()">
+          정보 요청
+        </button>
+</div>
+</div>
+<!-- User Guide Section -->
+<div class="relative w-full max-w-[95%] md:max-w-4xl mx-auto p-4 md:p-6 lg:p-8 z-40 mt-8 md:mt-12 mb-10 md:mb-20 pointer-events-auto">
+  <div class="bg-surface-container/30 border border-outline/30 p-5 md:p-8 rounded-2xl backdrop-blur-sm text-left">
+    <h3 class="text-xl md:text-2xl font-bold text-white mb-4 flex items-center gap-2">
+      <span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+      현장 요원 행동 지침서 (재미 전용)
+    </h3>
+    <ul class="flex flex-col gap-3 md:gap-4 text-sm md:text-base text-white">
+      <li class="flex gap-2 md:gap-4 items-start">
+        <span class="material-symbols-outlined text-white mt-0.5" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+        <p><strong>상황 발생:</strong> "작동 시작" 버튼을 눌러 시한폭탄 카운트다운을 개시하십시오. (물론 진짜 터지진 않습니다! 펑-💣)</p>
+      </li>
+      <li class="flex gap-2 md:gap-4 items-start">
+        <span class="material-symbols-outlined text-white mt-0.5" style="font-variation-settings: 'FILL' 1;">cut</span>
+        <p><strong>해체 절차:</strong> 5개의 선 중 <strong>단 하나</strong>의 안전선이 존재합니다. 당신의 직감을 믿고 과감하게 선을 자르십시오.</p>
+      </li>
+      <li class="flex gap-2 md:gap-4 items-start">
+        <span class="material-symbols-outlined text-white mt-0.5" style="font-variation-settings: 'FILL' 1;">warning_amber</span>
+        <p><strong>위험 요소:</strong> 3번의 기회가 주어집니다. 잘못된 선을 자를 경우 시간이 10초씩 차감되며 타격이 발생합니다. 주의하십시오!</p>
+      </li>
+      <li class="flex gap-2 md:gap-4 items-start">
+        <span class="material-symbols-outlined text-white mt-0.5" style="font-variation-settings: 'FILL' 1;">help_clinic</span>
+        <p><strong>전술 지원:</strong> 판단이 불확실할 경우 "정보 요청" 버튼을 이용해 생존 확률을 확인할 수 있습니다. 다들 쫄보라고 놀려도 살아남는 편이 낫습니다. (남은 선이 3개 이상일 때 작동)</p>
+      </li>
+      <li class="flex gap-2 md:gap-4 items-start">
+        <span class="material-symbols-outlined text-white mt-0.5" style="font-variation-settings: 'FILL' 1;">sentiment_very_satisfied</span>
+        <p><strong>면책 조항:</strong> 본 시스템은 재미있는 내기와 복불복 게임을 위해 만들어졌습니다. 밥값 내기 혹은 벌칙자 선정 등 소소한 결정에 짜릿함을 더해보세요!</p>
+      </li>
+    </ul>
+  </div>
+</div>
+<!-- Floating Background Details -->
+<div class="absolute right-8 top-1/3 opacity-20 pointer-events-none hidden lg:block">
+<div class="flex flex-col gap-2">
+<div class="w-48 xl:w-64 h-24 xl:h-32 border-l border-t border-outline/30 p-3 xl:p-4">
+<p class="text-[10px] xl:text-[12px] font-digital text-error mb-1">전압: 450V</p>
+<p class="text-[10px] xl:text-[12px] font-digital text-error mb-1">온도: 98.4°C</p>
+<p class="text-[10px] xl:text-[12px] font-digital text-error mb-1">안정성: 저하 중</p>
+</div>
+<div class="w-32 xl:w-48 h-8 xl:h-12 border-b border-outline/30 self-end"></div>
+</div>
+</div>
+<!-- User Guide Section -->
+<section class="max-w-[95%] md:max-w-4xl mx-auto px-4 md:px-6 lg:px-8 py-8 md:py-12 mb-8 md:mb-12 text-white">
+    <div class="bg-surface-container/10 border border-outline/30 p-5 md:p-8 rounded-2xl backdrop-blur-sm text-left">
+        <h3 class="text-xl md:text-2xl font-bold text-[#FFD700] mb-4 flex items-center gap-2">
+            <span class="material-symbols-outlined text-[#FFD700]" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+            폭탄 복불복 사용 지침서
+        </h3>
+        <ul class="flex flex-col gap-3 md:gap-4 text-sm md:text-base text-white/80">
+            <li class="flex gap-2 md:gap-4 items-start">
+                <span class="material-symbols-outlined text-[#FFD700] mt-0.5" style="font-variation-settings: 'FILL' 1;">group_add</span>
+                <p><strong>참여자 설정:</strong> 폭탄 게임을 진행할 인원들의 이름을 추가하세요. 하단 설정 버튼을 통해 쉽게 이름을 넣거나 수정할 수 있습니다.</p>
+            </li>
+            <li class="flex gap-2 md:gap-4 items-start">
+                <span class="material-symbols-outlined text-[#FFD700] mt-0.5" style="font-variation-settings: 'FILL' 1;">timer</span>
+                <p><strong>시간 및 폭탄 설정:</strong> 예측할 수 없는 타이머가 작동하도록 시간 범위(예: 30초~60초)를 조절하고, 투입할 폭탄의 모드를 설정하세요.</p>
+            </li>
+            <li class="flex gap-2 md:gap-4 items-start">
+                <span class="material-symbols-outlined text-[#FFD700] mt-0.5" style="font-variation-settings: 'FILL' 1;">sports_esports</span>
+                <p><strong>게임 시작:</strong> 불이 붙은 폭탄이 등장하면, 클릭하여 폭탄을 다른 사람에게 터치로 넘기세요. 시간이 끝나 폭발할 때 폭탄을 쥐고 있는 사람이 벌칙에 당첨됩니다!</p>
+            </li>
+        </ul>
+    </div>
+</section>nded-2xl backdrop-blur-sm">
+        <h3 class="text-2xl md:text-3xl font-bold text-[#FFD700] mb-4 md:mb-6 flex items-center gap-2 md:gap-3">
+            <span class="material-symbols-outlined text-[#FFD700]" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+            폭탄 복불복 사용 지침서
+        </h3>
+        <ul class="flex flex-col gap-4 md:gap-6 text-sm md:text-base text-white/80">
+            <li class="flex gap-4 md:gap-6 items-start">
+                <span class="material-symbols-outlined text-[#FFD700] mt-0.5" style="font-variation-settings: 'FILL' 1;">group_add</span>
+                <p><strong>참여자 설정:</strong> 폭탄 게임을 진행할 인원들의 이름을 추가하세요. 하단 설정 버튼을 통해 쉽게 이름을 넣거나 수정할 수 있습니다.</p>
+            </li>
+            <li class="flex gap-4 md:gap-6 items-start">
+                <span class="material-symbols-outlined text-[#FFD700] mt-0.5" style="font-variation-settings: 'FILL' 1;">timer</span>
+                <p><strong>시간 및 폭탄 설정:</strong> 예측할 수 없는 타이머가 작동하도록 시간 범위(예: 30초~60초)를 조절하고, 투입할 폭탄의 모드를 설정하세요.</p>
+            </li>
+            <li class="flex gap-4 md:gap-6 items-start">
+                <span class="material-symbols-outlined text-[#FFD700] mt-0.5" style="font-variation-settings: 'FILL' 1;">sports_esports</span>
+                <p><strong>게임 시작:</strong> 불이 붙은 폭탄이 등장하면, 클릭하여 폭탄을 다른 사람에게 터치로 넘기세요. 시간이 끝나 폭발할 때 폭탄을 쥐고 있는 사람이 벌칙에 당첨됩니다!</p>
+            </li>
+        </ul>
+    </div>
+</section>
+</main>
+<!-- Overlay for Interaction Feedback -->
+<div class="fixed inset-0 bg-white pointer-events-none opacity-0 z-[100] transition-opacity duration-75" id="flash-overlay"></div>
+
+<!-- Toast Notification -->
+<div id="toast-container" class="fixed top-24 left-1/2 transform -translate-x-1/2 z-[9999] flex flex-col gap-2 items-center pointer-events-none"></div>
+
+</body></html>

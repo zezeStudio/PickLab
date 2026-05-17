@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>순서 정하기 - Order of Fate</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        .glass-panel {
+            background: rgba(25, 27, 35, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(115, 118, 134, 0.2);
+        }
+        .mystic-glow {
+            box-shadow: 0 0 40px rgba(173, 59, 0, 0.15);
+        }
+        .star-field {
+            background: radial-gradient(circle at 50% 50%, #191b23 0%, #000000 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .star-field::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(white, rgba(255,255,255,0) 1.5px);
+            background-size: 100px 100px;
+            opacity: 0.1;
+        }
+    </style>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-background": "#191b23",
+                        "on-secondary": "#ffffff",
+                        "error-container": "#ffdad6",
+                        "error": "#ba1a1a",
+                        "primary-container": "#1a56db",
+                        "secondary-fixed-dim": "#bdc7d8",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed": "#ffdbcf",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#faf8ff",
+                        "tertiary": "#852b00",
+                        "on-secondary-fixed": "#121c28",
+                        "outline-variant": "#c3c5d7",
+                        "on-tertiary-fixed": "#380d00",
+                        "on-primary-fixed-variant": "#003dab",
+                        "on-secondary-container": "#596372",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f3f3fe",
+                        "primary": "#003fb1",
+                        "surface-container-highest": "#e2e1ed",
+                        "on-surface-variant": "#434654",
+                        "surface-variant": "#e2e1ed",
+                        "on-tertiary-fixed-variant": "#802a00",
+                        "primary-fixed-dim": "#b5c4ff",
+                        "background": "#faf8ff",
+                        "surface-tint": "#1353d8",
+                        "outline": "#737686",
+                        "surface-container": "#ededf8",
+                        "on-error-container": "#93000a",
+                        "tertiary-container": "#ad3b00",
+                        "secondary": "#555f6d",
+                        "on-surface": "#191b23",
+                        "surface-dim": "#d9d9e4",
+                        "on-primary": "#ffffff",
+                        "inverse-primary": "#b5c4ff",
+                        "inverse-on-surface": "#f0f0fb",
+                        "secondary-container": "#d6e0f1",
+                        "surface-container-high": "#e7e7f3",
+                        "on-primary-container": "#d4dcff",
+                        "on-secondary-fixed-variant": "#3e4755",
+                        "inverse-surface": "#2e3039",
+                        "secondary-fixed": "#d9e3f4",
+                        "primary-fixed": "#dbe1ff",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "surface": "#faf8ff",
+                        "on-tertiary-container": "#ffd4c5",
+                        "on-primary-fixed": "#00174d"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</head>
+<body class="star-field text-on-background min-h-screen flex flex-col items-center justify-start pt-28 pb-12 px-6 overflow-y-auto">
+    <!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-[100] bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 text-on-surface">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-8 lg:px-12 py-4">
+<div class="flex items-center gap-6 lg:gap-12">
+<a class="text-xl md:text-2xl font-bold text-primary dark:text-primary-fixed shrink-0" href="/">PickLab</a>
+<nav class="hidden lg:flex gap-8 items-center">
+  
+  <!-- Category 1: Quick Decisions -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/coinflip/">코인플립</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/dice/">운명의 주사위</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/magiclamp/">요술램프</a>
+    </div>
+  </div>
+
+  <!-- Category 2: Games & Roulette -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/bomb/">폭탄터트리기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/ladder/">운명의 사다리</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/roulette/">룰렛돌리기</a>
+    </div>
+  </div>
+
+  <!-- Category 3: Group & Team -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-56 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/number/">숫자 생성기</a>
+    </div>
+  </div>
+</nav>
+</div>
+<div class="flex items-center gap-4 md:gap-6 lg:hidden">
+<button id="mobile-menu-btn" class="p-2 text-on-surface hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden lg:hidden bg-surface dark:bg-surface-container-low border-b border-outline-variant/30 flex flex-col shadow-lg max-h-[80vh] overflow-y-auto">
+  <div class="py-2 border-b border-outline-variant/10">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/coinflip/">코인플립</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/dice/">운명의 주사위</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/magiclamp/">요술램프</a>
+  </div>
+  <div class="py-2 border-b border-outline-variant/10">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/bomb/">폭탄터트리기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/ladder/">운명의 사다리</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/roulette/">룰렛돌리기</a>
+  </div>
+  <div class="py-2">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/number/">숫자 생성기</a>
+  </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileBtn.querySelector('.material-symbols-outlined');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.textContent = 'menu';
+                } else {
+                    icon.textContent = 'close';
+                }
+            });
+        }
+        
+        // Highlight active menu item
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('header nav flex a, header #mobile-menu a, header .group a');
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href !== '/' && currentPath.startsWith(href)) {
+                link.classList.add('text-primary', 'dark:text-primary-fixed', 'font-bold', 'bg-surface-container-highest');
+            }
+        });
+    });
+</script>
+</header>
+    <!-- Main Container -->
+    <main class="w-full max-w-2xl flex flex-col items-center gap-10 mt-8">
+        <!-- Visual Ornament: Mystical Hourglass -->
+        <div class="relative w-40 h-40 flex items-center justify-center group" id="hourglass-container">
+            <div class="absolute inset-0 bg-tertiary/20 rounded-full blur-3xl group-hover:bg-tertiary/30 transition-all duration-700"></div>
+            <div class="relative z-10 flex flex-col items-center" id="hourglass-icon-wrapper">
+                <span class="material-symbols-outlined text-[80px] text-tertiary-fixed-dim leading-none transition-transform duration-1000" data-icon="hourglass_empty" style="font-variation-settings: 'FILL' 0, 'wght' 200;">hourglass_empty</span>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                    <span class="material-symbols-outlined text-[32px] text-tertiary opacity-40 animate-pulse" data-icon="auto_awesome" style="font-variation-settings: 'FILL' 1;">auto_awesome</span>
+                </div>
+            </div>
+            <!-- Glowing Runes Orbit -->
+            <div class="absolute w-full h-full border border-outline/20 rounded-full scale-125 border-dashed opacity-30" id="orbit-ring"></div>
+        </div>
+
+        <!-- Header Section -->
+        <header class="text-center space-y-3">
+            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white tracking-tight">
+                운명의 순서 정하기
+            </h1>
+            <p class="text-sm md:text-base text-surface-variant/80 max-w-md mx-auto">
+                Order of Fate: 운명이 정해준 순서에 따라 발걸음을 옮기세요.
+            </p>
+        </header>
+
+        <!-- Input Section -->
+        <section class="w-full glass-panel rounded-xl p-8 space-y-6" id="input-section">
+            <div class="flex items-center justify-between border-b border-outline/20 pb-4">
+                <div class="flex items-center gap-3">
+                    <span class="material-symbols-outlined text-tertiary-fixed-dim" data-icon="groups">groups</span>
+                    <label class="text-sm font-bold text-white/90" for="participants">참가자 명단 <span class="text-surface-variant/50 ml-2">Enter names (one per line)</span></label>
+                </div>
+                <div class="text-xs text-sm font-bold text-tertiary/80 tracking-widest uppercase" id="input-count">0명</div>
+            </div>
+            <div class="relative">
+                <textarea class="w-full h-64 bg-black/20 border-none rounded-lg p-6 text-sm md:text-base text-white placeholder:text-surface-variant/30 focus:ring-2 focus:ring-tertiary/40 resize-none leading-relaxed transition-all" id="participants" placeholder="예: 김철수
+이영희
+박지민"></textarea>
+                <!-- Decorative Corners -->
+                <div class="absolute top-0 left-0 w-2 h-2 border-t border-l border-tertiary/40"></div>
+                <div class="absolute top-0 right-0 w-2 h-2 border-t border-r border-tertiary/40"></div>
+                <div class="absolute bottom-0 left-0 w-2 h-2 border-b border-l border-tertiary/40"></div>
+                <div class="absolute bottom-0 right-0 w-2 h-2 border-b border-r border-tertiary/40"></div>
+            </div>
+
+            <!-- Action Button -->
+            <div class="pt-4">
+                <button id="btn-draw" class="w-full py-5 bg-tertiary-container hover:bg-tertiary transition-all duration-300 rounded-lg flex items-center justify-center gap-3 group relative overflow-hidden">
+                    <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <span class="material-symbols-outlined text-white" data-icon="auto_fix_high" style="font-variation-settings: 'FILL' 1;">auto_fix_high</span>
+                    <span class="text-2xl md:text-3xl font-bold text-white">순서 정하기</span>
+                    <span class="material-symbols-outlined text-white/40 group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Result Section (Initially Hidden) -->
+        <section class="w-full glass-panel rounded-xl p-8 space-y-6 hidden opacity-0 transition-opacity duration-500" id="result-section">
+            <div id="capture-area" class="w-full bg-[#191b23] rounded-xl p-6 relative overflow-hidden flex flex-col space-y-6 border border-white/10">
+                <div class="flex items-center justify-between border-b border-outline/20 pb-4">
+                    <div class="flex items-center gap-3">
+                        <span class="material-symbols-outlined text-tertiary-fixed-dim" data-icon="format_list_numbered">format_list_numbered</span>
+                        <h2 class="text-sm font-bold text-white/90">운명의 순서 결과</h2>
+                    </div>
+                    <div class="text-xs text-sm font-bold text-tertiary/80 tracking-widest uppercase" id="result-date">Result Zone</div>
+                </div>
+                
+                <div class="relative w-full">
+                    <div id="result-list" class="flex flex-col gap-3 text-sm md:text-base text-white w-full">
+                        <!-- Results will be generated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="pt-4 flex flex-col sm:flex-row gap-4">
+                <button id="btn-save" class="flex-1 py-4 bg-gradient-to-r from-primary-container to-primary hover:brightness-110 transition-all duration-300 rounded-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/30">
+                    <span class="material-symbols-outlined text-white text-[20px]">download</span>
+                    <span class="text-sm font-bold text-white font-bold">이미지 저장</span>
+                </button>
+                <button id="btn-retry" class="flex-1 py-4 bg-white/10 hover:bg-white/20 transition-all duration-300 rounded-lg flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-white text-[20px]" data-icon="refresh">refresh</span>
+                    <span class="text-sm font-bold text-white">다시 하기</span>
+                </button>
+                <button id="btn-edit" class="flex-1 py-4 border border-outline/30 hover:bg-white/5 transition-all duration-300 rounded-lg flex items-center justify-center gap-2">
+                    <span class="material-symbols-outlined text-white/80 text-[20px]" data-icon="edit">edit</span>
+                    <span class="text-sm font-bold text-white/80">명단 수정</span>
+                </button>
+            </div>
+        </section>
+
+        <!-- Secondary Guidance -->
+        <div class="flex items-center gap-6 opacity-40">
+            <div class="h-px w-12 bg-outline-variant"></div>
+            <div class="text-[10px] text-sm font-bold tracking-[0.2em] text-surface-variant uppercase">The Cosmos Aligns for You</div>
+            <div class="h-px w-12 bg-outline-variant"></div>
+        </div>
+
+        <!-- User Guide Section -->
+        <section class="max-w-2xl mx-auto text-white w-full z-10 relative mt-4">
+            <div class="glass-panel p-6 md:p-8 rounded-2xl w-full">
+                <h3 class="text-2xl md:text-3xl font-bold text-tertiary-fixed-dim mb-4 flex items-center gap-3">
+                    <span class="material-symbols-outlined text-tertiary-fixed-dim" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+                    순서 정하기 사용 지침서
+                </h3>
+                <ul class="flex flex-col gap-4 text-sm md:text-base text-white/80">
+                    <li class="flex gap-4 items-start">
+                        <span class="material-symbols-outlined text-tertiary-fixed-dim mt-0.5" style="font-variation-settings: 'FILL' 1;">edit_note</span>
+                        <p><strong>참가자 명단 입력:</strong> 순서를 정할 사람이나 항목의 이름을 한 줄에 하나씩 입력해주세요. 2명 이상부터 순서를 배정할 수 있습니다.</p>
+                    </li>
+                    <li class="flex gap-4 items-start">
+                        <span class="material-symbols-outlined text-tertiary-fixed-dim mt-0.5" style="font-variation-settings: 'FILL' 1;">magic_button</span>
+                        <p><strong>순서 정하기:</strong> '순서 정하기' 버튼을 누르면 신비로운 기운이 무작위로 순번을 배정합니다.</p>
+                    </li>
+                    <li class="flex gap-4 items-start">
+                        <span class="material-symbols-outlined text-tertiary-fixed-dim mt-0.5" style="font-variation-settings: 'FILL' 1;">download</span>
+                        <p><strong>결과 저장 및 다시 하기:</strong> 결정된 순서는 1, 2, 3위에 특별한 표시와 함께 나타납니다. '이미지 저장' 버튼을 통해 결과를 간직하거나, '다시 하기' 또는 '명단 수정'을 통해 진행을 계속할 수 있습니다.</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-auto pt-16 pb-8">
+        <div class="text-center space-y-1">
+            <p class="text-sm font-bold text-surface-variant/40 tracking-[0.3em] uppercase">
+                Mystic Oracle Suite
+            </p>
+            <p class="text-[10px] text-surface-variant/20 text-sm font-bold">
+                Divine Sequencing Engine • Protocol v4.3.0
+            </p>
+        </div>
+    </footer>
+
+    <!-- Background Decoration Images -->
+    <div class="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-20">
+        <img alt="Cosmic background" class="w-full h-full object-cover mix-blend-overlay" data-alt="A deep cosmic background representing the void of space, filled with distant nebulae in shades of deep indigo and violet. Subtle, sharp star particles are scattered across the scene with varying brightness, creating a high-fidelity mystical atmosphere. The lighting is low-key and atmospheric, consistent with a premium dark mode UI, evoking a sense of ancient cosmic mystery." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwVmYmMAprYVOf0Q0ircDUuXtmkFrZ85RihJnuB6sNqXyOJvRSXwNYbQbOAlsQMPGsb-L8sh1rr3zZNIjXIgStQs8-3AGUv12ddd1jt_EX7ze4sfmNpxED-xvI5hUZLVIwmAY0pTc6tVBYDTPlZeI3mc_DNFKG4TO-h1np5OnmcGi290Acu0SDOOfM79RcB6iXm0KhHnZA8nvRVwjNEsaFvWUrJc5-x8IXtiHVfHuPJq8GXTArHKo7dIII_H4Cb9laMXvLYtl6-u8"/>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast-container" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const participantsEl = document.getElementById('participants');
+            const inputCountEl = document.getElementById('input-count');
+            const btnDraw = document.getElementById('btn-draw');
+            
+            const inputSection = document.getElementById('input-section');
+            const resultSection = document.getElementById('result-section');
+            const resultList = document.getElementById('result-list');
+            
+            const btnRetry = document.getElementById('btn-retry');
+            const btnEdit = document.getElementById('btn-edit');
+            const btnSave = document.getElementById('btn-save');
+            const captureArea = document.getElementById('capture-area');
+            const resultDateEl = document.getElementById('result-date');
+            
+            const hourglassIconWrapper = document.getElementById('hourglass-icon-wrapper').firstElementChild;
+            const orbitRing = document.getElementById('orbit-ring');
+
+            function showToast(message) {
+                const toast = document.createElement('div');
+                toast.className = 'bg-error-container text-on-error-container px-4 py-2 rounded-lg text-sm font-bold text-sm shadow-lg transform transition-all duration-300 opacity-0 translate-y-4';
+                toast.textContent = message;
+                document.getElementById('toast-container').appendChild(toast);
+                
+                requestAnimationFrame(() => {
+                    toast.classList.remove('opacity-0', 'translate-y-4');
+                });
+
+                setTimeout(() => {
+                    toast.classList.add('opacity-0', 'translate-y-4');
+                    setTimeout(() => toast.remove(), 300);
+                }, 3000);
+            }
+
+            function updateCount() {
+                const names = participantsEl.value.split('\n').map(n => n.trim()).filter(n => n);
+                inputCountEl.textContent = `${names.length}명`;
+            }
+
+            participantsEl.addEventListener('input', updateCount);
+
+            function generateSequence() {
+                const names = participantsEl.value.split('\n').map(n => n.trim()).filter(n => n);
+                if (names.length < 2) {
+                    showToast('2명 이상의 참가자를 입력해주세요.');
+                    return;
+                }
+
+                // UI animation state
+                btnDraw.classList.add('opacity-50', 'pointer-events-none');
+                btnDraw.innerHTML = `<span class="material-symbols-outlined text-white animate-spin">refresh</span><span class="text-2xl md:text-3xl font-bold text-white">결정 중...</span>`;
+                
+                hourglassIconWrapper.classList.add('rotate-180');
+                orbitRing.classList.add('animate-[spin_1s_linear_infinite]');
+                orbitRing.classList.replace('border-outline/20', 'border-tertiary-fixed-dim/50');
+                
+                setTimeout(() => {
+                    // Shuffle array (Fisher-Yates)
+                    for (let i = names.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [names[i], names[j]] = [names[j], names[i]];
+                    }
+
+                    // Build result HTML
+                    resultList.innerHTML = '';
+                    names.forEach((name, idx) => {
+                        const item = document.createElement('div');
+                        item.className = 'w-full bg-black/20 border border-white/5 rounded-lg p-4 flex items-center gap-4 transform transition-all duration-500 opacity-0 translate-y-4';
+                        
+                        // Top 3 gets special styling
+                        const isTop3 = idx < 3;
+                        const rankColor = idx === 0 ? 'text-yellow-400' : idx === 1 ? 'text-gray-300' : idx === 2 ? 'text-orange-300' : 'text-white/50';
+                        const trophyIcon = isTop3 ? `<span class="material-symbols-outlined ${rankColor}">workspace_premium</span>` : '';
+                        
+                        item.innerHTML = `
+                            <div class="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center text-2xl md:text-3xl font-bold ${rankColor} border border-white/10 shrink-0">
+                                ${idx + 1}
+                            </div>
+                            <div class="text-2xl md:text-3xl font-bold text-lg text-white/90 flex-1 truncate">${name}</div>
+                            ${trophyIcon}
+                        `;
+                        resultList.appendChild(item);
+                    });
+
+                    const now = new Date();
+                    resultDateEl.textContent = `${now.getFullYear()}.${String(now.getMonth()+1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')}`;
+
+                    // Switch sections
+                    inputSection.classList.add('hidden');
+                    resultSection.classList.remove('hidden');
+                    
+                    // Reset animations
+                    orbitRing.classList.remove('animate-[spin_1s_linear_infinite]');
+                    orbitRing.classList.replace('border-tertiary-fixed-dim/50', 'border-outline/20');
+                    btnDraw.classList.remove('opacity-50', 'pointer-events-none');
+                    btnDraw.innerHTML = `
+                        <div class="absolute inset-0 bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                        <span class="material-symbols-outlined text-white" data-icon="auto_fix_high" style="font-variation-settings: 'FILL' 1;">auto_fix_high</span>
+                        <span class="text-2xl md:text-3xl font-bold text-white">순서 정하기</span>
+                        <span class="material-symbols-outlined text-white/40 group-hover:translate-x-1 transition-transform" data-icon="chevron_right">chevron_right</span>
+                    `;
+
+                    // Fade in results
+                    requestAnimationFrame(() => {
+                        resultSection.classList.add('opacity-100');
+                        // Stagger item animations
+                        const items = resultList.children;
+                        for (let i = 0; i < items.length; i++) {
+                            setTimeout(() => {
+                                items[i].classList.remove('opacity-0', 'translate-y-4');
+                            }, i * 100);
+                        }
+                    });
+
+                }, 1500);
+            }
+
+            btnDraw.addEventListener('click', generateSequence);
+
+            btnRetry.addEventListener('click', () => {
+                hourglassIconWrapper.classList.remove('rotate-180');
+                // Hide result items
+                const items = resultList.children;
+                for (let i = 0; i < items.length; i++) {
+                    items[i].classList.add('opacity-0');
+                }
+                setTimeout(() => {
+                    generateSequence();
+                }, 300);
+            });
+
+            btnEdit.addEventListener('click', () => {
+                hourglassIconWrapper.classList.remove('rotate-180');
+                resultSection.classList.remove('opacity-100');
+                setTimeout(() => {
+                    resultSection.classList.add('hidden');
+                    inputSection.classList.remove('hidden');
+                }, 500);
+            });
+
+            btnSave.addEventListener('click', () => {
+                const origText = btnSave.innerHTML;
+                btnSave.innerHTML = `<span class="material-symbols-outlined text-[20px] text-white animate-spin">refresh</span><span class="text-sm font-bold text-white font-bold">저장 중...</span>`;
+                btnSave.classList.add('opacity-70', 'pointer-events-none');
+                
+                html2canvas(captureArea, {
+                    backgroundColor: '#191b23',
+                    scale: 2 
+                }).then(canvas => {
+                    const link = document.createElement('a');
+                    link.download = `Sequence_${new Date().getTime()}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    
+                    btnSave.innerHTML = `<span class="material-symbols-outlined text-white text-[20px]">check</span><span class="text-sm font-bold text-white font-bold">저장 완료!</span>`;
+                    setTimeout(() => {
+                        btnSave.innerHTML = origText;
+                        btnSave.classList.remove('opacity-70', 'pointer-events-none');
+                    }, 2000);
+                }).catch(err => {
+                    console.error(err);
+                    btnSave.innerHTML = origText;
+                    btnSave.classList.remove('opacity-70', 'pointer-events-none');
+                    showToast('이미지 저장에 실패했습니다.');
+                });
+            });
+            
+            updateCount();
+        });
+    </script>
+</body>
+</html>

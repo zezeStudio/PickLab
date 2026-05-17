@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>술자리 게임 모음</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body {
+            background: radial-gradient(circle at top center, #1a1b2e 0%, #0a0a0f 100%);
+            min-height: 100vh;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            border-color: rgba(212, 220, 255, 0.3);
+            transform: translateY(-4px);
+        }
+        .neon-glow-primary {
+            box-shadow: 0 0 20px rgba(26, 86, 219, 0.4);
+        }
+        .neon-glow-tertiary {
+            box-shadow: 0 0 20px rgba(133, 43, 0, 0.4);
+        }
+        .neon-text-primary {
+            text-shadow: 0 0 10px rgba(181, 196, 255, 0.6);
+        }
+        .mystic-particles {
+            background-image: radial-gradient(circle, #ffffff 1px, transparent 1px);
+            background-size: 50px 50px;
+            opacity: 0.1;
+        }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary": "#ffffff",
+                    "on-background": "#191b23",
+                    "surface-container-high": "#e7e7f3",
+                    "primary-container": "#1a56db",
+                    "background": "#faf8ff",
+                    "on-primary": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "primary-fixed": "#dbe1ff",
+                    "on-surface-variant": "#434654",
+                    "tertiary-container": "#ad3b00",
+                    "surface-dim": "#d9d9e4",
+                    "on-tertiary-fixed-variant": "#802a00",
+                    "inverse-primary": "#b5c4ff",
+                    "on-secondary": "#ffffff",
+                    "surface": "#faf8ff",
+                    "outline-variant": "#c3c5d7",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-container-low": "#f3f3fe",
+                    "surface-container": "#ededf8",
+                    "on-tertiary-fixed": "#380d00",
+                    "on-surface": "#191b23",
+                    "secondary": "#555f6d",
+                    "tertiary-fixed": "#ffdbcf",
+                    "surface-variant": "#e2e1ed",
+                    "primary-fixed-dim": "#b5c4ff",
+                    "on-primary-fixed": "#00174d",
+                    "on-primary-fixed-variant": "#003dab",
+                    "surface-tint": "#1353d8",
+                    "on-secondary-container": "#596372",
+                    "on-primary-container": "#d4dcff",
+                    "inverse-surface": "#2e3039",
+                    "surface-bright": "#faf8ff",
+                    "on-secondary-fixed": "#121c28",
+                    "on-error": "#ffffff",
+                    "secondary-container": "#d6e0f1",
+                    "outline": "#737686",
+                    "error": "#ba1a1a",
+                    "error-container": "#ffdad6",
+                    "primary": "#003fb1",
+                    "tertiary-fixed-dim": "#ffb59a",
+                    "secondary-fixed-dim": "#bdc7d8",
+                    "inverse-on-surface": "#f0f0fb",
+                    "on-secondary-fixed-variant": "#3e4755",
+                    "tertiary": "#852b00",
+                    "secondary-fixed": "#d9e3f4",
+                    "surface-container-highest": "#e2e1ed",
+                    "on-tertiary-container": "#ffd4c5"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "base": "4px",
+                    "margin-mobile": "1rem",
+                    "gutter": "1.5rem",
+                    "xl": "3rem",
+                    "max-width": "1440px",
+                    "sm": "1rem",
+                    "xs": "0.5rem",
+                    "margin-desktop": "2.5rem",
+                    "lg": "2rem",
+                    "md": "1.5rem"
+            },
+            "fontFamily": {
+                    "headline-xl": ["Plus Jakarta Sans"],
+                    "headline-lg": ["Plus Jakarta Sans"],
+                    "body-lg": ["Inter"],
+                    "body-sm": ["Inter"],
+                    "headline-lg-mobile": ["Plus Jakarta Sans"],
+                    "label-sm": ["Inter"],
+                    "label-md": ["Inter"],
+                    "display-lg": ["Plus Jakarta Sans"],
+                    "body-md": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-xl": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                    "headline-lg": ["24px", {"lineHeight": "1.3", "letterSpacing": "0em", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                    "headline-lg-mobile": ["20px", {"lineHeight": "1.3", "letterSpacing": "0em", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                    "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                    "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="text-on-primary selection:bg-primary-container selection:text-white overflow-x-hidden pt-[80px]">
+    <!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-[100] bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 text-on-surface">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-8 lg:px-12 py-4">
+<div class="flex items-center gap-6 lg:gap-12">
+<a class="text-xl md:text-2xl font-bold text-primary dark:text-primary-fixed shrink-0" href="/">PickLab</a>
+<nav class="hidden lg:flex gap-8 items-center">
+  
+  <!-- Category 1: Quick Decisions -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/coinflip/">코인플립</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/dice/">운명의 주사위</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/magiclamp/">요술램프</a>
+    </div>
+  </div>
+
+  <!-- Category 2: Games & Roulette -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/bomb/">폭탄터트리기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/ladder/">운명의 사다리</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/roulette/">룰렛돌리기</a>
+    </div>
+  </div>
+
+  <!-- Category 3: Group & Team -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-56 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/number/">숫자 생성기</a>
+    </div>
+  </div>
+</nav>
+</div>
+<div class="flex items-center gap-4 md:gap-6 lg:hidden">
+<button id="mobile-menu-btn" class="p-2 text-on-surface hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden lg:hidden bg-surface dark:bg-surface-container-low border-b border-outline-variant/30 flex flex-col shadow-lg max-h-[80vh] overflow-y-auto">
+  <div class="py-2 border-b border-outline-variant/10">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/coinflip/">코인플립</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/dice/">운명의 주사위</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/magiclamp/">요술램프</a>
+  </div>
+  <div class="py-2 border-b border-outline-variant/10">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/bomb/">폭탄터트리기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/ladder/">운명의 사다리</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/roulette/">룰렛돌리기</a>
+  </div>
+  <div class="py-2">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/number/">숫자 생성기</a>
+  </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileBtn.querySelector('.material-symbols-outlined');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.textContent = 'menu';
+                } else {
+                    icon.textContent = 'close';
+                }
+            });
+        }
+        
+        // Highlight active menu item
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('header nav flex a, header #mobile-menu a, header .group a');
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href !== '/' && currentPath.startsWith(href)) {
+                link.classList.add('text-primary', 'dark:text-primary-fixed', 'font-bold', 'bg-surface-container-highest');
+            }
+        });
+    });
+</script>
+</header>
+<!-- Background Particle Layer -->
+<div class="fixed inset-0 mystic-particles pointer-events-none"></div>
+<main id="view-menu" class="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 md:px-8 lg:px-12 md:px-4 md:px-8 lg:px-12 py-12 md:py-24 max-w-7xl mx-auto transition-all duration-500">
+<!-- Header Section -->
+<header class="text-center mb-12 md:mb-16 mt-8">
+<div class="inline-flex items-center justify-center p-4 bg-primary-container/20 rounded-full mb-6 neon-glow-primary border border-primary-container/30">
+<span class="material-symbols-outlined text-4xl text-inverse-primary" data-icon="liquor">liquor</span>
+</div>
+<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-inverse-primary neon-text-primary tracking-tighter mb-2">
+                술자리 게임 모음
+            </h1>
+<p class="text-2xl md:text-3xl font-bold text-primary-fixed-dim opacity-80">
+                랜덤과 복불복이 함께하는 즐거운 술자리
+            </p>
+</header>
+<!-- Game Modes Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full mb-12 md:mb-16">
+<!-- Mode 1: Fate's Shot -->
+<div id="mode-fate" class="glass-card p-6 md:p-8 rounded-xl flex flex-col items-center text-center group cursor-pointer border-t-2 border-t-primary transition-all duration-300 hover:-translate-y-2">
+<div class="w-24 h-24 mb-6 relative">
+<div class="absolute inset-0 bg-primary/20 blur-xl rounded-full group-hover:bg-primary/40 transition-all"></div>
+<div class="relative z-10 w-full h-full flex items-center justify-center">
+<span class="material-symbols-outlined text-6xl text-primary-fixed block transition-transform group-hover:scale-110" data-icon="local_bar">local_bar</span>
+</div>
+</div>
+<h3 class="text-2xl md:text-3xl font-bold text-white mb-2">술병 돌리기</h3>
+<p class="text-sm md:text-base text-inverse-primary font-bold mb-4">병이 가리키는 사람이 마신다!</p>
+<p class="text-xs md:text-sm text-outline-variant opacity-70">
+                    둥그렇게 앉아서 술병을 돌리세요. 멈추는 곳을 가리키는 사람이 벌칙을 받습니다.
+                </p>
+</div>
+<!-- Mode 2: Truth or Denial -->
+<div id="mode-truth" class="glass-card p-6 md:p-8 rounded-xl flex flex-col items-center text-center group cursor-pointer border-t-2 border-t-tertiary transition-all duration-300 hover:-translate-y-2">
+<div class="w-24 h-24 mb-6 relative">
+<div class="absolute inset-0 bg-tertiary/20 blur-xl rounded-full group-hover:bg-tertiary/40 transition-all"></div>
+<div class="relative z-10 w-full h-full flex items-center justify-center">
+<span class="material-symbols-outlined text-6xl text-tertiary-fixed block transition-transform group-hover:scale-110" data-icon="style">style</span>
+</div>
+</div>
+<h3 class="text-2xl md:text-3xl font-bold text-white mb-2">진실게임</h3>
+<p class="text-sm md:text-base text-tertiary-fixed-dim font-bold mb-4">솔직하게 답하거나 마시거나!</p>
+<p class="text-xs md:text-sm text-outline-variant opacity-70">
+                    카드가 던지는 질문에 답하세요. 대답하기 싫다면 술을 마셔야 합니다!
+                </p>
+</div>
+<!-- Mode 3: Oracle's Penalty -->
+<div id="mode-oracle" class="glass-card p-6 md:p-8 rounded-xl flex flex-col items-center text-center group cursor-pointer border-t-2 border-t-secondary transition-all duration-300 hover:-translate-y-2">
+<div class="w-24 h-24 mb-6 relative">
+<div class="absolute inset-0 bg-secondary/20 blur-xl rounded-full group-hover:bg-secondary/40 transition-all"></div>
+<div class="relative z-10 w-full h-full flex items-center justify-center">
+<span class="material-symbols-outlined text-6xl text-secondary-fixed block transition-transform group-hover:scale-110" data-icon="auto_awesome">auto_awesome</span>
+</div>
+</div>
+<h3 class="text-2xl md:text-3xl font-bold text-white mb-2">랜덤 벌칙 뽑기</h3>
+<p class="text-sm md:text-base text-secondary-fixed-dim font-bold mb-4">운명의 랜덤 벌칙</p>
+<p class="text-xs md:text-sm text-outline-variant opacity-70">
+                    구슬을 터치해 무작위 벌칙을 뽑으세요. 누구든 예외는 없습니다.
+                </p>
+</div>
+</div>
+<!-- Common User Guide -->
+<div class="mt-8 w-full max-w-2xl bg-surface/30 backdrop-blur-md rounded-2xl p-6 border border-white/5 text-left">
+    <h3 class="text-xl md:text-2xl font-bold text-white mb-4 flex items-center gap-2"><span class="material-symbols-outlined text-primary-fixed">menu_book</span> 사용 가이드</h3>
+    <ul class="text-white/70 space-y-3 text-sm md:text-base list-disc list-inside">
+        <li>게임을 진행할 사람들과 둥그렇게 혹은 마주보고 모여 앉으세요.</li>
+        <li>위 3가지 모드 중 원하는 게임을 선택해 입장합니다.</li>
+        <li>각 게임은 진행자의 안내나 화면의 지시에 따라 공평하게 진행하세요.</li>
+        <li>벌칙이 정해지면 뒤끝 없이 즐겁게 수행하는 것이 꿀잼 포인트!</li>
+    </ul>
+</div>
+<!-- Interactive Shuffle Button -->
+<div class="flex flex-col items-center gap-4 hidden">
+<button class="px-xl py-6 bg-primary hover:bg-primary-container text-white text-2xl md:text-3xl font-bold rounded-full neon-glow-primary transition-all active:scale-95 flex items-center gap-4 group">
+<span class="material-symbols-outlined text-3xl group-hover:rotate-180 transition-transform duration-500" data-icon="cached">cached</span>
+<span>Shuffle Fate (운명 섞기)</span>
+</button>
+<p class="text-xs font-bold text-outline-variant opacity-50 tracking-widest uppercase">
+                Tap to begin the ritual
+            </p>
+</div>
+</main>
+
+<!-- Game View: Fate's Shot -->
+<main id="view-fate" class="hidden relative z-10 flex flex-col items-center justify-center min-h-screen px-4 md:px-8 lg:px-12 py-12 md:py-24 max-w-3xl mx-auto text-center">
+    <button class="absolute top-28 left-6 text-white/50 hover:text-white transition-colors flex items-center gap-2" onclick="showMenu()">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+        <span class="text-sm font-bold text-sm">돌아가기</span>
+    </button>
+    <div class="mb-12 mt-16 md:mt-0">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-4xl text-primary-fixed neon-text-primary mb-2">술병 돌리기</h2>
+        <p class="text-base md:text-lg text-white/70 mb-4">술병 입구가 가리키는 사람이 벌칙을 받습니다! 둥그렇게 앉은 뒤 시작해 하세요.</p>
+    </div>
+    
+    <div class="relative w-[300px] h-[300px] md:w-[460px] md:h-[460px] mb-12 flex items-center justify-center border-4 border-primary/20 rounded-full glass-card">
+        <!-- Bottle / Pointer -->
+        <div id="fate-bottle" class="transition-transform ease-out origin-center flex flex-col items-center z-10 w-full h-full justify-center">
+            <img src="SpinBottle.png" alt="Spin Bottle" class="w-[280px] md:w-[448px] max-w-none h-auto drop-shadow-[0_0_15px_rgba(219,225,255,0.8)] pointer-events-none">
+        </div>
+        <!-- Center pivot point -->
+        <div class="absolute w-4 h-4 rounded-full bg-primary-fixed-dim/50 shadow-[0_0_10px_#b5c4ff] z-20"></div>
+    </div>
+    
+    <div class="h-24 flex items-center justify-center w-full mb-8">
+        <p id="fate-result" class="text-3xl md:text-4xl lg:text-5xl font-bold text-2xl md:text-3xl text-white opacity-0 transition-opacity duration-300">결과가 여기에 표시됩니다.</p>
+    </div>
+
+    <button id="btn-spin-fate" class="px-10 py-5 bg-primary hover:bg-primary-container text-white text-2xl md:text-3xl font-bold rounded-full neon-glow-primary transition-all active:scale-95 flex items-center gap-4 mb-12">
+        <span class="material-symbols-outlined" data-icon="cached">cached</span>
+        <span>운명의 잔 돌리기</span>
+    </button>
+    
+    <div class="mt-8 bg-primary/10 border border-primary/20 rounded-xl p-4 text-left w-full max-w-lg">
+        <h4 class="text-primary-fixed font-bold mb-2 text-sm flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">info</span> 게임 방법</h4>
+        <ul class="text-white/60 text-sm list-disc list-inside space-y-1 block">
+            <li>참가자들이 스마트폰을 가운데 두고 둥그렇게 앉습니다.</li>
+            <li>'운명의 잔 돌리기' 버튼을 누르면 술병이 회전합니다.</li>
+            <li>술병이 멈췄을 때 병 입구가 가리키는 사람이 화면에 나온 벌칙을 수행합니다.</li>
+        </ul>
+    </div>
+</main>
+
+<!-- Game View: Truth or Denial -->
+<main id="view-truth" class="hidden relative z-10 flex flex-col items-center justify-center min-h-screen px-4 md:px-8 lg:px-12 py-12 md:py-24 max-w-5xl mx-auto text-center pt-24 md:pt-0">
+    <button class="absolute top-28 left-6 text-white/50 hover:text-white transition-colors flex items-center gap-2" onclick="showMenu()">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+        <span class="text-sm font-bold text-sm">돌아가기</span>
+    </button>
+    <div class="mb-12">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-4xl text-tertiary-fixed neon-glow-tertiary shadow-none mb-2" style="text-shadow: 0 0 10px rgba(255,219,207,0.6);">진실게임</h2>
+        <p class="text-base md:text-lg text-white/70 mb-4">진실을 말하기 싫다면 벌칙주를 마시면 됩니다. 가장 끌리는 카드를 선택하세요.</p>
+    </div>
+
+    <!-- Cards Grid -->
+    <div id="truth-cards" class="flex flex-wrap justify-center gap-6 mb-12">
+        <!-- 3 Cards generated in JS -->
+    </div>
+
+    <div id="truth-actions" class="hidden flex gap-4 my-8">
+        <button id="btn-truth-next" class="px-8 py-4 bg-tertiary hover:bg-tertiary-container text-white text-2xl md:text-3xl font-bold rounded-xl transition-all active:scale-95">
+            다음 카드 뽑기
+        </button>
+    </div>
+
+    <div class="mt-8 bg-tertiary/10 border border-tertiary/20 rounded-xl p-4 text-left w-full max-w-lg">
+        <h4 class="text-tertiary-fixed font-bold mb-2 text-sm flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">info</span> 게임 방법</h4>
+        <ul class="text-white/60 text-sm list-disc list-inside space-y-1 block">
+            <li>질문을 받을 대상자(술래) 한 명을 정합니다.</li>
+            <li>술래가 자신이 대답할 카드 한 장을 무작위로 고릅니다.</li>
+            <li>카드에 나온 질문에 솔직하게 대답하거나, 대답을 거부하고 벌칙주를 마십니다.</li>
+        </ul>
+    </div>
+</main>
+
+<!-- Game View: Oracle's Penalty -->
+<main id="view-oracle" class="hidden relative z-10 flex flex-col items-center justify-center min-h-screen px-4 md:px-8 lg:px-12 py-12 md:py-24 max-w-3xl mx-auto text-center pt-24 md:pt-0">
+    <button class="absolute top-28 left-6 text-white/50 hover:text-white transition-colors flex items-center gap-2" onclick="showMenu()">
+        <span class="material-symbols-outlined text-[20px]">arrow_back</span>
+        <span class="text-sm font-bold text-sm">돌아가기</span>
+    </button>
+    <div class="mb-12">
+        <h2 class="text-4xl md:text-5xl lg:text-6xl font-bold text-4xl text-secondary-fixed mb-2 drop-shadow-[0_0_10px_rgba(217,227,244,0.6)]">랜덤 벌칙 뽑기</h2>
+        <p class="text-base md:text-lg text-white/70 mb-4">구슬을 터치하여 랜덤 벌칙을 뽑으세요. 나온 벌칙은 무조건 따라야 합니다!</p>
+    </div>
+    
+    <div class="relative w-64 h-64 flex items-center justify-center mb-12">
+        <div id="oracle-orb" class="absolute inset-0 bg-gradient-to-tr from-secondary to-secondary-fixed opacity-70 blur-md rounded-full animate-pulse transition-all duration-500 shadow-[0_0_40px_rgba(85,95,109,0.8)] cursor-pointer"></div>
+        <div id="oracle-orb-inner" class="relative z-10 w-48 h-48 bg-black/40 rounded-full backdrop-blur-xl border border-white/20 flex flex-col items-center justify-center text-white/50 hover:text-white/80 transition-colors cursor-pointer">
+            <span class="material-symbols-outlined text-[60px] animate-bounce">touch_app</span>
+            <span class="text-sm font-bold mt-2">터치하여 해방</span>
+        </div>
+    </div>
+    
+    <div id="oracle-result-box" class="w-full max-w-xl min-h-[150px] glass-card rounded-2xl p-8 flex flex-col items-center justify-center transition-all duration-500 transform scale-95 opacity-0 mb-12">
+        <p id="oracle-result" class="text-2xl md:text-3xl font-bold text-2xl md:text-3xl text-secondary-fixed-dim drop-shadow-md break-keep">벌칙이 해방됩니다.</p>
+    </div>
+
+    <div class="mt-8 bg-secondary/10 border border-secondary/20 rounded-xl p-4 text-left w-full max-w-lg">
+        <h4 class="text-secondary-fixed font-bold mb-2 text-sm flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">info</span> 게임 방법</h4>
+        <ul class="text-white/60 text-sm list-disc list-inside space-y-1 block">
+            <li>벌칙을 받을 사람 한 명을 지목하거나, 모두가 참여하는 벌칙 뽑기 시간을 가집니다.</li>
+            <li>중앙의 구슬을 터치하면 무작위로 벌칙이 나타납니다.</li>
+            <li>나온 벌칙을 즉시 모두 함께 수행합니다.</li>
+        </ul>
+    </div>
+</main>
+<!-- Visual Accents (Mystical Blobs) -->
+<div class="fixed top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/20 blur-[120px] rounded-full pointer-events-none"></div>
+<div class="fixed bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-tertiary/10 blur-[120px] rounded-full pointer-events-none"></div>
+<!-- Footer Component from JSON -->
+<footer class="w-full flex flex-col items-center gap-2 py-8 px-4 md:px-8 lg:px-12 bg-transparent relative z-10">
+<div class="text-2xl font-bold font-bold text-primary dark:text-inverse-primary tracking-tighter opacity-70">
+            © 2024 Mystic Oracle Suite
+        </div>
+<div class="flex gap-6 text-xs md:text-sm text-on-surface-variant dark:text-outline-variant opacity-70">
+<a class="hover:text-primary dark:hover:text-inverse-primary transition-colors duration-300" href="#">Terms of Fate</a>
+<a class="hover:text-primary dark:hover:text-inverse-primary transition-colors duration-300" href="#">Privacy Rituals</a>
+</div>
+</footer>
+
+<style>
+/* 3D Animations */
+.perspective {
+    perspective: 1000px;
+}
+.truth-card {
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+.truth-card.flipped {
+    transform: rotateY(180deg);
+}
+.truth-face {
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+.truth-back {
+    transform: rotateY(180deg);
+}
+.vibrate {
+    animation: vibrate 0.3s linear infinite both;
+}
+@keyframes vibrate {
+  0% { transform: translate(0) }
+  20% { transform: translate(-2px, 2px) }
+  40% { transform: translate(-2px, -2px) }
+  60% { transform: translate(2px, 2px) }
+  80% { transform: translate(2px, -2px) }
+  100% { transform: translate(0) }
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.animate-\\[fadeIn_0\\.5s_ease-out\\] {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+</style>
+<script>
+    const VIEWS = {
+        menu: document.getElementById('view-menu'),
+        fate: document.getElementById('view-fate'),
+        truth: document.getElementById('view-truth'),
+        oracle: document.getElementById('view-oracle'),
+    };
+
+    function showMenu() {
+        Object.values(VIEWS).forEach(v => {
+            if(v) v.classList.add('hidden');
+        });
+        if(VIEWS.menu) VIEWS.menu.classList.remove('hidden');
+    }
+
+    function switchView(viewId) {
+        Object.values(VIEWS).forEach(v => {
+            if(v) v.classList.add('hidden');
+        });
+        if(VIEWS[viewId]) {
+            VIEWS[viewId].classList.remove('hidden');
+            VIEWS[viewId].classList.add('animate-[fadeIn_0.5s_ease-out]');
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- 1. Fate's Shot ---
+        let currentRotation = 0;
+        let isSpinning = false;
+        const btnSpinFate = document.getElementById('btn-spin-fate');
+        const fateBottle = document.getElementById('fate-bottle');
+        const fateResult = document.getElementById('fate-result');
+
+        btnSpinFate.addEventListener('click', () => {
+            if(isSpinning) return;
+            isSpinning = true;
+            fateResult.classList.remove('opacity-100');
+            fateResult.classList.add('opacity-0');
+            
+            // Randomly spin 5-8 times plus random angle
+            const extraSpins = Math.floor(Math.random() * 4) + 5;
+            const extraAngle = Math.floor(Math.random() * 360);
+            const totalRotation = extraSpins * 360 + extraAngle;
+            currentRotation += totalRotation;
+
+            fateBottle.style.transitionDuration = '3000ms';
+            fateBottle.style.transform = `rotate(${currentRotation}deg)`;
+
+            setTimeout(() => {
+                fateResult.innerHTML = `<span class="text-sm text-sm font-bold tracking-widest uppercase opacity-60 block mb-2">운명이 결정되었습니다!</span><span class="text-primary-fixed font-bold">당첨! 운명의 한 잔을 마시세요 🥃</span>`;
+                fateResult.classList.remove('opacity-0');
+                fateResult.classList.add('opacity-100');
+                isSpinning = false;
+            }, 3000);
+        });
+
+        // --- 2. Truth or Denial ---
+        const TRUTH_QUESTIONS = [
+            "가장 최근에 키스한 사람은 언제인가?", "이 중에 첫인상이 가장 안 좋았던 사람은?",
+            "자신의 술버릇은 무엇인가?", "지금 가장 마음에 드는 이성이 이 자리에 있는가?",
+            "학창시절 가장 큰 일탈은?", "가장 숨기고 싶은 비밀 하나는?",
+            "최근에 가장 크게 울었던 이유는?", "이 중에서 단 둘이 1박 2일 여행 갈 사람 한 명은?",
+            "가장 최근에 한 거짓말은?", "가장 많이 차여본 횟수는?", "주사로 흑역사를 생성한 적이 있는가? 썰 하나 풀기"
+        ];
+        const truthCardsContainer = document.getElementById('truth-cards');
+        const truthActions = document.getElementById('truth-actions');
+        let cardFlipped = false;
+
+        function renderTruthCards() {
+            truthCardsContainer.innerHTML = '';
+            cardFlipped = false;
+            truthActions.classList.add('hidden');
+            
+            // Generate 3 random cards
+            const shuffledQ = [...TRUTH_QUESTIONS].sort(() => 0.5 - Math.random());
+            
+            for(let i=0; i<3; i++) {
+                const card = document.createElement('div');
+                card.className = "relative w-40 h-56 perspective group";
+                card.innerHTML = `
+                    <div class="truth-card w-full h-full relative" onclick="flipCard(this, '${shuffledQ[i].replace(/'/g,"\\'").replace(/"/g,'&quot;')}')">
+                        <div class="truth-face absolute inset-0 glass-card border-tertiary/30 rounded-xl flex items-center justify-center bg-tertiary/10 group-hover:bg-tertiary/20">
+                            <span class="material-symbols-outlined text-[64px] text-tertiary-fixed opacity-60">help_outline</span>
+                        </div>
+                        <div class="truth-face truth-back absolute inset-0 glass-card border-tertiary-fixed/50 rounded-xl flex flex-col items-center justify-center p-4 bg-[#191b23] text-center shadow-[0_0_20px_rgba(255,219,207,0.2)]">
+                            <span class="material-symbols-outlined text-[32px] text-tertiary mb-2">style</span>
+                            <p class="text-sm md:text-base font-bold text-white break-keep answer-text leading-relaxed tracking-wide"></p>
+                        </div>
+                    </div>
+                `;
+                truthCardsContainer.appendChild(card);
+            }
+        }
+
+        window.flipCard = function(el, question) {
+            if(cardFlipped) return; // Only open one per round
+            cardFlipped = true;
+            el.classList.add('flipped');
+            el.querySelector('.answer-text').textContent = question;
+            
+            // Fade out others slightly
+            document.querySelectorAll('.truth-card').forEach(c => {
+                if(c !== el) {
+                    c.parentElement.style.opacity = '0.3';
+                    c.classList.remove('cursor-pointer');
+                }
+            });
+            setTimeout(() => {
+                truthActions.classList.remove('hidden');
+                truthActions.classList.add('animate-[fadeIn_0.5s_ease-out]');
+            }, 600);
+        };
+
+        document.getElementById('btn-truth-next').addEventListener('click', renderTruthCards);
+
+
+        // --- 3. Oracle's Penalty ---
+        const PENALTIES = [
+            "다 같이 원샷!", "양 옆 사람과 러브샷", "369 게임 시작 (틀리면 한 잔)",
+            "눈치게임 시작 (걸리면 한 잔)", "아이엠그라운드 자기소개 하기 (틀리면 한 잔)",
+            "나 빼고 다 한 잔씩", "가장 나이 많은 사람에게 한 잔 따라주고 같이 마시기",
+            "지정하는 한 사람과 원샷", "1분 동안 외국어 사용 금지 (걸리면 한 잔)",
+            "아무나 지목해서 칭찬 3가지 하기", "혼자 고독하게 한 잔 마시기",
+            "시계 방향으로 돌아가며 한 모금씩 마시기"
+        ];
+        const oracleOrb = document.getElementById('oracle-orb');
+        const oracleOrbInner = document.getElementById('oracle-orb-inner');
+        const oracleResultBox = document.getElementById('oracle-result-box');
+        const oracleResult = document.getElementById('oracle-result');
+        let isOracleExtracting = false;
+
+        function triggerOracle() {
+            if(isOracleExtracting) return;
+            isOracleExtracting = true;
+            oracleResultBox.classList.remove('scale-100', 'opacity-100');
+            oracleResultBox.classList.add('scale-95', 'opacity-0');
+            oracleOrbInner.innerHTML = '<span class="material-symbols-outlined text-[60px] animate-spin">cyclone</span><span class="text-sm font-bold mt-2">해방 중...</span>';
+            
+            oracleOrb.classList.add('vibrate', 'scale-110');
+            oracleOrb.classList.replace('from-secondary', 'from-white');
+
+            setTimeout(() => {
+                oracleOrb.classList.remove('vibrate', 'scale-110');
+                oracleOrb.classList.replace('from-white', 'from-secondary');
+                oracleOrbInner.innerHTML = '<span class="material-symbols-outlined text-[60px] animate-bounce">touch_app</span><span class="text-sm font-bold mt-2">다시 터치</span>';
+                
+                const randomPenalty = PENALTIES[Math.floor(Math.random() * PENALTIES.length)];
+                oracleResult.innerHTML = '<span class="block text-white/50 text-sm mb-4 uppercase tracking-widest">신탁의 결과</span>' + randomPenalty;
+                
+                oracleResultBox.classList.remove('scale-95', 'opacity-0');
+                oracleResultBox.classList.add('scale-100', 'opacity-100');
+                isOracleExtracting = false;
+            }, 1500);
+        }
+
+        oracleOrb.addEventListener('click', triggerOracle);
+        oracleOrbInner.addEventListener('click', triggerOracle);
+
+        // Map menu clicks to views
+        document.getElementById('mode-fate').addEventListener('click', () => switchView('fate'));
+        document.getElementById('mode-truth').addEventListener('click', () => { renderTruthCards(); switchView('truth'); });
+        document.getElementById('mode-oracle').addEventListener('click', () => switchView('oracle'));
+        
+        window.showMenu = showMenu;
+    });
+</script>
+</body></html>

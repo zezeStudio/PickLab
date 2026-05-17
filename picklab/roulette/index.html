@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "outline": "#737686",
+                      "primary": "#003fb1",
+                      "tertiary": "#852b00",
+                      "primary-fixed": "#dbe1ff",
+                      "primary-container": "#1a56db",
+                      "surface-dim": "#d9d9e4",
+                      "surface-container-high": "#e7e7f3",
+                      "surface-container": "#ededf8",
+                      "outline-variant": "#c3c5d7",
+                      "surface-container-highest": "#e2e1ed",
+                      "on-background": "#191b23",
+                      "error-container": "#ffdad6",
+                      "surface-container-low": "#f3f3fe",
+                      "tertiary-fixed-dim": "#ffb59a",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary": "#555f6d",
+                      "on-surface-variant": "#434654",
+                      "error": "#ba1a1a",
+                      "surface": "#faf8ff",
+                      "background": "#faf8ff",
+                      "inverse-primary": "#b5c4ff"
+              },
+              "spacing": {
+                      "max-width": "1440px",
+                      "margin-desktop": "2.5rem",
+                      "xs": "0.5rem",
+                      "margin-mobile": "1rem",
+                      "md": "1.5rem",
+                      "base": "4px",
+                      "lg": "2rem",
+                      "xl": "3rem",
+                      "sm": "1rem",
+                      "gutter": "1.5rem"
+              },
+              "fontFamily": {
+                      "headline-xl": ["Plus Jakarta Sans"],
+                      "label-sm": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "headline-lg-mobile": ["Plus Jakarta Sans"],
+                      "display-lg": ["Plus Jakarta Sans"],
+                      "headline-lg": ["Plus Jakarta Sans"],
+                      "label-md": ["Inter"],
+                      "body-sm": ["Inter"],
+                      "body-md": ["Inter"]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body {
+            background: radial-gradient(circle at center, #1a1b2e 0%, #0d0e1a 100%);
+            overflow-x: hidden;
+            color: white;
+        }
+
+        .mystic-smoke {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.4;
+            pointer-events: none;
+            background-image: radial-gradient(circle at 20% 30%, rgba(0, 63, 177, 0.15) 0%, transparent 50%),
+                              radial-gradient(circle at 80% 70%, rgba(133, 43, 0, 0.1) 0%, transparent 50%);
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+        }
+
+        .wheel-container {
+            perspective: 1200px;
+        }
+
+        .wheel-outer {
+            box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8),
+                        inset 0 0 40px rgba(255, 215, 0, 0.1);
+            border: 8px solid #ffffff;
+            position: relative;
+            transition: transform 5s cubic-bezier(0.2, 0.8, 0.1, 1);
+        }
+
+        .wheel-gold-trim {
+            position: absolute;
+            inset: -4px;
+            border: 4px solid #ddd;
+            border-radius: 9999px;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .spin-button {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .spin-button:hover {
+            box-shadow: 0 0 30px rgba(0, 63, 177, 0.6);
+            transform: scale(1.05);
+        }
+
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        .roulette-bg {
+            transition: background 0.3s ease;
+        }
+    </style>
+</head>
+<body class="min-h-screen">
+
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-[100] bg-black/80 backdrop-blur-md border-b border-white/10 text-white">
+<div class="max-w-max-width mx-auto flex justify-between items-center px-4 md:px-8 lg:px-12 md:px-4 md:px-8 lg:px-12 lg:px-4 md:px-8 lg:px-12 py-4">
+<div class="flex items-center gap-4 md:gap-6 lg:gap-8 md:gap-12 lg:gap-16">
+<a class="text-2xl md:text-3xl font-bold text-lg md:text-xl font-bold md: font-bold text-white shrink-0" href="/">PickLab</a>
+<nav class="hidden lg:flex gap-6 md:gap-8 items-center">
+  <!-- Category 1: Quick Decisions -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-white/80 hover:text-white transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-[#1a1b2e] rounded-xl shadow-xl border border-white/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-white hover:bg-white/10 hover:text-white transition-colors" href="/coinflip/">코인플립</a>
+      <a class="px-4 py-3 text-sm md:text-base text-white hover:bg-white/10 hover:text-white transition-colors" href="/dice/">운명의 주사위</a>
+      <a class="px-4 py-3 text-sm md:text-base text-white hover:bg-white/10 hover:text-white transition-colors" href="/magiclamp/">요술램프</a>
+    </div>
+  </div>
+
+  <!-- Category 2: Games & Roulette -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-white/80 hover:text-white transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-[#1a1b2e] rounded-xl shadow-xl border border-white/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-white hover:bg-white/10 hover:text-white transition-colors" href="/bomb/">폭탄터트리기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-white hover:bg-white/10 hover:text-white transition-colors" href="/ladder/">운명의 사다리</a>
+      <a class="px-4 py-3 text-sm md:text-base text-white hover:bg-white/10 hover:text-white transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-white hover:bg-white/10 hover:text-white transition-colors" href="/roulette/">룰렛돌리기</a>
+    </div>
+  </div>
+
+  <!-- Category 3: Group & Team -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-white/80 hover:text-white transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-56 bg-[#1a1b2e] rounded-xl shadow-xl border border-white/20 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-white hover:bg-white/10 hover:text-white transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-white hover:bg-white/10 hover:text-white transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-white hover:bg-white/10 hover:text-white transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/sequence/">운명의 순서 정하기</a>
+    </div>
+  </div>
+</nav>
+</div>
+<div class="flex items-center gap-4 md:gap-6 lg:hidden">
+<button id="mobile-menu-btn" class="p-2 text-white hover:text-white/80 transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden lg:hidden bg-[#1a1b2e] border-b border-white/20 flex flex-col shadow-lg max-h-[80vh] overflow-y-auto">
+  <div class="py-2 border-b border-white/10">
+    <div class="px-6 py-2 font-bold text-white/50 flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+    </div>
+    <a class="block px-8 py-3 text-lg md:text-xl font-bold text-white hover:bg-white/10 transition-colors" href="/coinflip/">코인플립</a>
+    <a class="block px-8 py-3 text-lg md:text-xl font-bold text-white hover:bg-white/10 transition-colors" href="/dice/">운명의 주사위</a>
+    <a class="block px-8 py-3 text-lg md:text-xl font-bold text-white hover:bg-white/10 transition-colors" href="/magiclamp/">요술램프</a>
+  </div>
+  <div class="py-2 border-b border-white/10">
+    <div class="px-6 py-2 font-bold text-white/50 flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+    </div>
+    <a class="block px-8 py-3 text-lg md:text-xl font-bold text-white hover:bg-white/10 transition-colors" href="/bomb/">폭탄터트리기</a>
+    <a class="block px-8 py-3 text-lg md:text-xl font-bold text-white hover:bg-white/10 transition-colors" href="/ladder/">운명의 사다리</a>
+    <a class="block px-8 py-3 text-lg md:text-xl font-bold text-white hover:bg-white/10 transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+    <a class="block px-8 py-3 text-lg md:text-xl font-bold text-white hover:bg-white/10 transition-colors" href="/roulette/">룰렛돌리기</a>
+  </div>
+  <div class="py-2">
+    <div class="px-6 py-2 font-bold text-white/50 flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+    </div>
+    <a class="block px-8 py-3 text-lg md:text-xl font-bold text-white hover:bg-white/10 transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+    <a class="block px-8 py-3 text-lg md:text-xl font-bold text-white hover:bg-white/10 transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="block px-8 py-3 text-lg md:text-xl font-bold text-white hover:bg-white/10 transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/sequence/">운명의 순서 정하기</a>
+  </div>
+</div>
+</header>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    });
+</script>
+
+
+<div class="mystic-smoke"></div>
+<main class="flex flex-col lg:flex-row min-h-screen pt-24 md:pt-32 p-4 md:p-8 lg:p-12 gap-8 md:gap-12 items-center justify-center">
+<div class="flex-1 w-full max-w-[600px] flex flex-col items-center gap-6 md:gap-8">
+<header class="text-center mb-4 md:mb-6">
+<h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-2 tracking-tight">운명의 룰렛</h1>
+<p class="text-xs md:text-sm text-white/60 uppercase tracking-[0.2em]">Wheel of Fate</p>
+</header>
+
+<div class="wheel-container relative w-full aspect-square max-w-[300px] sm:max-w-[400px] mt-4 md:mt-8">
+    <div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-8 z-30 filter drop-shadow-[0_6px_6px_rgba(0,0,0,0.6)]">
+        <svg width="32" height="44" viewBox="0 0 32 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M16 44L0 12C0 5.37258 5.37258 0 12 0H20C26.6274 0 32 5.37258 32 12L16 44Z" fill="white"/>
+            <path d="M16 38L4 12C4 7.58172 7.58172 4 12 4H20C24.4183 4 28 7.58172 28 12L16 38Z" fill="#e2e8f0"/>
+        </svg>
+    </div>
+    <div id="wheel" class="wheel-outer w-full h-full rounded-full overflow-hidden relative flex items-center justify-center">
+        <div class="wheel-gold-trim"></div>
+        <div id="wheel-bg" class="absolute inset-0 w-full h-full roulette-bg"></div>
+        <div id="wheel-items" class="absolute inset-0"></div>
+    </div>
+</div>
+
+<div class="mt-8 md:mt-12 flex justify-center">
+<button id="btn-spin" class="spin-button px-8 md:px-12 py-3 md:py-4 bg-blue-600 text-white rounded-full text-xl md:text-2xl font-bold shadow-xl uppercase tracking-widest border border-blue-400">
+    돌리기 SPIN
+</button>
+</div>
+</div>
+<aside class="w-full max-w-xl lg:w-[400px] glass-panel p-4 md:p-6 lg:p-8 rounded-xl flex flex-col gap-4 md:gap-6">
+<section>
+<div class="flex items-center justify-between mb-4 md:mb-6 text-white">
+<h2 class="text-xl md:text-2xl font-bold">항목 설정</h2>
+<span class="material-symbols-outlined text-white/60">edit_calendar</span>
+</div>
+<div class="flex flex-col gap-3 md:gap-4">
+<div class="flex gap-2">
+<input type="color" id="item-color" class="w-12 h-12 shrink-0 rounded-lg overflow-hidden cursor-pointer bg-white/10 border border-white/20 p-1" value="#FF3B30">
+<div class="relative flex-1">
+<input id="item-input" class="w-full bg-white/10 border border-white/20 rounded-lg pl-4 pr-10 py-2 md:py-3 h-12 text-white text-sm md:text-base focus:outline-none focus:border-white/50 transition-all" placeholder="새로운 항목을 입력하세요 (엔터)..." type="text"/>
+<button id="btn-add" class="absolute right-2 top-1/2 -translate-y-1/2 text-white/50 hover:text-white">
+<span class="material-symbols-outlined">add_circle</span>
+</button>
+</div>
+</div>
+<div id="items-list" class="flex flex-col gap-2 mt-4 md:mt-6 max-h-[300px] md:max-h-[400px] overflow-y-auto pr-2">
+    <!-- Items added by JS -->
+</div>
+</div>
+</section>
+</aside>
+</main>
+<!-- User Guide Section -->
+<section class="max-w-[95%] md:max-w-4xl mx-auto px-2 md:px-8 lg:px-12 py-8 md:py-16 mb-8 md:mb-12 text-white w-full">
+    <div class="glass-panel border border-white/20 p-5 md:p-8 lg:p-12 rounded-2xl backdrop-blur-sm">
+        <h3 class="text-xl md:text-2xl lg:text-3xl font-bold text-[#FF9500] mb-4 md:mb-6 lg:mb-8 flex items-center gap-2 md:gap-4">
+            <span class="material-symbols-outlined text-[#FF9500] text-[24px] md:text-[32px]" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+            운명의 룰렛 사용 지침서
+        </h3>
+        <ul class="flex flex-col gap-4 md:gap-6 text-sm md:text-base lg:text-lg text-white/80">
+            <li class="flex gap-3 md:gap-4 items-start">
+                <span class="material-symbols-outlined text-[#FF9500] mt-0.5 text-[20px] md:text-[24px]" style="font-variation-settings: 'FILL' 1;">edit_note</span>
+                <p><strong>항목 추가/삭제:</strong> 우측 패널(모바일은 하단)에서 룰렛에 들어갈 항목을 입력하고 + 버튼을 누르거나 엔터를 쳐주세요. 기존 항목은 휴지통 아이콘을 눌러 삭제할 수 있습니다.</p>
+            </li>
+            <li class="flex gap-3 md:gap-4 items-start">
+                <span class="material-symbols-outlined text-[#FF9500] mt-0.5 text-[20px] md:text-[24px]" style="font-variation-settings: 'FILL' 1;">change_circle</span>
+                <p><strong>룰렛 돌리기:</strong> 최소 2개 이상의 항목을 추가한 후 '돌리기 SPIN' 버튼을 클릭하면 화려하게 룰렛이 회전하며 무작위 행운이 결정됩니다.</p>
+            </li>
+            <li class="flex gap-3 md:gap-4 items-start">
+                <span class="material-symbols-outlined text-[#FF9500] mt-0.5 text-[20px] md:text-[24px]" style="font-variation-settings: 'FILL' 1;">stars</span>
+                <p><strong>결과 확인 및 공유:</strong> 회전이 끝난 후, 당첨 결과가 축하 메시지, 날짜와 함께 팝업으로 출력됩니다. '저장' 버튼을 눌러 결과 이미지를 다운로드하고 공유해보세요!</p>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<div id="toast-container" class="fixed top-8 left-1/2 -translate-x-1/2 z-[300] flex flex-col gap-2 pointer-events-none"></div>
+
+<div id="result-modal" class="fixed inset-0 z-[200] flex items-center justify-center pointer-events-none opacity-0 transition-opacity duration-500 bg-black/80 backdrop-blur-md hidden">
+<div class="relative p-6 md:p-12 rounded-3xl max-w-sm w-[90%] md:w-full text-center border-4 border-yellow-400/50 shadow-[0_0_60px_rgba(250,204,21,0.3)] bg-gradient-to-b from-[#1a1b2e] to-[#0d0e1a] pointer-events-auto transform transition-transform scale-95 overflow-hidden mx-auto" id="result-content">
+<div class="absolute inset-x-0 top-0 py-2 bg-black/20 border-b border-white/5 flex justify-center items-center gap-2">
+    <span class="material-symbols-outlined text-[14px] text-white/40">calendar_today</span>
+    <span id="result-date" class="text-white/40 text-[12px] md:text-[14px]"></span>
+</div>
+<div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0IiBoZWlnaHQ9IjQiPgo8cmVjdCB3aWR0aD0iNCIgaGVpZ2h0PSI0IiBmaWxsPSIjZmZmIiBmaWxsLW9wYWNpdHk9IjAuMDUiLz4KPC9zdmc+')] opacity-50 mt-8"></div>
+<span class="relative z-10 material-symbols-outlined text-[60px] md:text-[80px] text-yellow-400 mb-4 md:mb-6 drop-shadow-[0_0_20px_rgba(250,204,21,0.8)] animate-bounce mt-10 md:mt-12" style="font-variation-settings: 'FILL' 1;">workspace_premium</span>
+<h3 class="relative z-10 text-2xl md:text-3xl font-bold text-white mb-2 md:mb-4 tracking-wide">🎉 축하합니다! 🎉</h3>
+<div class="relative z-10 py-6 md:py-8 flex flex-col items-center gap-3 md:gap-4">
+<p class="text-white/80 text-sm md:text-base">운명의 룰렛이 선택한 결과는...</p>
+<div class="px-6 py-4 md:px-8 md:py-6 bg-white/5 rounded-2xl border border-white/10 shadow-inner w-full">
+<p id="result-text" class="text-2xl md:text-[40px] leading-tight text-yellow-400 font-bold drop-shadow-[0_2px_8px_rgba(250,204,21,0.5)] break-words">항목</p>
+</div>
+<p class="text-white/80 text-sm md:text-base">당첨을 축하합니다!</p>
+</div>
+<div id="modal-buttons" class="relative z-10 flex gap-4 md:gap-6 justify-center mt-2 md:mt-4">
+    <button id="btn-save-image" class="px-4 py-2 md:px-6 md:py-3 bg-white/10 text-white rounded-full text-xs md:text-sm uppercase tracking-widest hover:bg-white/20 transition-all font-bold flex items-center justify-center gap-1 md:gap-2">
+        <span class="material-symbols-outlined text-[16px] md:text-[18px]">download</span> 저장
+    </button>
+    <button id="btn-close-modal" class="px-8 py-2 md:px-12 md:py-3 bg-gradient-to-r from-yellow-500 to-yellow-600 text-black rounded-full text-xs md:text-sm uppercase tracking-widest hover:from-yellow-400 hover:to-yellow-500 hover:scale-105 transition-all shadow-[0_0_20px_rgba(250,204,21,0.4)] font-bold">
+        확인
+    </button>
+</div>
+</div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Standard bright generic roulette colors
+        const colors = [
+            '#FF3B30', // Red
+            '#FF9500', // Orange
+            '#FFCC00', // Yellow
+            '#4CD964', // Green
+            '#5AC8FA', // Light Blue
+            '#007AFF', // Blue
+            '#5856D6', // Purple
+            '#FF2D55', // Pink
+            '#E05CEB', // Magenta
+            '#A2845E'  // Brownish gold
+        ];
+
+        let items = [];
+
+        const wheelBg = document.getElementById('wheel-bg');
+        const wheelItemsEl = document.getElementById('wheel-items');
+        const itemsList = document.getElementById('items-list');
+        const itemInput = document.getElementById('item-input');
+        const itemColorInput = document.getElementById('item-color');
+        const btnAdd = document.getElementById('btn-add');
+        const btnSpin = document.getElementById('btn-spin');
+        const wheel = document.getElementById('wheel');
+        const resultModal = document.getElementById('result-modal');
+        const resultContent = document.getElementById('result-content');
+        const resultText = document.getElementById('result-text');
+        const btnCloseModal = document.getElementById('btn-close-modal');
+        const btnSaveImage = document.getElementById('btn-save-image');
+        const modalButtons = document.getElementById('modal-buttons');
+        const toastContainer = document.getElementById('toast-container');
+
+        let isSpinning = false;
+        let currentRotation = 0;
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'glass-panel px-6 py-3 rounded-full text-white text-sm md:text-base shadow-[0_0_20px_rgba(0,63,177,0.4)] flex items-center gap-2 transform transition-all duration-300 translate-y-[-20px] opacity-0 text-center';
+            toast.innerHTML = `<span class="material-symbols-outlined text-[20px] text-yellow-400" style="font-variation-settings: 'FILL' 1;">error</span> ${message}`;
+            toastContainer.appendChild(toast);
+            
+            // Trigger reflow
+            void toast.offsetWidth;
+            toast.classList.remove('translate-y-[-20px]', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-[-20px]', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        function renderWheel() {
+            if (items.length === 0) {
+                wheelBg.style.background = 'repeating-conic-gradient(from 0deg, #1a2035 0deg 30deg, #232b47 30deg 60deg)';
+                wheelItemsEl.innerHTML = '<span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white/50 font-bold text-xl drop-shadow-md whitespace-nowrap z-20">항목을 추가해주세요</span>';
+                return;
+            }
+
+            const sliceAngle = 360 / items.length;
+            let conicStops = [];
+            
+            for (let i = 0; i < items.length; i++) {
+                const color = items[i].color || colors[i % colors.length];
+                const startAngle = i * sliceAngle;
+                const endAngle = (i + 1) * sliceAngle;
+                conicStops.push(`${color} ${startAngle}deg ${endAngle}deg`);
+            }
+            
+            wheelBg.style.background = `conic-gradient(${conicStops.join(', ')})`;
+
+            // Render text and lines
+            wheelItemsEl.innerHTML = '';
+            items.forEach((item, index) => {
+                const angle = index * sliceAngle + (sliceAngle / 2);
+                
+                // Text span
+                const span = document.createElement('span');
+                span.textContent = item.text;
+                span.className = 'absolute top-1/2 left-1/2 text-white font-bold text-lg drop-shadow-md whitespace-nowrap transform origin-left overflow-hidden text-ellipsis flex items-center justify-center';
+                span.style.width = '120px';
+                span.style.transform = `translateY(-50%) rotate(${angle - 90}deg) translateX(40px)`;
+                span.style.zIndex = '10';
+                
+                wheelItemsEl.appendChild(span);
+                
+                // Divider line
+                const lineAngle = index * sliceAngle;
+                const line = document.createElement('div');
+                line.className = 'absolute top-1/2 left-1/2 bg-white origin-left shadow-sm';
+                line.style.width = '50%';
+                line.style.height = '2px';
+                line.style.transform = `translateY(-50%) rotate(${lineAngle - 90}deg)`;
+                line.style.zIndex = '5';
+                
+                wheelItemsEl.appendChild(line);
+            });
+        }
+
+        function renderList() {
+            itemsList.innerHTML = '';
+            items.forEach((item, index) => {
+                const color = item.color || colors[index % colors.length];
+                
+                const div = document.createElement('div');
+                div.className = 'flex items-center justify-between p-2 md:p-4 rounded-lg bg-white/5 border border-white/10 group animate-fade-in';
+                
+                const leftDiv = document.createElement('div');
+                leftDiv.className = 'flex items-center gap-2 md:gap-3';
+                
+                const colorInput = document.createElement('input');
+                colorInput.type = 'color';
+                colorInput.className = 'w-8 h-8 rounded shrink-0 cursor-pointer border-none bg-transparent';
+                colorInput.value = color;
+                colorInput.addEventListener('input', (e) => {
+                    item.color = e.target.value;
+                    renderWheel();
+                });
+                
+                const textSpan = document.createElement('span');
+                textSpan.className = 'text-sm md:text-base text-white overflow-hidden text-ellipsis whitespace-nowrap max-w-[200px]';
+                textSpan.textContent = item.text;
+                
+                leftDiv.appendChild(colorInput);
+                leftDiv.appendChild(textSpan);
+                
+                const delBtn = document.createElement('button');
+                delBtn.className = 'text-white/40 hover:text-red-400 opacity-0 group-hover:opacity-100 transition-opacity';
+                delBtn.innerHTML = '<span class="material-symbols-outlined text-[18px]">delete</span>';
+                delBtn.onclick = () => {
+                    if (isSpinning) return;
+                    items = items.filter(i => i.id !== item.id);
+                    renderWheel();
+                    renderList();
+                };
+                
+                div.appendChild(leftDiv);
+                div.appendChild(delBtn);
+                itemsList.appendChild(div);
+            });
+        }
+
+        function addItem() {
+            if (isSpinning) return;
+            const text = itemInput.value.trim();
+            const color = itemColorInput.value;
+            if (text) {
+                items.push({ id: Date.now(), text, color });
+                itemInput.value = '';
+                itemColorInput.value = colors[items.length % colors.length];
+                renderWheel();
+                renderList();
+            }
+        }
+
+        btnAdd.addEventListener('click', addItem);
+        itemInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') addItem();
+        });
+
+        btnSpin.addEventListener('click', () => {
+            if (isSpinning) return;
+            if (items.length < 2) {
+                showToast('항목을 2개 이상 추가해주세요.');
+                return;
+            }
+            
+            isSpinning = true;
+            btnSpin.classList.add('opacity-50', 'cursor-not-allowed');
+            
+            // Random rotations + extra spins (3 to 6 full spins)
+            const extraSpins = 360 * (3 + Math.floor(Math.random() * 4));
+            const randomAngle = Math.floor(Math.random() * 360);
+            const totalRotation = currentRotation + extraSpins + randomAngle;
+            
+            wheel.style.transform = `rotate(${totalRotation}deg)`;
+            
+            setTimeout(() => {
+                isSpinning = false;
+                btnSpin.classList.remove('opacity-50', 'cursor-not-allowed');
+                currentRotation = totalRotation;
+                
+                // Calculate winner
+                // The pointer is at the top (0 degrees).
+                // The wheel has rotated currentRotation degrees clockwise.
+                // The actual top position is equivalent to -currentRotation % 360.
+                const normalizedRotation = (360 - (currentRotation % 360)) % 360;
+                
+                const sliceAngle = 360 / items.length;
+                const winningIndex = Math.floor(normalizedRotation / sliceAngle);
+                
+                const winner = items[winningIndex];
+                
+                // Show result modal
+                resultText.textContent = winner.text;
+                
+                const now = new Date();
+                document.getElementById('result-date').textContent = `${now.getFullYear()}.${String(now.getMonth() + 1).padStart(2, '0')}.${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+                
+                resultModal.classList.remove('hidden');
+                // trigger reflow
+                void resultModal.offsetWidth;
+                resultModal.classList.remove('opacity-0', 'pointer-events-none');
+                resultContent.classList.remove('scale-95');
+                resultContent.classList.add('scale-100');
+                
+            }, 5000); // 5 seconds transition
+        });
+
+        btnCloseModal.addEventListener('click', () => {
+            resultModal.classList.add('opacity-0', 'pointer-events-none');
+            resultContent.classList.remove('scale-100');
+            resultContent.classList.add('scale-95');
+            setTimeout(() => {
+                resultModal.classList.add('hidden');
+            }, 500);
+        });
+        
+        btnSaveImage.addEventListener('click', async () => {
+            if (!window.html2canvas) return;
+            
+            modalButtons.style.display = 'none';
+            
+            // Allow DOM to update before taking screenshot
+            await new Promise(r => setTimeout(r, 50));
+            
+            try {
+                const canvas = await html2canvas(resultContent, {
+                    backgroundColor: '#0d0e1a',
+                    scale: 2
+                });
+                
+                const link = document.createElement('a');
+                link.download = `roulette_result_${Date.now()}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            } catch (e) {
+                console.error('Image save failed', e);
+                showToast('이미지 저장에 실패했습니다.');
+            } finally {
+                modalButtons.style.display = 'flex';
+            }
+        });
+
+        // initial render
+        renderWheel();
+        renderList();
+    });
+</script>
+</body></html>

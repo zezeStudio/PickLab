@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+
+<html class="light" lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "outline-variant": "#c3c5d7",
+                        "on-primary-fixed": "#00174d",
+                        "on-secondary-fixed-variant": "#3e4755",
+                        "on-surface-variant": "#434654",
+                        "primary": "#003fb1",
+                        "surface-variant": "#e2e1ed",
+                        "surface-container": "#ededf8",
+                        "primary-fixed": "#dbe1ff",
+                        "background": "#faf8ff",
+                        "secondary-fixed-dim": "#bdc7d8",
+                        "tertiary-fixed-dim": "#ffb59a",
+                        "secondary-container": "#d6e0f1",
+                        "surface": "#faf8ff",
+                        "inverse-primary": "#b5c4ff",
+                        "surface-tint": "#1353d8",
+                        "secondary-fixed": "#d9e3f4",
+                        "surface-container-highest": "#e2e1ed",
+                        "tertiary-container": "#ad3b00",
+                        "on-background": "#191b23",
+                        "inverse-on-surface": "#f0f0fb",
+                        "surface-bright": "#faf8ff",
+                        "secondary": "#555f6d",
+                        "on-tertiary-container": "#ffd4c5",
+                        "surface-container-lowest": "#ffffff",
+                        "primary-fixed-dim": "#b5c4ff",
+                        "surface-dim": "#d9d9e4",
+                        "on-surface": "#191b23",
+                        "surface-container-low": "#f3f3fe",
+                        "on-primary": "#ffffff",
+                        "error": "#ba1a1a",
+                        "on-secondary": "#ffffff",
+                        "surface-container-high": "#e7e7f3",
+                        "tertiary-fixed": "#ffdbcf",
+                        "outline": "#737686",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#2e3039",
+                        "on-secondary-container": "#596372",
+                        "on-primary-container": "#d4dcff",
+                        "on-tertiary": "#ffffff",
+                        "on-tertiary-fixed": "#380d00",
+                        "primary-container": "#1a56db",
+                        "on-secondary-fixed": "#121c28",
+                        "error-container": "#ffdad6",
+                        "tertiary": "#852b00",
+                        "on-primary-fixed-variant": "#003dab",
+                        "on-error-container": "#93000a",
+                        "on-tertiary-fixed-variant": "#802a00"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "max-width": "1440px",
+                        "lg": "2rem",
+                        "xs": "0.5rem",
+                        "sm": "1rem",
+                        "gutter": "1.5rem",
+                        "xl": "3rem",
+                        "margin-mobile": "1rem",
+                        "margin-desktop": "2.5rem",
+                        "md": "1.5rem",
+                        "base": "4px"
+                    },
+                    "fontFamily": {
+                        "display-lg": ["Plus Jakarta Sans"],
+                        "headline-xl": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "headline-lg-mobile": ["Plus Jakarta Sans"],
+                        "label-md": ["Inter"],
+                        "headline-lg": ["Plus Jakarta Sans"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-xl": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "700"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "headline-lg-mobile": ["20px", {"lineHeight": "1.3", "letterSpacing": "0em", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "600"}],
+                        "headline-lg": ["24px", {"lineHeight": "1.3", "letterSpacing": "0em", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "letterSpacing": "0em", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bg-mystic-purple {
+            background-color: #1a1b2e;
+            background-image: 
+                radial-gradient(circle at 50% 50%, rgba(88, 28, 135, 0.15) 0%, transparent 70%),
+                radial-gradient(circle at 20% 80%, rgba(45, 212, 191, 0.05) 0%, transparent 50%);
+        }
+        .ladder-line {
+            background: linear-gradient(to bottom, #d4af37, #f9e29b, #d4af37);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+        }
+        .ladder-rung {
+            background: linear-gradient(to right, #d4af37, #f9e29b, #d4af37);
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.3);
+        }
+        .particle {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-mystic-purple text-on-surface flex flex-col min-h-screen">
+
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<!-- Top Navigation Bar -->
+<header class="fixed top-0 left-0 w-full z-[100] bg-surface/80 dark:bg-surface/80 backdrop-blur-md border-b border-outline-variant/30 text-on-surface">
+<div class="max-w-7xl mx-auto flex justify-between items-center px-4 md:px-8 lg:px-12 py-4">
+<div class="flex items-center gap-6 lg:gap-12">
+<a class="text-xl md:text-2xl font-bold text-primary dark:text-primary-fixed shrink-0" href="/">PickLab</a>
+<nav class="hidden lg:flex gap-8 items-center">
+  
+  <!-- Category 1: Quick Decisions -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/coinflip/">코인플립</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/dice/">운명의 주사위</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/magiclamp/">요술램프</a>
+    </div>
+  </div>
+
+  <!-- Category 2: Games & Roulette -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-48 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/bomb/">폭탄터트리기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/ladder/">운명의 사다리</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/roulette/">룰렛돌리기</a>
+    </div>
+  </div>
+
+  <!-- Category 3: Group & Team -->
+  <div class="relative group">
+    <button class="text-sm md:text-base text-on-surface-variant dark:text-on-surface-variant group-hover:text-primary dark:group-hover:text-primary-fixed transition-colors duration-200 flex items-center gap-1">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+      <span class="material-symbols-outlined text-[20px] transition-transform group-hover:rotate-180">arrow_drop_down</span>
+    </button>
+    <div class="absolute top-full left-0 mt-4 w-56 bg-surface dark:bg-surface-container-high rounded-xl shadow-xl border border-outline-variant/30 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 flex flex-col py-2">
+      <div class="absolute -top-4 left-0 w-full h-4"></div>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="px-4 py-3 text-sm md:text-base text-on-surface hover:bg-surface-container hover:text-primary dark:hover:text-primary-fixed transition-colors" href="/number/">숫자 생성기</a>
+    </div>
+  </div>
+</nav>
+</div>
+<div class="flex items-center gap-4 md:gap-6 lg:hidden">
+<button id="mobile-menu-btn" class="p-2 text-on-surface hover:text-primary transition-colors flex items-center justify-center">
+<span class="material-symbols-outlined text-[28px]">menu</span>
+</button>
+</div>
+</div>
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="hidden lg:hidden bg-surface dark:bg-surface-container-low border-b border-outline-variant/30 flex flex-col shadow-lg max-h-[80vh] overflow-y-auto">
+  <div class="py-2 border-b border-outline-variant/10">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">bolt</span> 퀵 결정
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/coinflip/">코인플립</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/dice/">운명의 주사위</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/magiclamp/">요술램프</a>
+  </div>
+  <div class="py-2 border-b border-outline-variant/10">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">casino</span> 복불복 & 게임
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/bomb/">폭탄터트리기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/ladder/">운명의 사다리</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/cardflip/">운명의 카드뒤집기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/roulette/">룰렛돌리기</a>
+  </div>
+  <div class="py-2">
+    <div class="px-6 py-2 text-xs font-bold text-primary flex items-center gap-2">
+      <span class="material-symbols-outlined text-[18px]">groups</span> 모임 & 추첨
+    </div>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/luckydraw/">신비로운 제비뽑기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/namedraw/">신비로운 이름 추첨기</a>
+    <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/team/">신비로운 팀 나누기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/sequence/">운명의 순서 정하기</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/drinking/">술자리 게임</a>
+      <a class="block px-8 py-3 text-sm font-bold text-on-surface hover:bg-surface-container transition-colors" href="/number/">숫자 생성기</a>
+  </div>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                const icon = mobileBtn.querySelector('.material-symbols-outlined');
+                if (mobileMenu.classList.contains('hidden')) {
+                    icon.textContent = 'menu';
+                } else {
+                    icon.textContent = 'close';
+                }
+            });
+        }
+        
+        // Highlight active menu item
+        const currentPath = window.location.pathname;
+        const navLinks = document.querySelectorAll('header nav flex a, header #mobile-menu a, header .group a');
+        navLinks.forEach(link => {
+            const href = link.getAttribute('href');
+            if (href && href !== '/' && currentPath.startsWith(href)) {
+                link.classList.add('text-primary', 'dark:text-primary-fixed', 'font-bold', 'bg-surface-container-highest');
+            }
+        });
+    });
+</script>
+</header>
+
+<!-- Main Content Canvas -->
+<main class="flex-1 flex flex-col relative overflow-hidden mt-24">
+<!-- Particle Decoration -->
+<div class="absolute inset-0 z-0 opacity-20">
+<div class="particle w-1 h-1 top-1/4 left-1/4" style="box-shadow: 0 0 10px white;"></div>
+<div class="particle w-2 h-2 top-1/3 left-2/3" style="box-shadow: 0 0 15px white;"></div>
+<div class="particle w-1 h-1 top-3/4 left-1/2" style="box-shadow: 0 0 10px white;"></div>
+</div>
+<!-- Header -->
+<div class="flex flex-col md:flex-row justify-between items-center px-4 md:px-8 lg:px-12 py-6 lg:py-8 z-10 gap-4 md:gap-6 mt-4 md:mt-0">
+<div class="flex flex-col text-center md:text-left">
+<h2 class="text-2xl md:text-3xl lg:text-4xl font-bold text-on-primary-fixed dark:text-primary-fixed-dim">운명의 사다리</h2>
+<p class="text-sm md:text-base text-on-surface-variant opacity-80 mt-1 md:mt-2">Ghost Leg: Let the spirits guide your path.</p>
+</div>
+<div class="flex items-center gap-2 md:gap-4 lg:gap-6">
+<div class="flex items-center glass-card rounded-lg md:rounded-xl p-1 md:p-2 lg:p-3">
+<button id="btn-minus" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-primary-fixed-dim hover:bg-white/10 rounded-md md:rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[24px] md:text-[28px]">remove</span>
+</button>
+<span id="player-count-display" class="px-4 md:px-6 text-2xl md:text-4xl font-bold text-white">4</span>
+<button id="btn-plus" class="w-10 h-10 md:w-12 md:h-12 flex items-center justify-center text-primary-fixed-dim hover:bg-white/10 rounded-md md:rounded-lg transition-colors">
+<span class="material-symbols-outlined text-[24px] md:text-[28px]">add</span>
+</button>
+</div>
+<button id="btn-reset" class="glass-card w-12 h-12 md:w-16 md:h-16 flex items-center justify-center rounded-lg md:rounded-xl text-white hover:bg-white/10 transition-colors">
+<span class="material-symbols-outlined text-[24px] md:text-[32px]">refresh</span>
+</button>
+</div>
+</div>
+<!-- Game Canvas Section -->
+<section class="flex-1 px-4 md:px-8 lg:px-12 pb-12 md:pb-16 flex flex-col z-10 w-full max-w-[95%] md:max-w-7xl mx-auto">
+<div class="flex-1 glass-card rounded-3xl p-4 md:p-8 lg:p-12 flex flex-col gap-6 md:gap-8 lg:gap-10 border-primary/20">
+<!-- Participants (Top) -->
+<div id="players-container" class="grid gap-2 md:gap-4 lg:gap-6 w-full" style="grid-template-columns: repeat(4, minmax(0, 1fr));">
+</div>
+<!-- Ladder Grid (Middle) -->
+<div id="ladder-container" class="flex-1 relative flex justify-around min-h-[400px] md:min-h-[500px] lg:min-h-[600px] w-full">
+<canvas id="ladder-canvas" class="absolute inset-0 w-full h-full z-10"></canvas>
+<div id="ladder-curtain" class="absolute inset-0 z-20 flex items-center justify-center bg-black rounded-2xl transition-opacity duration-700 pointer-events-none">
+    <div class="px-4 md:px-8 py-2 md:py-4 rounded-full bg-black/50 border border-white/20 flex items-center gap-2 md:gap-4 text-white shadow-md">
+        <span class="material-symbols-outlined text-primary text-[20px] md:text-[28px]">visibility_off</span>
+        <span class="text-sm md:text-lg font-bold text-white">운명의 사다리가 가려져 있습니다</span>
+    </div>
+</div>
+<!-- Ethereal Glow Elements -->
+<div class="absolute inset-0 pointer-events-none overflow-hidden z-0">
+<div class="absolute top-1/2 left-1/4 w-32 md:w-48 h-32 md:h-48 bg-primary/10 blur-[60px] md:blur-[80px] rounded-full"></div>
+<div class="absolute top-1/3 right-1/4 w-40 md:w-56 h-40 md:h-56 bg-purple-500/10 blur-[80px] md:blur-[100px] rounded-full"></div>
+</div>
+</div>
+<!-- Results (Bottom) -->
+<div id="results-container" class="grid gap-2 md:gap-4 lg:gap-6 w-full" style="grid-template-columns: repeat(4, minmax(0, 1fr));">
+</div>
+</div>
+<!-- Start Button Section -->
+<div class="mt-8 md:mt-12 flex justify-center px-4 w-full">
+<button id="btn-start" class="group relative px-6 py-3 md:px-12 md:py-5 bg-gradient-to-r from-primary to-primary-container text-on-primary rounded-full font-bold flex items-center justify-center gap-2 md:gap-4 shadow-[0_0_30px_rgba(26,86,219,0.3)] hover:shadow-[0_0_50px_rgba(26,86,219,0.5)] active:scale-95 transition-all text-sm md:text-xl lg:text-2xl w-full md:w-auto">
+<span class="material-symbols-outlined text-[24px] md:text-[36px] group-hover:rotate-180 transition-transform duration-500">auto_awesome</span>
+                    운명의 사다리 타기
+                    <div class="absolute -inset-1 bg-gradient-to-r from-primary to-primary-container rounded-full blur-xl opacity-20 group-hover:opacity-40 transition-opacity"></div>
+</button>
+</div>
+<!-- Final Results Panel (Hidden by default) -->
+<div id="final-results-panel" class="hidden mt-8 md:mt-12 w-full max-w-2xl mx-auto glass-card rounded-3xl p-4 md:p-8 lg:p-12 flex flex-col items-center border-primary/20 z-20 mx-4 md:mx-auto">
+    <div id="share-card-target" class="w-full bg-mystic-purple p-6 md:p-10 rounded-2xl flex flex-col gap-6 md:gap-8 relative text-white">
+        <div class="text-center mb-2 md:mb-4">
+            <h3 class="text-xl md:text-3xl text-white font-bold">운명의 사다리 결과</h3>
+            <p class="text-xs md:text-sm text-white/80 mt-1 md:mt-2">PickLab</p>
+        </div>
+        <div id="final-results-list" class="flex flex-col gap-2 md:gap-4 w-full">
+            <!-- Items injected via JS -->
+        </div>
+        <div id="share-footer" class="hidden w-full mt-6 md:mt-10 flex justify-between items-center border-t border-white/20 pt-4 md:pt-6 z-10">
+            <span class="text-[10px] md:text-xs text-white/60 uppercase tracking-wider font-semibold">PickLab</span>
+            <span id="share-date" class="text-[10px] md:text-xs text-white/60 font-medium"></span>
+        </div>
+    </div>
+    
+    <div class="mt-6 md:mt-8 flex gap-4 w-full md:w-auto px-4 md:px-0">
+        <button id="btn-share" class="w-full md:w-auto px-6 py-3 md:px-10 md:py-4 bg-secondary text-on-secondary rounded-full font-bold flex items-center justify-center gap-2 md:gap-4 hover:bg-secondary/90 transition-colors shadow-md text-sm md:text-lg">
+            <span class="material-symbols-outlined text-[20px] md:text-[24px]">share</span>
+            결과 이미지 저장 및 공유
+        </button>
+    </div>
+</div>
+</section>
+<!-- Decorative Illustration -->
+<div class="absolute bottom-0 right-0 w-[300px] h-[300px] md:w-[400px] md:h-[400px] opacity-10 pointer-events-none hidden md:block">
+<img alt="Mystical Oracle Theme" class="w-full h-full object-contain" data-alt="A mystical digital illustration showing ethereal golden strings connecting glowing runes in a deep purple void. The visual style is minimal and high-end, featuring soft glowing orbs and floating geometric particles that represent threads of fate. The lighting is low-key with bright, sharp golden highlights and deep indigo shadows, matching a sophisticated Oracle aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC0gVP5ZdIaPCd0bMvmADgj-i3scSPJHhqdB8HGv-gWZYXamrKgZdfKyxiUUiXUg5VGZCJFXiSkVILsYeg1m5ksgQ_K9KJFlk94t5IZuYD2RFKyCjcnAHfePmbr8pU1AiOsTcWOpHySdV1kog6th1RfJJVn5lDQqNm-kcNxKvEogdyfSoK9J89OD3SWAvQ40agxg7Kz6WA0Qe1V5vySe8CoPAngwQ3ihIWt6WA8TdbzuStfXKuaH1TXKXS3MYr_MjfcROlufQxZLo8"/>
+</div>
+<!-- User Guide Section -->
+<section class="max-w-[95%] md:max-w-4xl mx-auto px-4 md:px-8 lg:px-12 py-8 md:py-16 mb-8 md:mb-12">
+    <div class="glass-card border border-primary/20 p-5 md:p-8 lg:p-12 rounded-2xl flex flex-col items-start w-full text-left">
+        <h3 class="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-4 md:mb-6 lg:mb-8 flex items-center gap-2 md:gap-4 self-start">
+            <span class="material-symbols-outlined text-primary text-[24px] md:text-[32px]" style="font-variation-settings: 'FILL' 1;">menu_book</span>
+            운명의 사다리 사용 지침서
+        </h3>
+        <ul class="flex flex-col gap-4 md:gap-6 text-sm md:text-base lg:text-lg text-white/80">
+            <li class="flex gap-3 md:gap-4 items-start">
+                <span class="material-symbols-outlined text-primary mt-0.5 text-[20px] md:text-[24px]" style="font-variation-settings: 'FILL' 1;">group</span>
+                <p><strong>인원 설정:</strong> 화면 상단의 -/+ 버튼을 통해 게임에 참여할 인원수(최소 2명 ~ 최대 10명)를 설정하세요.</p>
+            </li>
+            <li class="flex gap-3 md:gap-4 items-start">
+                <span class="material-symbols-outlined text-primary mt-0.5 text-[20px] md:text-[24px]" style="font-variation-settings: 'FILL' 1;">edit</span>
+                <p><strong>참여자 및 결과 입력:</strong> 사다리 상단의 입력창에는 참여자의 이름, 하단 결과창에는 당첨 항목(예: 꽝, 당첨, 커피 쏘기 등)을 자유롭게 기입해주세요.</p>
+            </li>
+            <li class="flex gap-3 md:gap-4 items-start">
+                <span class="material-symbols-outlined text-primary mt-0.5 text-[20px] md:text-[24px]" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                <p><strong>사다리 결과 확인:</strong> 중앙 하단의 '운명의 사다리 타기' 버튼을 한 번에 누르거나, 위쪽 각각의 시작 버튼을 클릭하여 결과가 어떻게 이어지는지 직접 눈으로 확인하세요. 모든 사다리 타기가 종료되면 나오는 화면에서 우측 하단의 저장 버튼을 통해 SNS에 결과를 공유할 수도 있습니다!</p>
+            </li>
+        </ul>
+    </div>
+</section>
+</main>
+
+<!-- Global Footer -->
+<footer class="w-full relative z-20 px-4 md:px-8 lg:px-12 md:px-4 md:px-8 lg:px-12 lg:px-4 md:px-8 lg:px-12 py-12 md:py-24 flex flex-col md:flex-row justify-between items-start gap-6 md:gap-8 bg-surface-container-lowest dark:bg-inverse-surface border-t border-outline-variant mt-auto text-on-surface">
+<div class="flex flex-col gap-2 md:gap-3">
+<span class="text-2xl md:text-3xl font-bold font-bold text-on-surface dark:text-inverse-on-surface">PickLab</span>
+<p class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant max-w-xs">
+                The world's leading decision-intelligence platform for high-growth enterprises.
+            </p>
+<p class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant mt-4 md:mt-6">
+                © 2024 PickLab. All rights reserved.
+            </p>
+</div>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 lg:gap-16">
+<div class="flex flex-col gap-2 md:gap-3">
+<span class="text-sm font-bold text-on-surface font-bold">Product</span>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Features</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Integrations</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Enterprise</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Solutions</a>
+</div>
+<div class="flex flex-col gap-2 md:gap-3">
+<span class="text-sm font-bold text-on-surface font-bold">Company</span>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">About Us</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Careers</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Press</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Contact</a>
+</div>
+<div class="flex flex-col gap-2 md:gap-3">
+<span class="text-sm font-bold text-on-surface font-bold">Resources</span>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Documentation</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">API Reference</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Community</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Status</a>
+</div>
+<div class="flex flex-col gap-2 md:gap-3">
+<span class="text-sm font-bold text-on-surface font-bold">Legal</span>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Privacy</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Terms</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Security</a>
+<a class="text-xs md:text-sm text-on-surface-variant dark:text-surface-variant hover:text-primary transition-colors" href="#">Cookies</a>
+</div>
+</div>
+</footer>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const btnMinus = document.getElementById('btn-minus');
+        const btnPlus = document.getElementById('btn-plus');
+        const btnReset = document.getElementById('btn-reset');
+        const btnStart = document.getElementById('btn-start');
+        const playerCountDisplay = document.getElementById('player-count-display');
+        const playersContainer = document.getElementById('players-container');
+        const resultsContainer = document.getElementById('results-container');
+        const ladderContainer = document.getElementById('ladder-container');
+        const ladderCurtain = document.getElementById('ladder-curtain');
+        const canvas = document.getElementById('ladder-canvas');
+        const ctx = canvas.getContext('2d');
+
+        let numPlayers = 4;
+        const MIN_PLAYERS = 2;
+        
+        function getMaxPlayers() {
+            return window.innerWidth < 768 ? 5 : 8;
+        }
+        
+        let rungs = []; 
+        const NUM_ROWS = 12; // Discrete distinct vertical steps
+
+        const playerColors = [
+            '#ef4444', '#3b82f6', '#10b981', '#f59e0b',
+            '#8b5cf6', '#ec4899', '#06b6d4', '#f97316'
+        ];
+
+        let activePaths = [];
+        let animationFrameId = null;
+        let isSequentialRunning = false;
+        let pQueue = [];
+
+        function startNextInQueue() {
+            if (pQueue.length === 0) {
+                isSequentialRunning = false;
+                return;
+            }
+            const nextIdx = pQueue.shift();
+            startPath(nextIdx);
+        }
+
+        function updateDOM() {
+            playerCountDisplay.textContent = numPlayers;
+            
+            playersContainer.style.gridTemplateColumns = `repeat(${numPlayers}, minmax(0, 1fr))`;
+            resultsContainer.style.gridTemplateColumns = `repeat(${numPlayers}, minmax(0, 1fr))`;
+            
+            let pHTML = '';
+            let rHTML = '';
+            for (let i = 0; i < numPlayers; i++) {
+                pHTML += `
+                <div class="relative group">
+                    <input id="p-input-${i}" class="w-full bg-white/5 border-2 border-white/10 text-white rounded-[8px] md:rounded-xl py-2 md:py-4 px-1 sm:px-2 text-center font-bold focus:border-primary-fixed-dim focus:ring-0 transition-all text-[10px] sm:text-xs md:text-sm z-10 relative" placeholder="이름" type="text" value="P${i + 1}">
+                    <div id="p-dot-${i}" data-idx="${i}" class="player-dot absolute -bottom-5 left-1/2 -translate-x-1/2 w-4 h-4 md:w-5 md:h-5 rounded-full blur-[1px] cursor-pointer hover:scale-125 transition-transform z-20 flex items-center justify-center font-bold text-[8px] md:text-[10px] text-white shadow-[0_0_10px_currentColor]" style="background-color: ${playerColors[i]}; color: ${playerColors[i]};">${i+1}</div>
+                </div>`;
+                rHTML += `
+                <div class="relative group">
+                    <div id="r-dot-${i}" class="absolute -top-5 left-1/2 -translate-x-1/2 w-3 h-3 md:w-4 md:h-4 rounded-full bg-secondary-fixed blur-[1px]"></div>
+                    <input class="w-full bg-secondary-container/10 border-2 border-secondary-fixed/20 text-secondary-fixed text-center rounded-[8px] md:rounded-xl py-2 md:py-4 px-1 sm:px-2 font-bold focus:border-secondary-fixed focus:ring-0 transition-all text-[10px] sm:text-xs md:text-sm z-10 relative" placeholder="결과" type="text" value="${i === 0 ? '당첨' : '꽝'}">
+                </div>`;
+            }
+            
+            playersContainer.innerHTML = pHTML;
+            resultsContainer.innerHTML = rHTML;
+
+            // Bind click to individual dots
+            document.querySelectorAll('.player-dot').forEach(el => {
+                el.addEventListener('click', (e) => {
+                    const idx = parseInt(e.target.dataset.idx, 10);
+                    if (ladderCurtain && !ladderCurtain.classList.contains('opacity-0')) {
+                        ladderCurtain.classList.add('opacity-0');
+                        setTimeout(() => startPath(idx), 700);
+                    } else {
+                        startPath(idx);
+                    }
+                });
+            });
+        }
+
+        function generateLadder() {
+            rungs = [];
+            for (let row = 1; row <= NUM_ROWS; row++) {
+                let avail = Array(numPlayers - 1).fill(true);
+                for (let c = 0; c < numPlayers - 1; c++) {
+                    if (avail[c] && Math.random() < 0.45) {
+                        rungs.push({ col: c, row: row });
+                        avail[c] = false;
+                        if (c + 1 < numPlayers - 1) avail[c + 1] = false;
+                    }
+                }
+            }
+        }
+
+        function getColX(c) {
+            const children = playersContainer.children;
+            if (!children[c]) return 0;
+            const rect = children[c].getBoundingClientRect();
+            const containerRect = ladderContainer.getBoundingClientRect();
+            return rect.left + rect.width / 2 - containerRect.left;
+        }
+
+        function getRowY(r) {
+            const margin = 20;
+            const h = canvas.height - 2 * margin;
+            return margin + (r / (NUM_ROWS + 1)) * h;
+        }
+
+        function drawBaseLadder() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.strokeStyle = 'rgba(255, 255, 255, 0.2)';
+            ctx.lineWidth = 4;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            // Draw vertical lines
+            for (let i = 0; i < numPlayers; i++) {
+                const x = getColX(i);
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+
+            // Draw rungs
+            for (let lr of rungs) {
+                const x1 = getColX(lr.col);
+                const x2 = getColX(lr.col + 1);
+                const y = getRowY(lr.row);
+                
+                ctx.beginPath();
+                ctx.moveTo(x1, y);
+                ctx.lineTo(x2, y);
+                ctx.stroke();
+            }
+        }
+
+        function buildPathCoordinates(startCol) {
+            let path = [];
+            let currentX = getColX(startCol);
+            let currentY = 0;
+            let currentCol = startCol;
+
+            path.push({ x: currentX, y: currentY });
+
+            for (let r = 1; r <= NUM_ROWS; r++) {
+                const rowY = getRowY(r);
+                
+                // Move down to the row
+                path.push({ x: currentX, y: rowY });
+                currentY = rowY;
+
+                // Check if there is a rung connected to current col left or right
+                // right: col == currentCol
+                let rungRight = rungs.find(x => x.row === r && x.col === currentCol);
+                // left: col == currentCol - 1
+                let rungLeft = rungs.find(x => x.row === r && x.col === currentCol - 1);
+
+                if (rungRight) {
+                    currentCol++;
+                    currentX = getColX(currentCol);
+                    path.push({ x: currentX, y: currentY });
+                } else if (rungLeft) {
+                    currentCol--;
+                    currentX = getColX(currentCol);
+                    path.push({ x: currentX, y: currentY });
+                }
+            }
+            
+            // final segment to bottom
+            path.push({ x: currentX, y: canvas.height });
+
+            // compute total length and segment lengths
+            let totalLen = 0;
+            for (let i=0; i<path.length-1; i++) {
+                let dx = path[i+1].x - path[i].x;
+                let dy = path[i+1].y - path[i].y;
+                let dist = Math.sqrt(dx*dx + dy*dy);
+                path[i].dist = dist;
+                totalLen += dist;
+            }
+            path.totalLen = totalLen;
+            path.endCol = currentCol;
+            return path;
+        }
+
+        function drawActivePaths() {
+            let newlyFinished = false;
+
+            for (let p of activePaths) {
+                if (!p.active && p.progress >= 1) {
+                   // Fully drawn
+                   ctx.strokeStyle = p.color;
+                   ctx.lineWidth = 6;
+                   ctx.beginPath();
+                   ctx.moveTo(p.coords[0].x, p.coords[0].y);
+                   for(let i=1; i<p.coords.length; i++) {
+                       ctx.lineTo(p.coords[i].x, p.coords[i].y);
+                   }
+                   ctx.stroke();
+                   continue;
+                }
+
+                if (p.active) {
+                    p.progress += 0.012; // speed
+                    if (p.progress >= 1) {
+                        p.progress = 1;
+                        p.active = false;
+                        newlyFinished = true;
+                    }
+                }
+
+                ctx.strokeStyle = p.color;
+                ctx.lineWidth = 6;
+                ctx.beginPath();
+                
+                let targetLen = p.progress * p.coords.totalLen;
+                let curLen = 0;
+                
+                ctx.moveTo(p.coords[0].x, p.coords[0].y);
+                
+                for(let i=0; i<p.coords.length-1; i++) {
+                    let seg = p.coords[i].dist;
+                    if (curLen + seg <= targetLen) {
+                        ctx.lineTo(p.coords[i+1].x, p.coords[i+1].y);
+                        curLen += seg;
+                    } else {
+                        // partial segment
+                        let remaining = targetLen - curLen;
+                        let ratio = remaining / seg;
+                        let endX = p.coords[i].x + (p.coords[i+1].x - p.coords[i].x) * ratio;
+                        let endY = p.coords[i].y + (p.coords[i+1].y - p.coords[i].y) * ratio;
+                        ctx.lineTo(endX, endY);
+                        
+                        // draw a glow blip at the front
+                        ctx.save();
+                        ctx.fillStyle = '#fff';
+                        ctx.shadowBlur = 15;
+                        ctx.shadowColor = p.color;
+                        ctx.beginPath();
+                        ctx.arc(endX, endY, 6, 0, Math.PI*2);
+                        ctx.fill();
+                        ctx.restore();
+                        
+                        break;
+                    }
+                }
+                ctx.stroke();
+            }
+
+            if (newlyFinished) {
+                if (isSequentialRunning) {
+                    setTimeout(startNextInQueue, 300);
+                }
+                setTimeout(checkAllFinished, 100);
+            }
+        }
+
+        function checkAllFinished() {
+            // Check if all players have a completed path
+            if (activePaths.length === numPlayers && activePaths.every(p => !p.active && p.progress >= 1)) {
+                showFinalResults();
+            }
+        }
+        
+        function showFinalResults() {
+            const finalPanel = document.getElementById('final-results-panel');
+            const resultsList = document.getElementById('final-results-list');
+            
+            let html = '';
+            // Make sure the paths are sorted by path index to maintain player order
+            const sortedPaths = [...activePaths].sort((a, b) => a.idx - b.idx);
+            
+            sortedPaths.forEach(p => {
+                const startInput = document.getElementById(`p-input-${p.idx}`);
+                // the results inputs don't have id right now, let's select them from resultsContainer
+                const resultInputs = resultsContainer.querySelectorAll('input');
+                const endInput = resultInputs[p.coords.endCol];
+                
+                const playerName = startInput ? startInput.value : `Player ${p.idx + 1}`;
+                const resultName = endInput ? endInput.value : `Result`;
+                
+                html += `
+                <div class="flex items-center justify-between bg-white/5 border border-white/10 p-2 md:p-4 sm:p-4 md:p-6 rounded-xl">
+                    <div class="flex items-center gap-2 md:gap-3">
+                        <div class="w-4 h-4 sm:w-6 sm:h-6 rounded-full shadow-[0_0_8px_currentColor]" style="background-color: ${p.color}; color: ${p.color}"></div>
+                        <span class="font-bold text-sm sm:text-base text-white">${playerName}</span>
+                    </div>
+                    <span class="material-symbols-outlined text-outline-variant text-sm sm:text-base">arrow_forward</span>
+                    <span class="font-bold text-sm sm:text-base text-secondary-fixed">${resultName}</span>
+                </div>
+                `;
+            });
+            
+            resultsList.innerHTML = html;
+            finalPanel.classList.remove('hidden');
+            // scroll to it
+            setTimeout(() => {
+                finalPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+        }
+
+        function animate() {
+            drawBaseLadder();
+            drawActivePaths();
+            animationFrameId = requestAnimationFrame(animate);
+        }
+
+        function startPath(idx) {
+            if (!activePaths.find(p => p.idx === idx)) {
+                activePaths.push({
+                    idx: idx,
+                    color: playerColors[idx],
+                    coords: buildPathCoordinates(idx),
+                    progress: 0,
+                    active: true
+                });
+            }
+        }
+
+        function startAllPathsSequentially() {
+            activePaths = [];
+            isSequentialRunning = true;
+            pQueue = [];
+            for (let i = 0; i < numPlayers; i++) {
+                pQueue.push(i);
+            }
+
+            if (ladderCurtain) ladderCurtain.classList.add('opacity-0');
+            setTimeout(() => {
+                startNextInQueue();
+            }, 700);
+        }
+
+        function init() {
+            if (animationFrameId) cancelAnimationFrame(animationFrameId);
+            activePaths = [];
+            isSequentialRunning = false;
+            pQueue = [];
+            if (ladderCurtain) ladderCurtain.classList.remove('opacity-0');
+            
+            const finalPanel = document.getElementById('final-results-panel');
+            if (finalPanel) {
+                finalPanel.classList.add('hidden');
+            }
+            
+            updateDOM();
+            generateLadder();
+            // Use setTimeout to allow DOM flow to establish layout widths
+            setTimeout(() => {
+                const rect = ladderContainer.getBoundingClientRect();
+                canvas.width = rect.width;
+                canvas.height = rect.height;
+                animate();
+            }, 50);
+        }
+
+        btnMinus.addEventListener('click', () => {
+            if (numPlayers > MIN_PLAYERS) {
+                numPlayers--;
+                init();
+            }
+        });
+
+        btnPlus.addEventListener('click', () => {
+            if (numPlayers < getMaxPlayers()) {
+                numPlayers++;
+                init();
+            }
+        });
+
+        btnReset.addEventListener('click', init);
+
+        btnStart.addEventListener('click', () => {
+            btnStart.classList.add('scale-95', 'opacity-80');
+            setTimeout(() => btnStart.classList.remove('scale-95', 'opacity-80'), 200);
+            startAllPathsSequentially();
+        });
+
+        window.addEventListener('resize', () => {
+            const maxP = getMaxPlayers();
+            if (numPlayers > maxP) {
+                numPlayers = maxP;
+                init();
+            } else {
+                const rect = ladderContainer.getBoundingClientRect();
+                canvas.width = rect.width;
+                canvas.height = rect.height;
+                // update existing path coordinates proportionally if we want, or just let it snap on next draw
+                activePaths.forEach(p => {
+                    p.coords = buildPathCoordinates(p.idx);
+                });
+            }
+        });
+
+        // Share functionality
+        const btnShare = document.getElementById('btn-share');
+        if (btnShare) {
+            btnShare.addEventListener('click', async () => {
+                if (typeof html2canvas === 'undefined') {
+                    alert('이미지 저장 라이브러리를 불러오는 중입니다. 잠시 후 다시 시도해주세요.');
+                    return;
+                }
+
+                const finalPanel = document.getElementById('final-results-panel');
+                const shareCardTarget = document.getElementById('share-card-target');
+                const shareFooter = document.getElementById('share-footer');
+                const shareDate = document.getElementById('share-date');
+                
+                const now = new Date();
+                shareDate.textContent = now.toLocaleDateString() + ' ' + now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+                shareFooter.classList.remove('hidden');
+                
+                const originalText = btnShare.innerHTML;
+                btnShare.classList.add('opacity-50', 'pointer-events-none');
+                btnShare.innerHTML = '<span class="material-symbols-outlined animate-spin text-[20px]">refresh</span> 처리 중...';
+
+                let resultsTextList = [];
+                const sortedPaths = [...activePaths].sort((a, b) => a.idx - b.idx);
+                
+                sortedPaths.forEach(p => {
+                    const startInput = document.getElementById(`p-input-${p.idx}`);
+                    const resultInputs = resultsContainer.querySelectorAll('input');
+                    const endInput = resultInputs[p.coords.endCol];
+                    
+                    const playerName = startInput ? startInput.value : `Player ${p.idx + 1}`;
+                    const resultName = endInput ? endInput.value : `Result`;
+                    resultsTextList.push(`- ${playerName} ➔ ${resultName}`);
+                });
+                
+                const shareText = `🪜 운명의 사다리 결과!\n\n${resultsTextList.join('\n')}\n\n결정이 힘들 땐 '디시전 허브'와 함께하세요!\n🎲 운명 확인하러 가기: ${window.location.origin}/ladder/`;
+                
+                // Copy text immediately while we still have user activation
+                let clipboardSuccess = false;
+                try {
+                    await navigator.clipboard.writeText(shareText);
+                    clipboardSuccess = true;
+                } catch (err) {
+                    console.error('Failed to copy text: ', err);
+                }
+
+                try {
+                    const canvas = await html2canvas(shareCardTarget, {
+                        backgroundColor: '#1a1b2e',
+                        scale: 2,
+                        useCORS: true,
+                        allowTaint: true,
+                        logging: false,
+                        onclone: (documentClone) => {
+                            const target = documentClone.getElementById('share-card-target');
+                            if (target) {
+                                target.style.width = shareCardTarget.offsetWidth + 'px';
+                                target.style.height = 'auto'; // allow height expansion
+                                target.style.transform = 'none';
+                            }
+                        }
+                    });
+
+                    shareFooter.classList.add('hidden');
+                    btnShare.innerHTML = originalText;
+                    btnShare.classList.remove('opacity-50', 'pointer-events-none');
+                    
+                    const link = document.createElement('a');
+                    link.download = `ladder-result-${Date.now()}.png`;
+                    link.href = canvas.toDataURL('image/png');
+                    link.click();
+                    
+                    if (clipboardSuccess) {
+                        alert('✨ 사다리 결과가 이미지로 저장되고 SNS 공유용 텍스트가 복사되었습니다! 🎉\n이제 원하는 곳에 붙여넣기로 공유해보세요!');
+                    } else {
+                        alert('✨ 결과 이미지가 저장되었습니다! SNS에 업로드 해보세요!');
+                    }
+                } catch (err) {
+                    console.error('Failed html2canvas:', err);
+                    shareFooter.classList.add('hidden');
+                    btnShare.innerHTML = originalText;
+                    btnShare.classList.remove('opacity-50', 'pointer-events-none');
+                    alert('이미지 저장에 실패했습니다. 다시 시도해주세요.');
+                }
+            });
+        }
+
+        init();
+    });
+</script>
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+</body></html>
